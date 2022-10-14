@@ -53,3 +53,13 @@ TEST(containers, ring_buffer)
     EXPECT_EQ(3, container.pop());
     EXPECT_EQ(4, container.pop());
 }
+
+TEST(containers, bitset)
+{
+    fnx::bitset<3> container;
+    container.set(0);
+    container.set(2);
+    EXPECT_TRUE(container.is_set(0));
+    EXPECT_FALSE(container.is_set(1));
+    EXPECT_TRUE(container.is_set(2));
+}
