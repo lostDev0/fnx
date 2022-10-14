@@ -9,7 +9,6 @@ include_directories(../include ../test)
 
 # puts all .cpp files inside src to the SOURCES variable
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/*.cpp)
-message(sources="${SOURCES}")
 
 # compiles the files defined by SOURCES to generante the executable defined
 add_executable(${PROJECT_NAME} ${SOURCES})

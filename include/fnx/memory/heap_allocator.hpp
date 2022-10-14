@@ -31,18 +31,6 @@ namespace fnx
 			return addr;
 		}
 
-		/*
-		/// @brief Calls the object destructor and frees the memory for the next call to create().
-		void destroy(T* ptr)
-		{
-			if (nullptr != ptr)
-			{
-				ptr->~T();
-				dealloc(ptr);
-			}
-		}
-		*/
-
 		/// @brief Calls the object destructor and frees the memory for the next call to create().
 		virtual void destroy(void* ptr) override
 		{

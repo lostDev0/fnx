@@ -1,7 +1,8 @@
 #pragma once
 
-#include<chrono>
-#include<type_traits>
+#include <chrono>
+#include <type_traits>
+#include <random>
 
 namespace fnx
 {
@@ -22,20 +23,20 @@ namespace fnx
         return static_cast<T>(dist(rng));
     }
 
-    template<typename T, typename U = T>
+    template<typename T, typename U = double>
     /// @brief Calculates the value from a ratio.
     inline T calc_value(T min, T max, U ratio)
     {
         // ratio of 0 returns min
         // ratio of 1 returns max
-        return ((max - min) * ratio) + min;
+        return static_cast<T>((static_cast<U>(max - min) * ratio) + static_cast<U>(min));
     }
 
-    template<typename T>
+    template<typename T, typename U = double>
     /// @brief Calculates a ratio between values.
-    inline T calc_ratio(T min, T max, T val)
+    inline U calc_ratio(T min, T max, T val)
     {
-        return (val - min) / (max - min);
+        return static_cast<U>(val - min) / static_cast<U>(max - min);
     }
 
     template<typename T, typename U>
@@ -60,12 +61,6 @@ namespace fnx
         v = fnx::minimum(v, max);
         v = fnx::maximum(v, min);
         return v;
-    }
-
-    template<typename T, typename = std::enable_if_t<std::is_arithmetic<T>::value>>
-    inline T mod(const T& a, const T& b)
-    {
-        return a - ((a / b) * b);
     }
 
     template<typename T, typename = std::enable_if_t<std::is_arithmetic<T>::value>>

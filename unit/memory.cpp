@@ -35,6 +35,10 @@ namespace tester
 
 		bool operator==(const foo& other) const { return x == other.x && y == other.y; }
 		bool operator!=(const foo& other) const { return !(*this == other); }
+
+        foo() = default;
+        ~foo() = default;
+        foo(int x, int y) : x(x), y(y) {}
 	};
 
 	int test_val = 0;
@@ -72,7 +76,12 @@ using namespace fnx;
 
 TEST(memory, heap_allocator)
 {
-
+    fnx::heap_pool_allocator<tester::foo> pool;
+    auto val = pool.create(42, 1337);
+    EXPECT_EQ(42, val->x);
+    EXPECT_EQ(1337, val->y);
+    // note that destroy doesn't change the pointer to null
+    pool.destroy(val);
 }
 
 TEST(function_ref, global)
