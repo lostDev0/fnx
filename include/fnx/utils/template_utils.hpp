@@ -6,6 +6,8 @@
 #include <unordered_set>
 #include <stack>
 #include <forward_list>
+#include <map>
+#include <unordered_map>
 
 namespace fnx
 {

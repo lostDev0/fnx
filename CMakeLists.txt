@@ -1,8 +1,9 @@
-# only for cmake --version >= 3.5.1
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.16)
 
 # project name
 project(fnx)
+
+set(HEADER_FILES include/fnx/fnx.hpp)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -24,5 +25,6 @@ file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 # compiles the files defined by SOURCES to generante the executable defined by EXEC
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
+target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILES})
 
 add_subdirectory(unit)

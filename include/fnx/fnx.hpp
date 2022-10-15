@@ -9,3 +9,9 @@
 
 #include "memory/heap_allocator.hpp"
 #include "memory/function_ref.hpp"
+
+#include "core/id_manager.hpp"
+#include "core/tween.hpp"
+#include "core/singleton.hpp"
+
+//#include "ecs/"
