@@ -169,3 +169,22 @@ TEST(function_ref, bind)
 	r(42);
 	EXPECT_EQ(obj.x, 42);
 }
+
+TEST(pool, access)
+{
+	struct foo {};
+	struct bar {};
+	fnx::heap_indexed_pool<foo, 2> foo_pool;
+	fnx::heap_indexed_pool<bar, 2> bar_pool;
+	auto a = foo_pool.create();
+	auto d = bar_pool.create();
+	auto b = foo_pool.create();
+	auto c = foo_pool.create();
+
+	EXPECT_EQ(2, foo_pool.num_blocks());
+	EXPECT_EQ(1, bar_pool.num_blocks());
+
+	ASSERT_EQ((intptr_t)a, (intptr_t)foo_pool[0]);
+	ASSERT_EQ((intptr_t)b, (intptr_t)foo_pool[1]);
+	ASSERT_EQ((intptr_t)c, (intptr_t)foo_pool[2]);
+}
