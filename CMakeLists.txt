@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_CXX_FLAGS "-Wall")
-#set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 # I./includes
@@ -32,3 +32,4 @@ target_link_libraries(${PROJECT_NAME} reactphysics3d.lib)
 
 add_subdirectory(unit)
 add_subdirectory(helloworld)
+add_subdirectory(sandbox)

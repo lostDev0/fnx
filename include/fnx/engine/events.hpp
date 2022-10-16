@@ -20,6 +20,7 @@ namespace fnx
         /// @brief Trigger an event to be queued.
         void emit(const T& payload, bool reverse = false, double delay = 0.0)
         {
+            FNX_INFO(fnx::to_string(payload));
             auto& d = get_dispatcher<T>();
             d.trigger(payload, reverse, delay);
         }
@@ -85,4 +86,6 @@ namespace fnx
             return type++;
         }
     };
+
+    #define FNX_EMIT(e) { auto [emitter,_99] = fnx::singleton<fnx::event_manager>::acquire(); emitter.emit(e); }
 }

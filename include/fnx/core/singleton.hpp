@@ -6,7 +6,7 @@ namespace fnx
 	struct acquire_i
 	{
 		T& data;
-		std::lock_guard<std::mutex> lock;
+		std::lock_guard<std::recursive_mutex> lock;
 	};
 
 	template<typename T>
@@ -18,9 +18,9 @@ namespace fnx
 		static acquire_i<T> acquire()
 		{
 			static std::unique_ptr<T> _instance = std::make_unique<T>();
-			static std::mutex _mutex;
+			static std::recursive_mutex _mutex;
 			return { *_instance, 
-					 std::lock_guard<std::mutex>(_mutex) };
+					 std::lock_guard<std::recursive_mutex>(_mutex) };
 		}
 	};
 }

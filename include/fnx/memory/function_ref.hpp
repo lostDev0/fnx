@@ -30,6 +30,7 @@ namespace fnx
     class function_ref;
 
     template <typename rtype, typename... args>
+    /// @brief  Stores and allows access to a function from a static context. Think std::function + std::bind.
     class function_ref<rtype(args...)> {
     public:
         using Functor = rtype(*)(args...);

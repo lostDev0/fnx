@@ -17,10 +17,20 @@ int main(int argc, char** argv) {
     // First you need to create the PhysicsCommon object. This is a factory module
     // that you can use to create physics world and other objects. It is also responsible
     // for logging and memory management
-    PhysicsCommon physicsCommon;
+    PhysicsWorld* world{nullptr};
+    DefaultLogger* logger{nullptr};
 
-    // Create a physics world
-    PhysicsWorld* world = physicsCommon.createPhysicsWorld();
+    {
+        // Initialize global singleton physics world for use by the FNX engine
+        auto [physicsCommon,_] = fnx::singleton<PhysicsCommon>::acquire();
+
+        // Create a physics world
+        world = physicsCommon.createPhysicsWorld();
+        logger = physicsCommon.createDefaultLogger();
+        auto logLevel = static_cast<uint>(static_cast<uint>(Logger::Level::Warning) | static_cast<uint>(Logger::Level::Error) | static_cast<uint>(Logger::Level::Information));
+        logger->addStreamDestination(std::cout, logLevel, DefaultLogger::Format::Text);
+        physicsCommon.setLogger(logger);
+    }
 
     // Create a rigid body in the world
     Vector3 position(0, 20, 0);
@@ -40,7 +50,9 @@ int main(int argc, char** argv) {
         const Vector3& position = transform.getPosition();
 
         // Display the position of the body
-        std::cout << "Body Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
+        logger->log(Logger::Level::Information, world->getName(), Logger::Category::World, 
+            std::string("Body Position: ") + std::to_string(position.x) + std::string(", ") + std::to_string(position.y) + std::string(", ") + std::to_string(position.z), __FILE__, __LINE__);
+        
     }
 
     return 0;
