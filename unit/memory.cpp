@@ -170,7 +170,7 @@ TEST(function_ref, bind)
 	EXPECT_EQ(obj.x, 42);
 }
 
-TEST(pool, access)
+TEST(heap_indexed_pool, access)
 {
 	struct foo {};
 	struct bar {};

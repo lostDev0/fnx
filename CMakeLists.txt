@@ -18,7 +18,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 # I./includes
-include_directories(include)
+include_directories(include dependencies/include)
+link_directories(dependencies/lib)
 
 # puts all .cpp files inside src to the SOURCES variable
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -27,4 +28,7 @@ file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILES})
 
+target_link_libraries(${PROJECT_NAME} reactphysics3d.lib)
+
 add_subdirectory(unit)
+add_subdirectory(helloworld)

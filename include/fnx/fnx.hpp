@@ -15,6 +15,8 @@
 #include "core/tween.hpp"
 #include "core/singleton.hpp"
 
+#include <reactphysics3d/reactphysics3d.h>
+
 #include "ecs/config.hpp"
 #include "ecs/component.hpp"
 //#include "ecs/entity.hpp"
