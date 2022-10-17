@@ -1,4 +1,12 @@
 # FNX C++ Game Engine
+## Getting Started
+### Dependencies
+Perform a git clone on ReachPhysics3d and build the library for static inclusion.
+### Creating an Application
+```cpp
+// initialize the fnx engine
+fnx::world::init();
+```
 ## LICENSE
 Copyright (c) <year> <copyright holders>
 

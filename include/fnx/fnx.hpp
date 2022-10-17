@@ -1,6 +1,8 @@
 #pragma once
 
 #include "utils/template_utils.hpp"
+#include "utils/macro_utils.hpp"
+#include "utils/string_utils.hpp"
 
 #include "math/math.hpp"
 
@@ -34,4 +36,7 @@
 #include "engine/asset_manager.hpp"
 #include "engine/sound.hpp"
 #include "engine/audio_manager.hpp"
+#include "engine/display_mode.hpp"
+#include "engine/window.hpp"
+
 #include "engine/world.hpp"

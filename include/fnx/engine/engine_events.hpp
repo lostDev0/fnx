@@ -23,12 +23,6 @@ namespace fnx
         std::string _resource_name;
     };
 
-    template<typename T>
-    inline std::string to_string(const T&)
-    {
-        return "unknown type";
-    }
-
     template<>
     inline std::string to_string(const sound_evt& evt)
     {
@@ -53,6 +47,13 @@ namespace fnx
     }
 
     struct window_close_evt {};
+
+    template<>
+    inline std::string to_string(const window_close_evt& evt)
+    {
+        return "window closed";
+    }
+
     struct window_resize_evt
     { 
         int _x{ 0 }; 
@@ -60,6 +61,13 @@ namespace fnx
         int _width{ 0 }; 
         int _height{ 0 };
     };
+
+    template<>
+    inline std::string to_string(const window_resize_evt& evt)
+    {
+        return fnx::format_string("window resize %d, %d, %d, %d", evt._x, evt._y, evt._width, evt._height);
+    }
+
     struct window_move_evt
     { 
         int _x{ 0 }; 
@@ -67,11 +75,52 @@ namespace fnx
         int _width{ 0 }; 
         int _height{ 0 };
     };
+
+    template<>
+    inline std::string to_string(const window_move_evt& evt)
+    {
+        return fnx::format_string("window move %d, %d, %d, %d", evt._x, evt._y, evt._width, evt._height);
+    }
+
     struct window_minimize_evt {};
+    
+    template<>
+    inline std::string to_string(const window_minimize_evt& evt)
+    {
+        return "window minimized";
+    }
+
     struct window_maximize_evt {};
+
+    template<>
+    inline std::string to_string(const window_maximize_evt& evt)
+    {
+        return "window maximized";
+    }
+
     struct window_fullscreen_evt {};
+    template<>
+    inline std::string to_string(const window_fullscreen_evt& evt)
+    {
+        return "window fullscreen";
+    }
+
     struct window_lose_focus_evt {};
+
+    template<>
+    inline std::string to_string(const window_lose_focus_evt& evt)
+    {
+        return "window lost focus";
+    }
+
     struct window_gain_focus_evt {};
+
+    template<>
+    inline std::string to_string(const window_gain_focus_evt& evt)
+    {
+        return "window gained focus";
+    }
+
     struct window_init_evt {
         void* _id;	/// used for any threads that need to know the active window
         int _x{ 0 }; int _y{ 0 }; int _width{ 0 }; int _height{ 0 };
@@ -84,17 +133,85 @@ namespace fnx
     }
 
     struct keyboard_press_evt { FNX_KEY _key{ FNX_KEY::FK_UNKNOWN }; };
+
+    template<>
+    inline std::string to_string(const keyboard_press_evt& evt)
+    {
+        return fnx::format_string("%c", key_to_ascii(evt._key));
+    }
+
     struct keyboard_release_evt { FNX_KEY _key{ FNX_KEY::FK_UNKNOWN }; };
+
+    template<>
+    inline std::string to_string(const keyboard_release_evt& evt)
+    {
+        return fnx::format_string("%c", key_to_ascii(evt._key));
+    }
+
     struct keyboard_repeat_evt { FNX_KEY _key{ FNX_KEY::FK_UNKNOWN }; };
 
+    template<>
+    inline std::string to_string(const keyboard_repeat_evt& evt)
+    {
+        return fnx::format_string("%c", key_to_ascii(evt._key));
+    }
+
     struct mouse_enter_evt {};
+
+    template<>
+    inline std::string to_string(const mouse_enter_evt& evt)
+    {
+        return "mouse entered window";
+    }
+    
     struct mouse_exit_evt {};
+
+    template<>
+    inline std::string to_string(const mouse_exit_evt& evt)
+    {
+        return "mouse exited window";
+    }
+
     struct mouse_move_evt { double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+
+    template<>
+    inline std::string to_string(const mouse_move_evt& evt)
+    {
+        return fnx::format_string("mouse moved %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
+    }
+
     struct mouse_press_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+
+    template<>
+    inline std::string to_string(const mouse_press_evt& evt)
+    {
+        return fnx::format_string("mouse pressed %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
+    }
+
     struct mouse_release_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+
+    template<>
+    inline std::string to_string(const mouse_release_evt& evt)
+    {
+        return fnx::format_string("mouse released %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
+    }
+
     struct mouse_scroll_evt { double _x{ 0.0 }; double _y{ 0.0 }; };
 
+    template<>
+    inline std::string to_string(const mouse_scroll_evt& evt)
+    {
+        return fnx::format_string("mouse scrolled %f %f", evt._x, evt._y);
+    }
+
     struct widget_active_evt { unsigned int _src; };
+
+    template<>
+    inline std::string to_string(const widget_active_evt& evt)
+    {
+        return fnx::format_string("widget activated %d", evt._src);
+    }
+
     struct widget_inactive_evt { unsigned int _src; };
     struct widget_press_evt { unsigned int _src; };
     struct widget_release_evt { unsigned int _src; };

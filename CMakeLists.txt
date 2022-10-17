@@ -16,6 +16,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+add_compile_definitions(_FNX_WINDOW GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 
 # I./includes
 include_directories(include dependencies/include)
@@ -28,7 +29,7 @@ file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILES})
 
-target_link_libraries(${PROJECT_NAME} reactphysics3d.lib)
+target_link_libraries(${PROJECT_NAME} reactphysics3d.lib opengl32.lib glew32s.lib glfw3.lib)
 
 add_subdirectory(unit)
 add_subdirectory(helloworld)
