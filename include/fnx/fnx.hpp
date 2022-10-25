@@ -1,5 +1,15 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+#include <string>
+#include <atomic>
+#include <mutex>
+#include <map>
+#include <unordered_map>
+#include <array>
+#include <type_traits>
+
 // Dependencies
 #pragma warning(disable: 4244)
 #include <reactphysics3d/reactphysics3d.h>
