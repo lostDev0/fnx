@@ -10,6 +10,7 @@
 #include <array>
 #include <type_traits>
 #include <list>
+#include <climits>
 
 // Dependencies
 #pragma warning(disable: 4244)
