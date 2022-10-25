@@ -55,3 +55,58 @@ TEST(math, factorial)
 {
     EXPECT_EQ(120, fnx::factorial(5));
 }
+
+TEST(matrix4x4, determinant)
+{
+    fnx::matrix4x4 in(1.0, 7.0, 14.0, 0.0, 9.0, 4.0, 18.0, 18.0, 2.0, 4.0, 5.0, 5.0, 1.0, 7.0, 1.0, 11.0);
+    EXPECT_ALMOST_EQ(1552.0, in.getDeterminant());
+}
+
+TEST(matrix4x4, addition)
+{
+    fnx::matrix4x4 a(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+    fnx::matrix4x4 b(1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16);
+    fnx::matrix4x4 e(2,6,10,14,
+                     6,10,14,18,
+                     10,14,18,22,
+                     14,18,22,26);
+    auto c = a + b;
+    EXPECT_EQ(e,c);
+}
+
+TEST(matrix4x4, subtraction)
+{
+    fnx::matrix4x4 a(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+    fnx::matrix4x4 b(1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16);
+    fnx::matrix4x4 e(0,-2,-4,-9,
+                     2,0,-9,18,
+                     4,9,0,22,
+                     9,18,22,0);
+    auto c = a - b;
+    EXPECT_EQ(e,c);
+}
+
+TEST(matrix4x4, multiplication)
+{
+    fnx::matrix4x4 a(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+    fnx::matrix4x4 b(1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16);
+    fnx::matrix4x4 e(0,-2,-4,-9,
+                     2,0,-9,18,
+                     4,9,0,22,
+                     9,18,22,0);
+    auto c = a * b;
+    EXPECT_EQ(e,c);
+}
+
+TEST(matrix4x4, multiplication_quaternion)
+{
+    fnx::matrix4x4 a(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+    reactphysics3d::Quaternion b(1,5,9,13);
+    fnx::matrix4x4 e(0,-2,-4,-9,
+                     2,0,-9,18,
+                     4,9,0,22,
+                     9,18,22,0);
+    auto c = a * b;
+    // TODO
+    //EXPECT_EQ(e,c);
+}

@@ -30,6 +30,10 @@ int main(int argc, char** argv) {
 
     // GOAL : Create a simple 3d fire with audio playing
     // 1. Get some audio
+    // 2. Create a window
+    // 3. Add ground
+    // 4. Add logs
+    // 5. Add fire emitter
     {
         auto [audio,_] = singleton<audio_manager>::acquire();
         audio.set_master_volume(1.f,1.f);

@@ -1,0 +1,69 @@
+#pragma once
+
+namespace fnx
+{
+	struct light
+	{
+		enum type
+		{
+			directional,
+			spot,
+			point
+		};
+
+		reactphysics3d::Vector3 position;
+		reactphysics3d::Vector3 direction;
+		reactphysics3d::Vector3 ambient;
+		reactphysics3d::Vector3 diffuse;
+		reactphysics3d::Vector3 specular; 
+		float cut_off;
+		float outer_cut_off;
+		float constant;
+		float linear;
+		float quadratic;
+		light::type type{ directional };		
+		
+		light() = default;
+
+		/// @brief Create a directional light.
+		light(const reactphysics3d::Vector3& direction, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular)
+		{
+			this->type = fnx::light::type::directional;
+			this->direction = direction;
+			this->ambient = ambient;
+			this->diffuse = diffuse;
+			this->specular = specular;
+		};
+
+		/// @brief Create a point light.
+		light(const reactphysics3d::Vector3& position, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular, float constant, float linear, float quadratic)
+		{
+			this->type = fnx::light::type::point;
+			this->position = position;
+			this->ambient = ambient;
+			this->diffuse = diffuse;
+			this->specular = specular;
+			this->constant = constant;
+			this->linear = linear;
+			this->quadratic = quadratic;
+		};
+
+		/// @brief Create a spot light.
+		light(const reactphysics3d::Vector3& position, const reactphysics3d::Vector3& direction, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular, float constant, float linear, float quadratic, float cutoff, float outer_cutoff)
+		{
+			this->type = fnx::light::type::spot;
+			this->direction = direction;
+			this->position = position;
+			this->ambient = ambient;
+			this->diffuse = diffuse;
+			this->specular = specular;
+			this->constant = constant;
+			this->linear = linear;
+			this->quadratic = quadratic;
+			this->cut_off = cutoff;
+			this->outer_cut_off = outer_cutoff;
+		};
+
+		~light() = default;
+	};
+}

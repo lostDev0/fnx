@@ -83,7 +83,7 @@ namespace fnx
 		}
 	}
 
-	template<typename... Args> auto format_string(const std::string& format, Args&& ... args)
+	template<typename... Args> inline auto format_string(const std::string& format, Args&& ... args) -> std::string
 	{
 		return detail::format_string_internal(format, detail::convert_string_internal(std::forward<Args>(args))...);
 	}

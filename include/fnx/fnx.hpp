@@ -1,10 +1,18 @@
 #pragma once
 
+// Dependencies
+#pragma warning(disable: 4244)
+#include <reactphysics3d/reactphysics3d.h>
+#pragma warning(default: 4244)
+
 #include "utils/template_utils.hpp"
 #include "utils/macro_utils.hpp"
 #include "utils/string_utils.hpp"
+#include "utils/react_utils.hpp"
 
 #include "math/math.hpp"
+#include "math/angle.hpp"
+#include "math/matrix4x4.hpp"
 
 #include "containers/dequeue.hpp"
 #include "containers/ring_buffer.hpp"
@@ -21,12 +29,9 @@
 #include "core/singleton.hpp"
 #include "core/async.hpp"
 
-// Dependencies
-#pragma warning(disable: 4244)
-#include <reactphysics3d/reactphysics3d.h>
-#include <stbimage/stb_image.h>
-#pragma warning(default: 4244)
-
+#include "engine/colors.hpp"
+#include "engine/constants.hpp"
+#include "engine/config_constants.hpp"
 #include "engine/logger.hpp"
 #include "engine/dispatcher.hpp"
 #include "engine/events.hpp"
@@ -37,6 +42,22 @@
 #include "engine/sound.hpp"
 #include "engine/audio_manager.hpp"
 #include "engine/display_mode.hpp"
+#include "engine/alignment.hpp"
 #include "engine/window.hpp"
+#include "engine/shader.hpp"
+#include "engine/raw_image.hpp"
+#include "engine/texture.hpp"
+#include "engine/material_map.hpp"
+#include "engine/material.hpp"
+#include "engine/raw_model.hpp"
+#include "engine/model.hpp"
+#include "engine/lights.hpp"
+#include "engine/font.hpp"
+#include "engine/type_names.hpp"
+#include "engine/camera.hpp"
+#include "engine/ortho_camera.hpp"
+#include "engine/perspective_camera.hpp"
+#include "engine/layer.hpp"
+#include "engine/layer_stack.hpp"
 
 #include "engine/world.hpp"
