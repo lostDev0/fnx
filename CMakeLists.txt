@@ -16,7 +16,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-G" "_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-add_compile_definitions(_FNX_WINDOW GLEW_STATIC _CRT_SECURE_NO_WARNINGS GLEW_NO_GLU GLFW_INCLUDE_NONE)
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS GLEW_NO_GLU GLFW_INCLUDE_NONE)
+else()
+    add_compile_definitions(_FNX_WINDOW GLEW_STATIC _CRT_SECURE_NO_WARNINGS GLEW_NO_GLU GLFW_INCLUDE_NONE)
+endif()
 
 # I./includes
 include_directories(include dependencies/include /usr/include/sdl)
