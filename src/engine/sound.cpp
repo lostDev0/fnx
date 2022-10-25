@@ -11,21 +11,20 @@ namespace fnx
 
     struct audio_context
     {
-        HWND _hwnd{};
         bool _isWindow{ false };
 
         audio_context()
         {
 #ifndef _FNX_WINDOW
-            _hwnd = GetConsoleWindow();
+            auto hwnd = GetConsoleWindow();
 #else
-            _hwnd = GetActiveWindow();
+            auto hwnd = GetActiveWindow();
             _isWindow = true;
 #endif
             // the hwnd is null if you construct the context on its own thread
             // you have to get the hwnd from the active window of the main thread
 
-            auto error = cs_init(_hwnd, 44100, 8192, nullptr);
+            auto error = cs_init(hwnd, 44100, 8192, nullptr);
             if(error != cs_error_t::CUTE_SOUND_ERROR_NONE)
             {
                 FNX_WARN(fnx::format_string("Error occurred initializing audio: %d", error));
