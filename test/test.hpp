@@ -117,17 +117,12 @@ namespace test
             };
 
             template <typename T, class = void>
-            struct is_streamable : std::false_type { using type = void; };
+            struct is_streamable : std::false_type {};
 
             template <typename T>
             struct is_streamable<T, std::enable_if_t<
-                std::is_convertible_v<
-                decltype(std::declval<std::ostream&>() << std::declval<T>()),
-                std::ostream&
-                >
-                >> : std::true_type {
-                    using type = T;
-                };
+                std::is_convertible_v<decltype(std::declval<std::ostream&>() << std::declval<T>()), std::ostream&>
+                >> : std::true_type {};
         }
 
         struct fail : public std::exception
