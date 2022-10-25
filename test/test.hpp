@@ -117,7 +117,7 @@ namespace test
             };
 
             template <typename T, class = void>
-            struct is_streamable : std::false_type { };
+            struct is_streamable : std::false_type { using type = void; };
 
             template <typename T>
             struct is_streamable<T, std::enable_if_t<
@@ -125,7 +125,9 @@ namespace test
                 decltype(std::declval<std::ostream&>() << std::declval<T>()),
                 std::ostream&
                 >
-                >> : std::true_type {};
+                >> : std::true_type {
+                    using type = T;
+                };
         }
 
         struct fail : public std::exception
