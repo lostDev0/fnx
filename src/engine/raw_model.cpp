@@ -672,7 +672,7 @@ namespace fnx
         }
     }
 
-    std::shared_ptr<fnx::raw_model> fnx::raw_model_quad()
+    std::shared_ptr<fnx::raw_model> raw_model_quad()
     {
         static const std::vector<unsigned short> indices
         {
@@ -696,7 +696,7 @@ namespace fnx
         return a;
     }
 
-    std::vector<float> fnx::create_vbo_data_for_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
+    std::vector<float> create_vbo_data_for_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
     {
         // TODO
         //const std::vector<float> data{
@@ -706,7 +706,7 @@ namespace fnx
         return std::vector<float>{};
     }
 
-    fnx::raw_model_handle fnx::raw_model_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
+    fnx::raw_model_handle raw_model_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
     {
         auto a = fnx::make_shared_ref<fnx::raw_model>("line", create_vbo_data_for_line(start, end, start_color, end_color));
         a->set_color_data_true();
