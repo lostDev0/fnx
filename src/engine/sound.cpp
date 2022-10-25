@@ -18,10 +18,13 @@ namespace fnx
 
         audio_context()
         {
+            void* hwnd = NULL;
 #ifndef _FNX_WINDOW
-            auto hwnd = GetConsoleWindow();
+        #ifndef CUTE_SOUND_FORCE_SDL
+            hwnd = GetConsoleWindow();
+        #endif
 #else
-            auto hwnd = GetActiveWindow();
+            hwnd = GetActiveWindow();
             _isWindow = true;
 #endif
             // the hwnd is null if you construct the context on its own thread
