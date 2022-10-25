@@ -1,3 +1,6 @@
+#if !defined _WIN32
+#define CUTE_SOUND_FORCE_SDL
+#endif
 #define CUTE_SOUND_IMPLEMENTATION
 #include <cutesound/cute_sound.h>
 
