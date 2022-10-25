@@ -1,4 +1,6 @@
+#ifdef _FNX_WINDOW
 #include <windows.h>
+#endif
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
