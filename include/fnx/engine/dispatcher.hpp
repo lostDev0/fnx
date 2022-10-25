@@ -15,18 +15,18 @@ namespace fnx
     /// @brief Used to send events to the engine features.
     class dispatcher : public dispatcher_interface
     {
-        template<typename T>
+        template<typename U>
         /// @brief Used internally to store events that can be triggered in the future or now.
         struct message
         {
             message() {}
             ~message() {}
-            message(const T& payload, bool reverse, double delay)
+            message(const U& payload, bool reverse, double delay)
                 : _payload{ payload }
                 , _reverse{ reverse }
                 , _time_left{ delay }
             {}
-            T _payload{};
+            U _payload{};
             bool _reverse{ false };
             double _time_left{ 0.0 };
         };
