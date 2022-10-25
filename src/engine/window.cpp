@@ -368,11 +368,11 @@ namespace fnx
         {
             void* hwnd = NULL;
 #if defined(_WIN32)
-#ifndef _FNX_WINDOW
+    #ifndef _FNX_WINDOW
             hwnd = GetConsoleWindow();
-#else
+    #else
             hwnd = GetActiveWindow();
-#endif
+    #endif
 #endif
             window_init_evt e;
             e._id = hwnd;
