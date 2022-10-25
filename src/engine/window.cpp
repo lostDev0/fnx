@@ -1,4 +1,4 @@
-#ifdef _FNX_WINDOW
+#if defined(_WIN32)
 #include <windows.h>
 #endif
 #include <GL/glew.h>
@@ -366,11 +366,13 @@ namespace fnx
         }
 
         {
-
+            void* hwnd = NULL;
+#if defined(_WIN32)
 #ifndef _FNX_WINDOW
-            auto hwnd = GetConsoleWindow();
+            hwnd = GetConsoleWindow();
 #else
-            auto hwnd = GetActiveWindow();
+            hwnd = GetActiveWindow();
+#endif
 #endif
             window_init_evt e;
             e._id = hwnd;
