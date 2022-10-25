@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <array>
 #include <type_traits>
+#include <list>
 
 // Dependencies
 #pragma warning(disable: 4244)
