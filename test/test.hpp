@@ -117,14 +117,11 @@ namespace test
             };
 
             template <typename T, class = void>
-            struct is_streamable : std::false_type { };
+            struct is_streamable : std::false_type {};
 
             template <typename T>
             struct is_streamable<T, std::enable_if_t<
-                std::is_convertible_v<
-                decltype(std::declval<std::ostream&>() << std::declval<T>()),
-                std::ostream&
-                >
+                std::is_convertible_v<decltype(std::declval<std::ostream&>() << std::declval<T>()), std::ostream&>
                 >> : std::true_type {};
         }
 
@@ -496,12 +493,12 @@ namespace test
 
 
     template<typename T, typename std::enable_if<!test::internal::check::is_streamable<T>::value, T>::type * = nullptr>
-    std::string print_helper(const T& in)
+    inline std::string print_helper(const T& in)
     {
         return typeid(T).name();
     }
 
-    template<typename T, typename std::enable_if<test::internal::check::is_streamable<T>::value && !std::is_pointer<T>::value>::type * = nullptr>
+    template<typename T, typename std::enable_if<test::internal::check::is_streamable<T>::value && !std::is_pointer<T>::value, T>::type * = nullptr>
     inline std::string print_helper(const T& in)
     {
         // use the overloaded operator
@@ -511,7 +508,7 @@ namespace test
     }
 
     template<typename T, typename std::enable_if<test::internal::check::is_streamable<T>::value>::type * = nullptr>
-    std::string print_helper(const T* in)
+    inline std::string print_helper(const T* in)
     {
         // use the overloaded operator
         std::stringstream ss;
@@ -520,7 +517,7 @@ namespace test
     }
 
     template<typename T, typename std::enable_if<!test::internal::check::is_streamable<T>::value>::type * = nullptr>
-    std::string print_helper(const T* in)
+    inline std::string print_helper(const T* in)
     {
         return typeid(T).name();
     }
