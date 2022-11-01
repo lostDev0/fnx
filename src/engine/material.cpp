@@ -42,22 +42,22 @@ namespace fnx
                 else if ("Ka" == cmd)
                 {
                     str >> r >> g >> b;
-                    mat->add_vec3f(UNIFORM_MATERIAL_KA, reactphysics3d::Vector3{ r,g,b });
+                    mat->add_vector3(UNIFORM_MATERIAL_KA, fnx::vector3{ r,g,b });
                 }
                 else if ("Kd" == cmd)
                 {
                     str >> r >> g >> b;
-                    mat->add_vec3f(UNIFORM_MATERIAL_KD, reactphysics3d::Vector3{ r,g,b });
+                    mat->add_vector3(UNIFORM_MATERIAL_KD, fnx::vector3{ r,g,b });
                 }
                 else if ("Ks" == cmd)
                 {
                     str >> r >> g >> b;
-                    mat->add_vec3f(UNIFORM_MATERIAL_KS, reactphysics3d::Vector3{ r,g,b });
+                    mat->add_vector3(UNIFORM_MATERIAL_KS, fnx::vector3{ r,g,b });
                 }
                 else if ("Ke" == cmd)
                 {
                     str >> r >> g >> b;
-                    mat->add_vec3f(UNIFORM_MATERIAL_KE, reactphysics3d::Vector3{ r,g,b });
+                    mat->add_vector3(UNIFORM_MATERIAL_KE, fnx::vector3{ r,g,b });
                 }
                 else if ("illum" == cmd)
                 {

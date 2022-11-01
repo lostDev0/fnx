@@ -72,7 +72,7 @@ namespace fnx
 		return ((a_char.height * 2.f) / window_height) * font_scale;
 	}
 
-	reactphysics3d::Vector2 font::calculate_string_size(const reactphysics3d::Vector2& size_limits, const std::string& text, float font_height_in_pixels, 
+	fnx::vector2 font::calculate_string_size(const fnx::vector2& size_limits, const std::string& text, float font_height_in_pixels, 
 		float window_width, float window_height, std::vector<std::pair<float, std::string>>& lines)
 	{
 		auto& a_char = _character_info[0x41];   // A
@@ -83,7 +83,7 @@ namespace fnx
 		float width_of_small_char = static_cast<float>(dot_char.xadvance) * width_to_opengl * font_scale;	/// opengl width of the . character
 
 		// lines = width,string
-		reactphysics3d::Vector2 ret{ 0.f,0.f };
+		fnx::vector2 ret{ 0.f,0.f };
 		auto word_start_index = 0u;
 		auto current_line_whole_words_start = 0u;		// start of the current line
 		auto current_line_whole_words_end = 0u;		// end of the current line
@@ -208,9 +208,9 @@ namespace fnx
 		return ret;
 	}
 
-	reactphysics3d::Vector2 font::calculate_texture_model_info(fnx::alignment align, const reactphysics3d::Vector2& size_limits, float font_height_in_pixels, 
+	fnx::vector2 font::calculate_texture_model_info(fnx::alignment align, const fnx::vector2& size_limits, float font_height_in_pixels, 
 		const std::string& text, std::vector<float>& model_coords, std::vector<float>& text_coords, 
-		float window_width, float window_height, reactphysics3d::Vector2& cursor_in_opengl_coords, std::vector<std::pair<float, std::string>>& line_map)
+		float window_width, float window_height, fnx::vector2& cursor_in_opengl_coords, std::vector<std::pair<float, std::string>>& line_map)
 	{
 		assert(window_width > 0);
 		assert(window_height > 0);
@@ -221,7 +221,7 @@ namespace fnx
 		auto& a_char = _character_info[0x41];   // A
 		auto& dot_char = _character_info[0x2E];   // .
 		float font_scale = font_height_in_pixels / static_cast<float>(a_char.height);
-		reactphysics3d::Vector2 texture_dim(static_cast<float>(_texture->width()), static_cast<float>(_texture->height()));
+		fnx::vector2 texture_dim(static_cast<float>(_texture->width()), static_cast<float>(_texture->height()));
 
 		auto lines = 0u;
 		auto line_height_in_pixels = font_height_in_pixels;
@@ -299,18 +299,18 @@ namespace fnx
 				*/
 				if (c.width > 0)
 				{
-					reactphysics3d::Vector2 char_in_opengl_coords(static_cast<float>(c.width)* width_to_opengl,
+					fnx::vector2 char_in_opengl_coords(static_cast<float>(c.width)* width_to_opengl,
 						static_cast<float>(c.height)* height_to_opengl);
-					reactphysics3d::Vector2 offset_in_opengl_coords(static_cast<float>(c.xoffset)* width_to_opengl,
+					fnx::vector2 offset_in_opengl_coords(static_cast<float>(c.xoffset)* width_to_opengl,
 						static_cast<float>(c.yoffset)* height_to_opengl);
 
 					// upscale coordinates to the provided font size
 					char_in_opengl_coords *= font_scale;
 					offset_in_opengl_coords *= font_scale;
 
-					reactphysics3d::Vector2 texture_coords(calc_ratio(0.f, texture_dim.x, static_cast<float>(c.x)),
+					fnx::vector2 texture_coords(calc_ratio(0.f, texture_dim.x, static_cast<float>(c.x)),
 						calc_ratio(0.f, texture_dim.y, static_cast<float>(c.y)));
-					reactphysics3d::Vector2 char_text_dim(calc_ratio(0.f, texture_dim.x, static_cast<float>(c.width)),
+					fnx::vector2 char_text_dim(calc_ratio(0.f, texture_dim.x, static_cast<float>(c.width)),
 						calc_ratio(0.f, texture_dim.y, static_cast<float>(c.height)));
 					float a_x, a_y, b_x, b_y, c_x, c_y, d_x, d_y; // char location within texture
 					float m_a_x, m_a_y, m_b_x, m_b_y, m_c_x, m_c_y, m_d_x, m_d_y, m_z;    // char location on screen

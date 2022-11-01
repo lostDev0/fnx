@@ -99,13 +99,13 @@ namespace fnx
 		static void get_cursor_position(double& pos_x, double& pos_y);
 
 		/// @brief Returns the position opengl coordinates.
-		reactphysics3d::Vector2 screen_to_opengl(double screen_x, double screen_y);
+		fnx::vector2 screen_to_opengl(double screen_x, double screen_y);
 
 		/// @brief Returns the position in screen coordinates where 0,0 is the top left corner of the screen.
-		reactphysics3d::Vector2 opengl_to_screen(double gl_x, double gl_y);
+		fnx::vector2 opengl_to_screen(double gl_x, double gl_y);
 
 		/// @brief Returns the position in screen coordinates where 0,0 is the bottom left corner of the screen.
-		reactphysics3d::Vector2 opengl_to_cartesian(double gl_x, double gl_y);
+		fnx::vector2 opengl_to_cartesian(double gl_x, double gl_y);
 
 		void set_icon(const char* image_path, const char* small_image_path);
 

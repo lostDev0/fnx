@@ -4,7 +4,8 @@ namespace fnx
 {
 	namespace colors
 	{
-		using rgb = reactphysics3d::Vector3;
+		using rgb = fnx::vector3;
+		using rgba = fnx::vector4;
 		static rgb black{ 0.f,0.f,0.f };
 		static rgb white{ 1.f,1.f,1.f };
 		static rgb red{ 1.f,0.f,0.f };

@@ -32,9 +32,9 @@ namespace fnx
         void apply_uniform(const char* uniform_name, int x, int y) const;
         void apply_uniform(const char* uniform_name, int x, int y, int z) const;
         void apply_uniform(const char* uniform_name, int x, int y, int z, int w) const;
-        void apply_uniform(const char* uniform_name, const reactphysics3d::Vector2& val) const;
-        void apply_uniform(const char* uniform_name, const reactphysics3d::Vector3& val) const;
-        void apply_uniform(const char* uniform_name, const reactphysics3d::Quaternion& val) const;
+        void apply_uniform(const char* uniform_name, const fnx::vector2& val) const;
+        void apply_uniform(const char* uniform_name, const fnx::vector3& val) const;
+        void apply_uniform(const char* uniform_name, const fnx::vector4& val) const;
         void apply_uniform(const char* uniform_name, const fnx::matrix4x4& val) const;
 
         static std::string create_array_name(const char* uniform_name, unsigned int index);
@@ -49,9 +49,9 @@ namespace fnx
         void apply_uniform(const char* uniform_name, unsigned int index, int x, int y) const;
         void apply_uniform(const char* uniform_name, unsigned int index, int x, int y, int z) const;
         void apply_uniform(const char* uniform_name, unsigned int index, int x, int y, int z, int w) const;
-        void apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector2& val) const;
-        void apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector3& val) const;
-        void apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Quaternion& val) const;
+        void apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector2& val) const;
+        void apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector3& val) const;
+        void apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector4& val) const;
         void apply_uniform(const char* uniform_name, unsigned int index, const fnx::matrix4x4& val) const;
 
         /* structs */
@@ -62,9 +62,9 @@ namespace fnx
         void apply_uniform(const char* uniform_name, const char* member_name, int x, int y) const;
         void apply_uniform(const char* uniform_name, const char* member_name, int x, int y, int z) const;
         void apply_uniform(const char* uniform_name, const char* member_name, int x, int y, int z, int w) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector2& val) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector3& val) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Quaternion& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector2& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector3& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector4& val) const;
         void apply_uniform(const char* uniform_name, const char* member_name, const fnx::matrix4x4& val) const;
 
         void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, int val) const;
@@ -74,9 +74,9 @@ namespace fnx
         void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, int x, int y) const;
         void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, int x, int y, int z) const;
         void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, int x, int y, int z, int w) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Vector2& val) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Vector3& val) const;
-        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Quaternion& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector2& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector3& val) const;
+        void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector4& val) const;
         void apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::matrix4x4& val) const;
 
         /* set_uniform sets the uniform with error checking */
@@ -84,18 +84,18 @@ namespace fnx
         void set_uniform(const char* uniform_name, unsigned int val) const;
         void set_uniform(const char* uniform_name, float val) const;
         void set_uniform(const char* uniform_name, double val) const;
-        void set_uniform(const char* uniform_name, const reactphysics3d::Vector2& val) const;
-        void set_uniform(const char* uniform_name, const reactphysics3d::Vector3& val) const;
-        void set_uniform(const char* uniform_name, const reactphysics3d::Quaternion& val) const;
+        void set_uniform(const char* uniform_name, const fnx::vector2& val) const;
+        void set_uniform(const char* uniform_name, const fnx::vector3& val) const;
+        void set_uniform(const char* uniform_name, const fnx::vector4& val) const;
         void set_uniform(const char* uniform_name, const fnx::matrix4x4& val) const;
         void set_uniform(const char* uniform_name, unsigned int index, int value) const;
         void set_uniform(const char* uniform_name, unsigned int index, float value) const;
         void set_uniform(const char* uniform_name, unsigned int index, int x, int y) const;
         void set_uniform(const char* uniform_name, unsigned int index, int x, int y, int z) const;
         void set_uniform(const char* uniform_name, unsigned int index, int x, int y, int z, int w) const;
-        void set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector2& value) const;
-        void set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector3& value) const;
-        void set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Quaternion& value) const;
+        void set_uniform(const char* uniform_name, unsigned int index, const fnx::vector2& value) const;
+        void set_uniform(const char* uniform_name, unsigned int index, const fnx::vector3& value) const;
+        void set_uniform(const char* uniform_name, unsigned int index, const fnx::vector4& value) const;
         void set_uniform(const char* uniform_name, const char* member_name, int val) const;
         void set_uniform(const char* uniform_name, const char* member_name, unsigned int val) const;
         void set_uniform(const char* uniform_name, const char* member_name, float val) const;
@@ -103,17 +103,17 @@ namespace fnx
         void set_uniform(const char* uniform_name, const char* member_name, int x, int y) const;
         void set_uniform(const char* uniform_name, const char* member_name, int x, int y, int z) const;
         void set_uniform(const char* uniform_name, const char* member_name, int x, int y, int z, int w) const;
-        void set_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector2& val) const;
-        void set_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector3& val) const;
-        void set_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Quaternion& val) const;
+        void set_uniform(const char* uniform_name, const char* member_name, const fnx::vector2& val) const;
+        void set_uniform(const char* uniform_name, const char* member_name, const fnx::vector3& val) const;
+        void set_uniform(const char* uniform_name, const char* member_name, const fnx::vector4& val) const;
         void set_uniform(const char* uniform_name, const char* member_name, const fnx::matrix4x4& val) const;
         void set_uniform(const char* uniform_name, const char* member, unsigned int index, int value) const;
         void set_uniform(const char* uniform_name, const char* member, unsigned int index, float value) const;
         void set_uniform(const char* uniform_name, const char* member, unsigned int index, int x, int y) const;
         void set_uniform(const char* uniform_name, const char* member, unsigned int index, int x, int y, int z) const;
-        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const reactphysics3d::Vector2& value) const;
-        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const reactphysics3d::Vector3& value) const;
-        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const reactphysics3d::Quaternion& value) const;
+        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const fnx::vector2& value) const;
+        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const fnx::vector3& value) const;
+        void set_uniform(const char* uniform_name, const char* member, unsigned int index, const fnx::vector4& value) const;
 
     private:
         shader_impl* _impl{ nullptr };

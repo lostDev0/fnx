@@ -515,7 +515,7 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_perspective(const angle & fov_y, reactph
     return set_frustum(-width, width, -height, height, front, back);
 }
 
-RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate(const fnx::matrix4x4 & input, const reactphysics3d::Vector3 & position)
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate(const fnx::matrix4x4 & input, const fnx::vector3 & position)
 {
     auto ret = input;
     auto x = position.x;
@@ -536,7 +536,7 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate(const fnx::matrix4x4& input, r
     return ret;
 }
 
-RP3D_FORCE_INLINE fnx::matrix4x4 matrix_rotate(const fnx::matrix4x4 & input, const angle & angle, const reactphysics3d::Vector3 & position)
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_rotate(const fnx::matrix4x4 & input, const angle & angle, const fnx::vector3 & position)
 {
     fnx::matrix4x4 ret(input);
     auto c = static_cast<reactphysics3d::decimal>(cos(angle.get_as_radian()));
@@ -586,7 +586,7 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_scale(const fnx::matrix4x4& input,
     return ret;
 }
 
-RP3D_FORCE_INLINE fnx::matrix4x4 matrix_scale(const fnx::matrix4x4 & input, const reactphysics3d::Vector3 & scale)
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_scale(const fnx::matrix4x4 & input, const fnx::vector3 & scale)
 {
     return matrix_scale(input, scale.x, scale.y, scale.z);
 }
@@ -630,9 +630,9 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_inverse(const fnx::matrix4x4 & input)
 }
 
 /// @brief Equivalent to gluLookAt()
-RP3D_FORCE_INLINE fnx::matrix4x4 matrix_look_at(const reactphysics3d::Vector3 & eye, 
-                                                const reactphysics3d::Vector3 & target, 
-                                                const reactphysics3d::Vector3 & up_direction)
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_look_at(const fnx::vector3 & eye, 
+                                                const fnx::vector3 & target, 
+                                                const fnx::vector3 & up_direction)
 {
     // compute the forward vector from target to eye
     auto forward = eye - target;
@@ -641,7 +641,7 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_look_at(const reactphysics3d::Vector3 & 
     auto left = up_direction.cross(forward); // cross product
     left.normalize();
     // recompute the orthonormal up vector
-    reactphysics3d::Vector3 up = forward.cross(left); // cross product
+    fnx::vector3 up = forward.cross(left); // cross product
     // init 4x4 matrix
     fnx::matrix4x4 matrix;
     // set rotation part, inverse rotation matrix: M^-1 = M^T for Euclidean transform
@@ -697,12 +697,12 @@ RP3D_FORCE_INLINE auto matrix_transpose(const matrix4x4 & mat)
 }
 
 /// Create a matrix with the given transformation parameters.
-RP3D_FORCE_INLINE auto calculate_transform_matrix(const reactphysics3d::Vector3& position, const reactphysics3d::Vector3& rotation_in_degrees, const reactphysics3d::Vector3& scale)
+RP3D_FORCE_INLINE auto calculate_transform_matrix(const fnx::vector3& position, const fnx::vector3& rotation_in_degrees, const fnx::vector3& scale)
 {
     auto ident = matrix4x4::identity();
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.x)), reactphysics3d::Vector3{1,0,0});
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.y)), reactphysics3d::Vector3{0,1,0});
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.z)), reactphysics3d::Vector3{0,0,1});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.x)), fnx::vector3{1,0,0});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.y)), fnx::vector3{0,1,0});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rotation_in_degrees.z)), fnx::vector3{0,0,1});
     ident = fnx::matrix_scale(ident, scale);
     ident = fnx::matrix_translate(ident, position);
     return ident;
@@ -720,9 +720,9 @@ RP3D_FORCE_INLINE auto calculate_transform_matrix(reactphysics3d::decimal x,
                                                   reactphysics3d::decimal sz)
 {
     auto ident = matrix4x4::identity();
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rx)), reactphysics3d::Vector3{1,0,0});
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(ry)), reactphysics3d::Vector3{0,1,0});
-    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rz)), reactphysics3d::Vector3{0,0,1});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rx)), fnx::vector3{1,0,0});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(ry)), fnx::vector3{0,1,0});
+    ident = fnx::matrix_rotate(ident, fnx::angle(fnx::Degree(rz)), fnx::vector3{0,0,1});
     ident = fnx::matrix_scale(ident, sx, sy, sz);
     ident = fnx::matrix_translate(ident, x, y, z);
     return ident;

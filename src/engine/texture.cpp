@@ -198,8 +198,8 @@ namespace fnx
         _impl = nullptr;
     }
 
-    reactphysics3d::Vector2 texture::calc_atlas_offset(unsigned char index) {
-        reactphysics3d::Vector2 ret{ 0.f,0.f };
+    fnx::vector2 texture::calc_atlas_offset(unsigned char index) {
+        fnx::vector2 ret{ 0.f,0.f };
         if (index < _rows * _cols)
         {
             int col = index % _cols;

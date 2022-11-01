@@ -172,7 +172,7 @@ namespace fnx
         return "mouse exited window";
     }
 
-    struct mouse_move_evt { double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+    struct mouse_move_evt { fnx::decimal _x{ 0.0 }; fnx::decimal _y{ 0.0 }; fnx::decimal _gl_x{ 0.0 }; fnx::decimal _gl_y{ 0.0 }; };
 
     template<>
     inline std::string to_string(const mouse_move_evt& evt)
@@ -180,7 +180,7 @@ namespace fnx
         return fnx::format_string("mouse moved %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
     }
 
-    struct mouse_press_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+    struct mouse_press_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; fnx::decimal _x{ 0.0 }; fnx::decimal _y{ 0.0 }; fnx::decimal _gl_x{ 0.0 }; fnx::decimal _gl_y{ 0.0 }; };
 
     template<>
     inline std::string to_string(const mouse_press_evt& evt)
@@ -188,7 +188,7 @@ namespace fnx
         return fnx::format_string("mouse pressed %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
     }
 
-    struct mouse_release_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; double _x{ 0.0 }; double _y{ 0.0 }; double _gl_x{ 0.0 }; double _gl_y{ 0.0 }; };
+    struct mouse_release_evt { FNX_BUTTON _btn{ FNX_BUTTON::BT_UNKNOWN }; fnx::decimal _x{ 0.0 }; fnx::decimal _y{ 0.0 }; fnx::decimal _gl_x{ 0.0 }; fnx::decimal _gl_y{ 0.0 }; };
 
     template<>
     inline std::string to_string(const mouse_release_evt& evt)
@@ -196,7 +196,7 @@ namespace fnx
         return fnx::format_string("mouse released %f %f %f %f", evt._x, evt._y, evt._gl_x, evt._gl_y);
     }
 
-    struct mouse_scroll_evt { double _x{ 0.0 }; double _y{ 0.0 }; };
+    struct mouse_scroll_evt { fnx::decimal _x{ 0.0 }; fnx::decimal _y{ 0.0 }; };
 
     template<>
     inline std::string to_string(const mouse_scroll_evt& evt)
@@ -213,12 +213,52 @@ namespace fnx
     }
 
     struct widget_inactive_evt { unsigned int _src; };
+
+    template<>
+    inline std::string to_string(const widget_inactive_evt& evt)
+    {
+        return fnx::format_string("widget inactive %d", evt._src);
+    }
+
     struct widget_press_evt { unsigned int _src; };
+
+    template<>
+    inline std::string to_string(const widget_press_evt& evt)
+    {
+        return fnx::format_string("widget pressed %d", evt._src);
+    }
+
     struct widget_release_evt { unsigned int _src; };
+
+    template<>
+    inline std::string to_string(const widget_release_evt& evt)
+    {
+        return fnx::format_string("widget released %d", evt._src);
+    }
+
     struct widget_progress_evt { unsigned int _src; float _progress{ 0.f }; };
 
+    template<>
+    inline std::string to_string(const widget_progress_evt& evt)
+    {
+        return fnx::format_string("widget progress changed %d %f", evt._src, evt._progress);
+    }
+
     struct text_submit_evt { std::string _text; std::string _src; };
+
+    template<>
+    inline std::string to_string(const text_submit_evt& evt)
+    {
+        return fnx::format_string("text submitted %d %s", evt._src, evt._text);
+    }
+
     struct text_update_evt { std::string _text; std::string _src; };
+
+    template<>
+    inline std::string to_string(const text_update_evt& evt)
+    {
+        return fnx::format_string("text updated %d %s", evt._src, evt._text);
+    }
 
     /// @brief Update all systems.
     struct update_evt
@@ -229,7 +269,7 @@ namespace fnx
             end
         };
         action_t _action{ action_t::start };
-        double _delta_in_seconds{ 0.0 };
+        fnx::decimal _delta_in_seconds{ 0.0 };
     };
 
     /// @brief Render game objects.
@@ -241,7 +281,7 @@ namespace fnx
             end
         };
         action_t _action{ action_t::start };
-        double _fps_now{ 0.0 };  double _fps_avg{ 0.0 }; double _fps_min{ 0.0 }; double _fps_max{ 0.0 }; 
+        fnx::decimal _fps_now{ 0.0 };  fnx::decimal _fps_avg{ 0.0 }; fnx::decimal _fps_min{ 0.0 }; fnx::decimal _fps_max{ 0.0 }; 
     };
 
     /// @brief Render game objects with shadows and produce the shadow map.
@@ -283,12 +323,12 @@ namespace fnx
     /// @brief Dawn event from the day/night system.
     struct dawn_evt
     {
-        double _sun_rise_duration{ 0.0 };
+        fnx::decimal _sun_rise_duration{ 0.0 };
     };
 
     /// @brief Dusk event from the day/night system.
     struct dusk_evt
     {
-        double _sun_set_duration{ 0.0 };
+        fnx::decimal _sun_set_duration{ 0.0 };
     };
 }

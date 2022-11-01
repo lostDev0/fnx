@@ -120,7 +120,7 @@ namespace fnx
 
     void opengl_cursor_pos_callback(GLFWwindow* window, double x, double y)
     {
-        auto pos = reactphysics3d::Vector2();
+        auto pos = fnx::vector2();
         {
             auto [win,_] = singleton<fnx::window>::acquire();
             pos = win.screen_to_opengl(x,y);
@@ -160,7 +160,7 @@ namespace fnx
     {
         double x, y;
         glfwGetCursorPos(window, &x, &y);
-        auto pos = reactphysics3d::Vector2();
+        auto pos = fnx::vector2();
         {
             auto [win,_] = singleton<fnx::window>::acquire();
             pos = win.screen_to_opengl(x,y);
@@ -591,25 +591,25 @@ namespace fnx
         pos_y = _cursor_position_y;
     }
 
-    reactphysics3d::Vector2 window::screen_to_opengl(double screen_x, double screen_y)
+    fnx::vector2 window::screen_to_opengl(double screen_x, double screen_y)
     {
         auto x = (2.0 * screen_x / static_cast<double>(width())) - 1.0;
         auto y = -(2.0 * screen_y / static_cast<double>(height())) + 1.0;
-        return reactphysics3d::Vector2(x, y);
+        return fnx::vector2(x, y);
     }
 
-    reactphysics3d::Vector2 window::opengl_to_screen(double gl_x, double gl_y)
+    fnx::vector2 window::opengl_to_screen(double gl_x, double gl_y)
     {
         auto x = ((gl_x + 1.0) / 2.0) * static_cast<double>(width());
         auto y = ((gl_y - 1.0) / -2.0) * static_cast<double>(height());
-        return reactphysics3d::Vector2(x, y);
+        return fnx::vector2(x, y);
     }
 
-    reactphysics3d::Vector2 window::opengl_to_cartesian(double gl_x, double gl_y)
+    fnx::vector2 window::opengl_to_cartesian(double gl_x, double gl_y)
     {
         auto x = ((gl_x + 1.0) / 2.0) * static_cast<double>(width());
         auto y = ((-gl_y - 1.0) / -2.0) * static_cast<double>(height());
-        return reactphysics3d::Vector2(x, y);
+        return fnx::vector2(x, y);
     }
 
     void window::set_icon(const char* image, const char* thumbnail)

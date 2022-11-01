@@ -338,7 +338,7 @@ namespace fnx
         glProgramUniform4i(_impl->_program, _impl->get_uniform_location(uniform_name), x, y, z, w);
     }
 
-    void shader::apply_uniform(const char* uniform_name, const reactphysics3d::Vector2& val) const
+    void shader::apply_uniform(const char* uniform_name, const fnx::vector2& val) const
     {
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
             glProgramUniform2d(_impl->_program, _impl->get_uniform_location(uniform_name), val.x, val.y);
@@ -347,7 +347,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, const reactphysics3d::Vector3& val) const
+    void shader::apply_uniform(const char* uniform_name, const fnx::vector3& val) const
     {
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
             glProgramUniform3d(_impl->_program, _impl->get_uniform_location(uniform_name), val.x, val.y, val.z);
@@ -356,7 +356,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, const reactphysics3d::Quaternion& val) const
+    void shader::apply_uniform(const char* uniform_name, const fnx::vector4& val) const
     {
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
             glProgramUniform4d(_impl->_program, _impl->get_uniform_location(uniform_name), val.x, val.y, val.z, val.w);
@@ -417,7 +417,7 @@ namespace fnx
         glProgramUniform4i(_impl->_program, _impl->get_uniform_location(buffer), x, y, z, w);
     }
 
-    void shader::apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector2& val) const
+    void shader::apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector2& val) const
     {
         auto buffer = create_array_name(uniform_name, index).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -427,7 +427,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector3& val) const
+    void shader::apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector3& val) const
     {
         auto buffer = create_array_name(uniform_name, index).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -437,7 +437,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Quaternion& val) const
+    void shader::apply_uniform(const char* uniform_name, unsigned int index, const fnx::vector4& val) const
     {
         auto buffer = create_array_name(uniform_name, index).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -500,7 +500,7 @@ namespace fnx
         glProgramUniform4i(_impl->_program, _impl->get_uniform_location(buffer), x, y, z, w);
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector2& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector2& val) const
     {
         auto buffer = create_struct_name(uniform_name, member_name).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -510,7 +510,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Vector3& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector3& val) const
     {
         auto buffer = create_struct_name(uniform_name, member_name).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -520,7 +520,7 @@ namespace fnx
         #endif
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, const reactphysics3d::Quaternion& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, const fnx::vector4& val) const
     {
         auto buffer = create_struct_name(uniform_name, member_name).c_str();
         #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
@@ -584,19 +584,19 @@ namespace fnx
         glProgramUniform4i(_impl->_program, _impl->get_uniform_location(buffer), x, y, z, w);
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Vector2& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector2& val) const
     {
         auto buffer = create_struct_array_name(uniform_name, member_name, index).c_str();
         glProgramUniform2f(_impl->_program, _impl->get_uniform_location(buffer), val.x, val.y);
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Vector3& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector3& val) const
     {
         auto buffer = create_struct_array_name(uniform_name, member_name, index).c_str();
         glProgramUniform3f(_impl->_program, _impl->get_uniform_location(buffer), val.x, val.y, val.z);
     }
 
-    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const reactphysics3d::Quaternion& val) const
+    void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::vector4& val) const
     {
         auto buffer = create_struct_array_name(uniform_name, member_name, index).c_str();
         glProgramUniform4f(_impl->_program, _impl->get_uniform_location(buffer), val.x, val.y, val.z, val.w);
@@ -605,8 +605,11 @@ namespace fnx
     void shader::apply_uniform(const char* uniform_name, const char* member_name, unsigned int index, const fnx::matrix4x4& val) const
     {
         auto buffer = create_struct_array_name(uniform_name, member_name, index).c_str();
-        // TODO handle compilation of double vs float
-        glProgramUniformMatrix4fv(_impl->_program, _impl->get_uniform_location(buffer), 1, GL_FALSE, *val.getAll());
+        #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
+            glProgramUniformMatrix4dv(_impl->_program, _impl->get_uniform_location(buffer), 1, GL_FALSE, *val.getAll());
+        #else                                   // If we are compiling for single precision
+            glProgramUniformMatrix4fv(_impl->_program, _impl->get_uniform_location(buffer), 1, GL_FALSE, *val.getAll());
+        #endif
     }
 
     /* setters with error checking */
@@ -631,7 +634,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const reactphysics3d::Vector2& val) const
+    void shader::set_uniform(const char* uniform_name, const fnx::vector2& val) const
     {
         auto loc = glGetUniformLocation(_impl->_program, uniform_name);
 
@@ -641,7 +644,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const reactphysics3d::Vector3& val) const
+    void shader::set_uniform(const char* uniform_name, const fnx::vector3& val) const
     {
         auto loc = glGetUniformLocation(_impl->_program, uniform_name);
 
@@ -651,7 +654,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const reactphysics3d::Quaternion& val) const
+    void shader::set_uniform(const char* uniform_name, const fnx::vector4& val) const
     {
         auto loc = glGetUniformLocation(_impl->_program, uniform_name);
 
@@ -711,7 +714,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector2& value) const
+    void shader::set_uniform(const char* uniform_name, unsigned int index, const fnx::vector2& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d]", uniform_name, index);
@@ -735,7 +738,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Vector3& value) const
+    void shader::set_uniform(const char* uniform_name, unsigned int index, const fnx::vector3& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d]", uniform_name, index);
@@ -759,7 +762,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, unsigned int index, const reactphysics3d::Quaternion& value) const
+    void shader::set_uniform(const char* uniform_name, unsigned int index, const fnx::vector4& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d]", uniform_name, index);
@@ -784,7 +787,7 @@ namespace fnx
     }
 
     void shader::set_uniform(const char* uniform_name, const char* member, unsigned int index,
-        const reactphysics3d::Vector2& value) const
+        const fnx::vector2& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d].%s", uniform_name, index, member);
@@ -797,7 +800,7 @@ namespace fnx
     }
 
     void shader::set_uniform(const char* uniform_name, const char* member, unsigned int index,
-        const reactphysics3d::Vector3& value) const
+        const fnx::vector3& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d].%s", uniform_name, index, member);
@@ -810,7 +813,7 @@ namespace fnx
     }
 
     void shader::set_uniform(const char* uniform_name, const char* member, unsigned int index,
-        const reactphysics3d::Quaternion& value) const
+        const fnx::vector4& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s[%d].%s", uniform_name, index, member);
@@ -954,7 +957,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const char* member, const reactphysics3d::Vector2& value) const
+    void shader::set_uniform(const char* uniform_name, const char* member, const fnx::vector2& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s.%s", uniform_name, member);
@@ -966,7 +969,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const char* member, const reactphysics3d::Vector3& value) const
+    void shader::set_uniform(const char* uniform_name, const char* member, const fnx::vector3& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s.%s", uniform_name, member);
@@ -978,7 +981,7 @@ namespace fnx
         }
     }
 
-    void shader::set_uniform(const char* uniform_name, const char* member, const reactphysics3d::Quaternion& value) const
+    void shader::set_uniform(const char* uniform_name, const char* member, const fnx::vector4& value) const
     {
         char buffer[MAX_UNIFORM_LENGTH] = { 0 };
         snprintf(buffer, MAX_UNIFORM_LENGTH - 1, "%s.%s", uniform_name, member);
@@ -998,8 +1001,11 @@ namespace fnx
 
         if (loc != -1)
         {
-            // TODO handle compilation diffs between decimal float and double
+        #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
+            glProgramUniformMatrix4dv(_impl->_program, loc, 1, GL_FALSE, *value.getAll());
+        #else                                   // If we are compiling for single precision
             glProgramUniformMatrix4fv(_impl->_program, loc, 1, GL_FALSE, *value.getAll());
+        #endif
         }
     }
 

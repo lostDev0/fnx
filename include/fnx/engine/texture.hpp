@@ -66,7 +66,7 @@ namespace fnx
 		inline auto atlas_num_cols() const { return _cols; }
 
 		/// @brief Return the position within the texture map for the given index.
-		reactphysics3d::Vector2 calc_atlas_offset(unsigned char index);
+		fnx::vector2 calc_atlas_offset(unsigned char index);
 
 		/// @brief Return the pixel at an row,col coordinate.
 		void pixel(unsigned int row, unsigned int col, char& r, char& g, char& b, char& a) const;

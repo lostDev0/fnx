@@ -11,11 +11,11 @@ namespace fnx
 			point
 		};
 
-		reactphysics3d::Vector3 position;
-		reactphysics3d::Vector3 direction;
-		reactphysics3d::Vector3 ambient;
-		reactphysics3d::Vector3 diffuse;
-		reactphysics3d::Vector3 specular; 
+		fnx::vector3 position;
+		fnx::vector3 direction;
+		fnx::vector3 ambient;
+		fnx::vector3 diffuse;
+		fnx::vector3 specular; 
 		float cut_off;
 		float outer_cut_off;
 		float constant;
@@ -26,7 +26,7 @@ namespace fnx
 		light() = default;
 
 		/// @brief Create a directional light.
-		light(const reactphysics3d::Vector3& direction, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular)
+		light(const fnx::vector3& direction, const fnx::vector3& ambient, const fnx::vector3& diffuse, const fnx::vector3& specular)
 		{
 			this->type = fnx::light::type::directional;
 			this->direction = direction;
@@ -36,7 +36,7 @@ namespace fnx
 		};
 
 		/// @brief Create a point light.
-		light(const reactphysics3d::Vector3& position, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular, float constant, float linear, float quadratic)
+		light(const fnx::vector3& position, const fnx::vector3& ambient, const fnx::vector3& diffuse, const fnx::vector3& specular, float constant, float linear, float quadratic)
 		{
 			this->type = fnx::light::type::point;
 			this->position = position;
@@ -49,7 +49,7 @@ namespace fnx
 		};
 
 		/// @brief Create a spot light.
-		light(const reactphysics3d::Vector3& position, const reactphysics3d::Vector3& direction, const reactphysics3d::Vector3& ambient, const reactphysics3d::Vector3& diffuse, const reactphysics3d::Vector3& specular, float constant, float linear, float quadratic, float cutoff, float outer_cutoff)
+		light(const fnx::vector3& position, const fnx::vector3& direction, const fnx::vector3& ambient, const fnx::vector3& diffuse, const fnx::vector3& specular, float constant, float linear, float quadratic, float cutoff, float outer_cutoff)
 		{
 			this->type = fnx::light::type::spot;
 			this->direction = direction;

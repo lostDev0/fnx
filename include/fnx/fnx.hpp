@@ -18,14 +18,17 @@
 #include <reactphysics3d/reactphysics3d.h>
 #pragma warning(default: 4244)
 
+namespace fnx
+{
+    using vector2 = reactphysics3d::Vector2;
+    using vector3 = reactphysics3d::Vector3;
+    using decimal = reactphysics3d::decimal;
+}
+
 #include "utils/template_utils.hpp"
 #include "utils/macro_utils.hpp"
 #include "utils/string_utils.hpp"
 #include "utils/react_utils.hpp"
-
-#include "math/math.hpp"
-#include "math/angle.hpp"
-#include "math/matrix4x4.hpp"
 
 #include "containers/dequeue.hpp"
 #include "containers/ring_buffer.hpp"
@@ -41,6 +44,13 @@
 #include "core/tween.hpp"
 #include "core/singleton.hpp"
 #include "core/async.hpp"
+#include "core/alignment.hpp"
+
+#include "math/math.hpp"
+#include "math/angle.hpp"
+#include "math/matrix4x4.hpp"
+#include "math/vector4.hpp"
+#include "math/rect.hpp"
 
 #include "engine/colors.hpp"
 #include "engine/constants.hpp"
@@ -55,7 +65,6 @@
 #include "engine/sound.hpp"
 #include "engine/audio_manager.hpp"
 #include "engine/display_mode.hpp"
-#include "engine/alignment.hpp"
 #include "engine/window.hpp"
 #include "engine/shader.hpp"
 #include "engine/raw_image.hpp"
@@ -72,5 +81,34 @@
 #include "engine/perspective_camera.hpp"
 #include "engine/layer.hpp"
 #include "engine/layer_stack.hpp"
+#include "engine/renderer.hpp"
+#include "engine/property.hpp"
+#include "engine/property_manager.hpp"
+
+#include "ui/interface.hpp"
+#include "ui/transition.hpp"
+#include "ui/animator.hpp"
+#include "ui/constraints.hpp"
+#include "ui/timer.hpp"
+#include "ui/widget.hpp"
+#include "ui/widget_config.hpp"
+#include "ui/block.hpp"
+#include "ui/image.hpp"
+#include "ui/label.hpp"
+#include "ui/text_box.hpp"
+#include "ui/text_input.hpp"
+#include "ui/radio.hpp"
+#include "ui/progress_bar.hpp"
+#include "ui/slider.hpp"
+#include "ui/sizer.hpp"
+#include "ui/button.hpp"
+#include "ui/line.hpp"
+#include "ui/collapsable.hpp"
+#include "ui/clipping_container.hpp"
+#include "ui/panel.hpp"
+#include "ui/mutually_exclusive_container.hpp"
+#include "ui/scroll_view.hpp"
+#include "ui/tabbed_notebook.hpp"
+#include "ui/widget_layer.hpp"
 
 #include "engine/world.hpp"

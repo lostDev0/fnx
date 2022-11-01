@@ -27,7 +27,7 @@ namespace fnx
 			// find out point between the two scales
 			std::size_t total = _vectors.size();
 			t = fnx::minimum(t, 1.0);
-			T ret_val{0};	// if used as a scale tween, you need to add 1 scale
+			T ret_val;	// if used as a scale tween, you need to add 1 scale
 
 			if (total > 1)
 			{

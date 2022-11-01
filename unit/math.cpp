@@ -101,12 +101,12 @@ TEST(matrix4x4, multiplication)
 TEST(matrix4x4, multiplication_quaternion)
 {
     fnx::matrix4x4 a(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
-    reactphysics3d::Quaternion b(1,5,9,13);
+    fnx::vector4 b(1,5,9,13);
     fnx::matrix4x4 e(0,-2,-4,-9,
                      2,0,-9,18,
                      4,9,0,22,
                      9,18,22,0);
-    auto c = a * b;
+    //auto c = a * b;
     // TODO
     //EXPECT_EQ(e,c);
 }

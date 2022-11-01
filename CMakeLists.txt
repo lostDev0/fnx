@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 # project name
 project(fnx)
 
+# TODO headless build
+
 set(HEADER_FILES include/fnx/fnx.hpp)
 
 if(NOT CMAKE_BUILD_TYPE)

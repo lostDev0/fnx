@@ -15,40 +15,40 @@ namespace fnx
 		void add_texture(const std::string& name, fnx::texture_handle value) { _textures[name] = value; }
 		void add_float(const std::string& name, float value) { _floats[name] = value; }
 		void add_int(const std::string& name, int value) { _ints[name] = value; }
-		void add_vec2f(const std::string& name, const reactphysics3d::Vector2& value) { _vec2fs[name] = value; }
-		void add_vec3f(const std::string& name, const reactphysics3d::Vector3& value) { _vec3fs[name] = value; }
-		void add_vec4f(const std::string& name, const reactphysics3d::Quaternion& value) { _vec4fs[name] = value; }
+		void add_vector2(const std::string& name, const fnx::vector2& value) { _vector2s[name] = value; }
+		void add_vector3(const std::string& name, const fnx::vector3& value) { _vector3s[name] = value; }
+		void add_vector4(const std::string& name, const fnx::vector4& value) { _vector4s[name] = value; }
 		void add_matrix4x4(const std::string& name, const fnx::matrix4x4& value) { _matrix4x4s[name] = value; }
 
 		const auto& get_textures() const { return _textures; }
 		const auto& get_floats() const { return _floats; }
 		const auto& get_ints() const { return _ints; }
-		const auto& get_vec2fs() const { return _vec2fs; }
-		const auto& get_vec3fs() const { return _vec3fs; }
-		const auto& get_vec4fs() const { return _vec4fs; }
+		const auto& get_vector2s() const { return _vector2s; }
+		const auto& get_vector3s() const { return _vector3s; }
+		const auto& get_vector4s() const { return _vector4s; }
 		const auto& get_matrix4x4s() const { return _matrix4x4s; }
 
 		bool get(const std::string& name, fnx::texture_handle& out) { return get(name, _textures, out); }
 		bool get(const std::string& name, float& out) { return get(name, _floats, out); }
 		bool get(const std::string& name, int& out) { return get(name, _ints, out); }
-		bool get(const std::string& name, reactphysics3d::Vector2& out) { return get(name, _vec2fs, out); }
-		bool get(const std::string& name, reactphysics3d::Vector3& out) { return get(name, _vec3fs, out); }
-		bool get(const std::string& name, reactphysics3d::Quaternion& out) { return get(name, _vec4fs, out); }
+		bool get(const std::string& name, fnx::vector2& out) { return get(name, _vector2s, out); }
+		bool get(const std::string& name, fnx::vector3& out) { return get(name, _vector3s, out); }
+		bool get(const std::string& name, fnx::vector4& out) { return get(name, _vector4s, out); }
 		bool get(const std::string& name, fnx::matrix4x4& out) { return get(name, _matrix4x4s, out); }
 
-		void add_array_vec4fs(const std::string& name, const std::vector<reactphysics3d::Quaternion>& src) { _arr_vec4fs[name] = src; }
-		const auto& get_array_vec4fs() const { return _arr_vec4fs; }
+		void add_array_vector4s(const std::string& name, const std::vector<fnx::vector4>& src) { _arr_vector4s[name] = src; }
+		const auto& get_array_vector4s() const { return _arr_vector4s; }
 
 	private:
 		std::unordered_map<std::string, fnx::texture_handle> _textures;
 		std::unordered_map<std::string, float> _floats;
 		std::unordered_map<std::string, int> _ints;
-		std::unordered_map<std::string, reactphysics3d::Vector2> _vec2fs;
-		std::unordered_map<std::string, reactphysics3d::Vector3> _vec3fs;
-		std::unordered_map<std::string, reactphysics3d::Quaternion> _vec4fs;
+		std::unordered_map<std::string, fnx::vector2> _vector2s;
+		std::unordered_map<std::string, fnx::vector3> _vector3s;
+		std::unordered_map<std::string, fnx::vector4> _vector4s;
 		std::unordered_map<std::string, fnx::matrix4x4> _matrix4x4s;
 
-		std::unordered_map<std::string, std::vector<reactphysics3d::Quaternion>> _arr_vec4fs;
+		std::unordered_map<std::string, std::vector<fnx::vector4>> _arr_vector4s;
 
 		template<typename ReturnType, typename SourceType>
 		const bool get(const std::string& name, const SourceType& lookup, ReturnType& out)

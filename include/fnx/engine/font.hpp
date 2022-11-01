@@ -37,8 +37,8 @@ namespace fnx
 
 		/// @brief Calculates the model and texture coordinates for use by a shader.
 		/// @return Returns the dimensions of the string.
-		reactphysics3d::Vector2 calculate_texture_model_info(fnx::alignment align, const reactphysics3d::Vector2& size_limits, float font_size_in_pixels, const std::string& text, std::vector<float>& model_coords,
-			std::vector<float>& text_coords, float window_width, float window_height, reactphysics3d::Vector2& cursor, std::vector<std::pair<float, std::string>>& lines);
+		fnx::vector2 calculate_texture_model_info(fnx::alignment align, const fnx::vector2& size_limits, float font_size_in_pixels, const std::string& text, std::vector<float>& model_coords,
+			std::vector<float>& text_coords, float window_width, float window_height, fnx::vector2& cursor, std::vector<std::pair<float, std::string>>& lines);
 
 		float calculate_line_height(float font_size, float window_height);
 
@@ -52,7 +52,7 @@ namespace fnx
 		short _base;
 		std::unordered_map<char, CharInfo> _character_info;
 
-		reactphysics3d::Vector2 calculate_string_size(const reactphysics3d::Vector2& size_limits, const std::string& text, float font_height_in_pixels, 
+		fnx::vector2 calculate_string_size(const fnx::vector2& size_limits, const std::string& text, float font_height_in_pixels, 
 			float window_width, float window_height, std::vector<std::pair<float, std::string>>& lines);
 
 		void init(fnx::asset_manager<fnx::texture>& textures, const std::string& texture_file_path, const std::string& char_map_file_path);

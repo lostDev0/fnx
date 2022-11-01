@@ -80,7 +80,7 @@ namespace fnx
             }
         }
 
-        void add_data(const reactphysics3d::Vector3& in, std::vector<float>& out)
+        void add_data(const fnx::vector3& in, std::vector<float>& out)
         {
             out.emplace_back(in.x);
             out.emplace_back(in.y);
@@ -107,7 +107,7 @@ namespace fnx
         }
 
         void add_vertex_data(const std::vector<float>& all_vert_coords, const std::vector<float>& all_texture_coords, std::vector<float>& vertex_output,
-            int vertex_index, int texture_index, const reactphysics3d::Vector3& normal)
+            int vertex_index, int texture_index, const fnx::vector3& normal)
         {
             // add vertex xyz position data
             add_data_by_index(all_vert_coords, vertex_output, vertex_index, 3);
@@ -222,7 +222,7 @@ namespace fnx
                 auto h = face_vert_str[5] == "" ? INT_MIN : stol(face_vert_str[5]);
                 auto i = INT_MIN;
 
-                reactphysics3d::Vector3 p1, p2, p3, normal1;
+                fnx::vector3 p1, p2, p3, normal1;
                 bool indexed_normals{ true };
 
                 a = get_index_actual(a, static_cast<int>(all_verts.size()), 3, vertex_offset);
@@ -237,10 +237,9 @@ namespace fnx
                 f = get_index_actual(f, static_cast<int>(all_normals.size()), 3, normal_offset);
                 i = get_index_actual(i, static_cast<int>(all_normals.size()), 3, normal_offset);
 
-                // TODO update corners of the aabb
-                //model.get_mutable_aabb().update_min_max(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[g], all_verts[g + 1], all_verts[g + 2]);
 
                 if (b != INT_MIN && e != INT_MIN && h != INT_MIN)
                 {
@@ -254,11 +253,10 @@ namespace fnx
                 else
                 {
                     // calculate the normals from the vertices
-                    p1 = reactphysics3d::Vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                    p2 = reactphysics3d::Vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                    p3 = reactphysics3d::Vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                    // TODO
-                    //normal1 = p1.get_normal(p2, p3);
+                    p1 = fnx::vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                    p2 = fnx::vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                    p3 = fnx::vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                    normal1 = get_normal(p1, p2, p3);
                     model.set_normal_data_true();
                     indexed_normals = false;
                 }
@@ -303,7 +301,7 @@ namespace fnx
                 auto l = INT_MIN;
 
                 // calculate normals
-                reactphysics3d::Vector3 p1, p2, p3, p4, normal1, normal2;
+                fnx::vector3 p1, p2, p3, p4, normal1, normal2;
                 bool indexed_normals{ true };
 
                 a = get_index_actual(a, static_cast<int>(all_verts.size()), 3, vertex_offset);
@@ -321,11 +319,10 @@ namespace fnx
                 i = get_index_actual(i, static_cast<int>(all_normals.size()), 3, normal_offset);
                 l = get_index_actual(l, static_cast<int>(all_normals.size()), 3, normal_offset);
 
-                // TODO
-                //model.get_mutable_aabb().update_min_max(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[j], all_verts[j + 1], all_verts[j + 2]);
 
                 if (b != INT_MIN && e != INT_MIN && h != INT_MIN && k != INT_MIN)
                 {					
@@ -339,13 +336,12 @@ namespace fnx
                 else
                 {
                     // calculate the normals from the vertices
-                    p1 = reactphysics3d::Vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                    p2 = reactphysics3d::Vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                    p3 = reactphysics3d::Vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                    p4 = reactphysics3d::Vector3(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
-                    // TODO
-                    //normal1 = p1.get_normal(p2, p3);
-                    //normal2 = p1.get_normal(p3, p4);
+                    p1 = fnx::vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                    p2 = fnx::vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                    p3 = fnx::vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                    p4 = fnx::vector3(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
+                    normal1 = get_normal(p1, p2, p3);
+                    normal2 = get_normal(p1, p3, p4);
                     model.set_normal_data_true();
                     indexed_normals = false;
                 }
@@ -391,7 +387,7 @@ namespace fnx
                 auto i = face_vert_str[8] == "" ? INT_MIN : stol(face_vert_str[8]);
 
                 // calculate normals
-                reactphysics3d::Vector3 p1, p2, p3, normal1;
+                fnx::vector3 p1, p2, p3, normal1;
                 bool indexed_normals{ true };
 
                 a = get_index_actual(a, static_cast<int>(all_verts.size()), 3, vertex_offset);
@@ -406,10 +402,9 @@ namespace fnx
                 f = get_index_actual(f, static_cast<int>(all_normals.size()), 3, normal_offset);
                 i = get_index_actual(i, static_cast<int>(all_normals.size()), 3, normal_offset);
 
-                // TODO
-                //model.get_mutable_aabb().update_min_max(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[g], all_verts[g + 1], all_verts[g + 2]);
 
                 if (b != INT_MIN && e != INT_MIN && h != INT_MIN)
                 {
@@ -423,11 +418,10 @@ namespace fnx
                 else
                 {
                     // calculate the normals from the vertices
-                    p1 = reactphysics3d::Vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                    p2 = reactphysics3d::Vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                    p3 = reactphysics3d::Vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                    // TODO
-                    //normal1 = p1.get_normal(p2, p3);
+                    p1 = fnx::vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                    p2 = fnx::vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                    p3 = fnx::vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                    normal1 = get_normal(p1, p2, p3);
                     model.set_normal_data_true();
                     indexed_normals = false;
                 }
@@ -474,7 +468,7 @@ namespace fnx
                 auto l = face_vert_str[11] == "" ? INT_MIN : stol(face_vert_str[11]);
 
                 // calculate normals
-                reactphysics3d::Vector3 p1, p2, p3, p4, normal1, normal2;
+                fnx::vector3 p1, p2, p3, p4, normal1, normal2;
                 bool indexed_normals{ true };
 
                 a = get_index_actual(a, static_cast<int>(all_verts.size()), 3, vertex_offset);
@@ -492,11 +486,10 @@ namespace fnx
                 i = get_index_actual(i, static_cast<int>(all_normals.size()), 3, normal_offset);
                 l = get_index_actual(l, static_cast<int>(all_normals.size()), 3, normal_offset);
 
-                // TODO
-                //model.get_mutable_aabb().update_min_max(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                //model.get_mutable_aabb().update_min_max(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                update_min_max(model.get_mutable_aabb(), all_verts[j], all_verts[j + 1], all_verts[j + 2]);
 
                 if (b != INT_MIN && e != INT_MIN && h != INT_MIN && k != INT_MIN)
                 {
@@ -510,13 +503,12 @@ namespace fnx
                 else
                 {
                     // calculate the normals from the vertices
-                    p1 = reactphysics3d::Vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
-                    p2 = reactphysics3d::Vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
-                    p3 = reactphysics3d::Vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
-                    p4 = reactphysics3d::Vector3(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
-                    // TODO
-                    //normal1 = p1.get_normal(p2, p3);
-                    //normal2 = p1.get_normal(p3, p4);
+                    p1 = fnx::vector3(all_verts[a], all_verts[a + 1], all_verts[a + 2]);
+                    p2 = fnx::vector3(all_verts[d], all_verts[d + 1], all_verts[d + 2]);
+                    p3 = fnx::vector3(all_verts[g], all_verts[g + 1], all_verts[g + 2]);
+                    p4 = fnx::vector3(all_verts[j], all_verts[j + 1], all_verts[j + 2]);
+                    normal1 = get_normal(p1, p2, p3);
+                    normal2 = get_normal(p1, p3, p4);
                     model.set_normal_data_true();
                     indexed_normals = false;
                 }
@@ -696,19 +688,27 @@ namespace fnx
         return a;
     }
 
-    std::vector<float> create_vbo_data_for_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
+    std::vector<float> create_vbo_data_for_line(const fnx::vector3& start, 
+                                                const fnx::vector3& end, 
+                                                const fnx::vector3& start_color, 
+                                                reactphysics3d::decimal start_alpha, 
+                                                const fnx::vector3& end_color,
+                                                reactphysics3d::decimal end_alpha)
     {
-        // TODO
-        //const std::vector<float> data{
-        //    start.x, start.y, start.z, start_color.r(), start_color.g(), start_color.b(), start_color.a(),
-        //    end.x, end.y, end.z, end_color.r(), end_color.g(), end_color.b(), end_color.a() };
-        //return data;
-        return std::vector<float>{};
+        std::vector<float> data{
+            start.x, start.y, start.z, start_color.x, start_color.y, start_color.z, start_alpha,
+            end.x, end.y, end.z, end_color.x, end_color.y, end_color.z, end_alpha };
+        return data;
     }
 
-    fnx::raw_model_handle raw_model_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color)
+    fnx::raw_model_handle raw_model_line(const fnx::vector3& start, 
+                                         const fnx::vector3& end, 
+                                         const fnx::vector3& start_color, 
+                                         reactphysics3d::decimal start_alpha, 
+                                         const fnx::vector3& end_color, 
+                                         reactphysics3d::decimal end_alpha)
     {
-        auto a = fnx::make_shared_ref<fnx::raw_model>("line", create_vbo_data_for_line(start, end, start_color, end_color));
+        auto a = fnx::make_shared_ref<fnx::raw_model>("line", create_vbo_data_for_line(start, end, start_color, start_alpha, end_color, end_alpha));
         a->set_color_data_true();
         a->set_is_line_true();
         return a;

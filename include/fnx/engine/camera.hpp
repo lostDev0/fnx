@@ -9,7 +9,7 @@ namespace fnx
 		~camera();
 		camera(const camera& other) = default;
 
-		virtual void set_position(const reactphysics3d::Vector3& position)
+		virtual void set_position(const fnx::vector3& position)
 		{
 			_position = position;
 			update_view_matrix();
@@ -23,7 +23,7 @@ namespace fnx
 			update_view_matrix();
 		}
 
-		void look_at(const reactphysics3d::Vector3& target, const reactphysics3d::Vector3& up)
+		void look_at(const fnx::vector3& target, const fnx::vector3& up)
 		{
 			_target = target;
 			_front = _target - _position;
@@ -46,16 +46,16 @@ namespace fnx
 		virtual void pitch(const fnx::angle& angle) {};
 		virtual void rotate_y(const fnx::angle& angle) {};
 		virtual void rotate_z(const fnx::angle& angle) {};
-		virtual void move(const reactphysics3d::Vector3& delta)
+		virtual void move(const fnx::vector3& delta)
 		{ 
 			set_position(_position + delta);
 		};
-		virtual void set_up(const reactphysics3d::Vector3& up)
+		virtual void set_up(const fnx::vector3& up)
 		{ 
 			_up = up;
 			update_view_matrix();
 		}
-		virtual void set_front(const reactphysics3d::Vector3& front)
+		virtual void set_front(const fnx::vector3& front)
 		{ 
 			_front = front;
 			update_view_matrix();
@@ -71,11 +71,11 @@ namespace fnx
 		fnx::matrix4x4 _projection_matrix{};
 		fnx::matrix4x4 _view_matrix{};
 		fnx::matrix4x4 _view_projection_matrix{};
-		reactphysics3d::Vector3 _position{ 0.f,0.f,0.f };
+		fnx::vector3 _position{ 0.f,0.f,0.f };
 		fnx::angle _rotation{ fnx::Degree(0.f) };
-		reactphysics3d::Vector3 _up{ 0.f,1.f,0.f };
-		reactphysics3d::Vector3 _front{ 0.f,0.f,-1.f };
-		reactphysics3d::Vector3 _target{ 0.f,0.f,0.f };
+		fnx::vector3 _up{ 0.f,1.f,0.f };
+		fnx::vector3 _front{ 0.f,0.f,-1.f };
+		fnx::vector3 _target{ 0.f,0.f,0.f };
 		float _aspect_ratio{ 1.f };
 	};
 

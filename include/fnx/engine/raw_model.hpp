@@ -92,7 +92,17 @@ namespace fnx
     using raw_model_handle = fnx::asset_handle<fnx::raw_model>;
 
     extern std::shared_ptr<fnx::raw_model> raw_model_quad();
-    extern std::vector<float> create_vbo_data_for_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color);
-    extern raw_model_handle raw_model_line(const reactphysics3d::Vector3& start, const reactphysics3d::Vector3& end, const reactphysics3d::Quaternion& start_color, const reactphysics3d::Quaternion& end_color);
+    extern std::vector<float> create_vbo_data_for_line(const fnx::vector3& start, 
+                                                const fnx::vector3& end, 
+                                                const fnx::vector3& start_color, 
+                                                reactphysics3d::decimal start_alpha, 
+                                                const fnx::vector3& end_color,
+                                                reactphysics3d::decimal end_alpha);
+    extern raw_model_handle raw_model_line(const fnx::vector3& start, 
+                                                const fnx::vector3& end, 
+                                                const fnx::vector3& start_color, 
+                                                reactphysics3d::decimal start_alpha, 
+                                                const fnx::vector3& end_color,
+                                                reactphysics3d::decimal end_alpha);
     extern void parse_model_file(const std::string& file_path);
 }
