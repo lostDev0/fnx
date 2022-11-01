@@ -3,10 +3,28 @@
 ### Dependencies
 Perform a git clone on ReachPhysics3d and build the library for static inclusion.
 ### Creating an Application
+Basic application startup is fairly simple.
 ```cpp
-// initialize the fnx engine
+// initialize the fnx engine with the highest available resolution
 fnx::world::init();
+// executing the main loop
+fnx::world::run();
+// loop has finished, perform cleanup
+fnx::world::terminate();
 ```
+Complex applicaiton startup allows for setting up windows with specific configuration files.
+```cpp
+fnx::world::init();
+// Get any preconfigured display mode settings and attempt to restore the window using those values
+auto display = fnx::world::load_display_configuration("display.cfg");
+fnx::world::create_window("My Window Title", display);
+// Whatever the engine was able to create, save those for the next time
+auto [win, _1] = fnx::singleton<fnx::window>::acquire();
+fnx::world::save_display_configuration("display.cfg", win.get_display_mode());
+fnx::world::run();
+fnx::world::terminate();
+```
+Notice the use of the singleton class. This is how to obtain global objects with the fnx engine.
 ## LICENSE
 Copyright (c) <year> <copyright holders>
 

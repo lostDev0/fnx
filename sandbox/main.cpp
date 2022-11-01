@@ -12,19 +12,19 @@ using namespace fnx;
 using namespace std::chrono;
 
 // Main function
-int main(int argc, char** argv) {
-
-    // First you need to create the PhysicsCommon object. This is a factory module
-    // that you can use to create physics world and other objects. It is also responsible
-    // for logging and memory management
-    PhysicsWorld* world{nullptr};
-    DefaultLogger* logger{nullptr};
-
-    fnx::world::init("fnx engine sandbox");
+int main(int argc, char** argv)
+{
+    fnx::world::init();
+    // Get any preconfigured display mode settings and attempt to restore the window using those values
+    auto display = fnx::world::load_display_configuration("display.cfg");
+    fnx::world::create_window("fnx engine sandbox", display);
+    // Whatever the engine was able to create, save those for the next time
+    auto [win, _1] = fnx::singleton<fnx::window>::acquire();
+    fnx::world::save_display_configuration("display.cfg", win.get_display_mode());
 
     {
         // Allow the event manager to execute once to ensure the systems initialize properly such as audio manager
-        auto [events,_3] = singleton<event_manager>::acquire();
+        auto [events,_] = singleton<event_manager>::acquire();
         events.update(0.f);
     }
 
@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
     }
 
     fnx::world::run();
+    fnx::world::terminate();
 
     return 0;
 }

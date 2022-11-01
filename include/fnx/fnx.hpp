@@ -45,6 +45,8 @@ namespace fnx
 #include "core/singleton.hpp"
 #include "core/async.hpp"
 #include "core/alignment.hpp"
+#include "core/byte_stream.hpp"
+#include "core/serialize.hpp"
 
 #include "math/math.hpp"
 #include "math/angle.hpp"

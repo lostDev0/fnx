@@ -1,7 +1,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <ostream>
 
 using namespace reactphysics3d;
+using namespace std;
+
 namespace fnx
 {
     namespace world
@@ -11,8 +14,10 @@ namespace fnx
             std::atomic<bool> _engine_running{true};
         }
 
-        void init(const char* window_title)
+        void init()
         {
+            serialize::register_members<fnx::display_mode>();
+
             { 
                 auto [physicsCommon,_] = singleton<PhysicsCommon>::acquire();
                 // Create a physics world
@@ -22,6 +27,10 @@ namespace fnx
                 logger->addStreamDestination(std::cout, logLevel, DefaultLogger::Format::Text);
                 physicsCommon.setLogger(logger);
             }
+        }
+
+        void create_window(const char* window_title, fnx::display_mode& display)
+        {
             { 
                 auto [events,_] = singleton<event_manager>::acquire();
                 events.subscribe<fnx::window_close_evt>(fnx::bind(&fnx::world::stop));
@@ -35,31 +44,35 @@ namespace fnx
                     throw "unable to initialize window framework";
                 }
                 auto [win,_] = singleton<window>::acquire();
-                const auto& modes = window::get_supported_display_modes();
+                auto mode = display;
 
-                /*
-                TODO : add configured display mode
-                auto current_mode = window::get_resolution();
-                bool found_current{ false };
-                for (const auto& supported_mode : modes)
+                // verify the gpu supports this display mode
+                if (!window::is_display_supported(mode))
                 {
-                    if(supported_mode == current_mode)
+                    FNX_WARN("Display mode provided is not supported, loading maximum supported resolution");
+                    // configuration is not supported, try a currently set level
+                    const auto& modes = window::get_supported_display_modes();
+                    auto current_mode = window::get_resolution();
+                    bool found_current{ false };
+                    for (const auto& supported_mode : modes)
                     {
-                        mode = current_mode;
-                        found_current = true;
-                        break;
+                        if(supported_mode == current_mode)
+                        {
+                            mode = current_mode;
+                            found_current = true;
+                            break;
+                        }
+                    }
+                    if (!found_current && modes.size() > 0)
+                    {
+                        mode = modes[0];
                     }
                 }
-                if (!found_current && modes.size() > 0)
-                {
-                    mode = modes[0];
-                }
-                */
-
-                win.set_display_mode(modes[0]);
+                
+                win.set_display_mode(mode);
                 if (win.create(window_title))
                 {
-                    win.set_fullscreen(modes[0]._fullscreen);
+                    win.set_fullscreen(mode._fullscreen);
                 }
             }
         }
@@ -94,6 +107,30 @@ namespace fnx
         void terminate()
         {
             glfwTerminate();
+        }
+
+        void save_display_configuration(const std::string& file_path, fnx::display_mode& mode)
+        {
+            ofstream out(file_path);
+            if(!out.good())
+            {
+                FNX_ERROR(fnx::format_string("Unable to save display configuration file %s", file_path));
+                return;
+            }
+		    out << serialize::serialize(mode).dump(3);
+        }
+
+        fnx::display_mode load_display_configuration(const std::string& file_path)
+        {
+            fnx::display_mode mode;
+            ifstream in(file_path);
+            if(!in.good())
+            {
+                FNX_ERROR(fnx::format_string("Unable to load display configuration file %s", file_path));
+                return mode;
+            }
+            serialize::deserialize(nlohmann::json::parse(in), mode);
+            return mode;
         }
     }
 }
