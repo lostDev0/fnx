@@ -2,6 +2,11 @@
 ## Getting Started
 ### Dependencies
 Perform a git clone on ReachPhysics3d and build the library for static inclusion.
+Install yaml-cppd
+```
+$ cd ./dependencies
+$ git submodule add https://github.com/jbeder/yaml-cpp.git ./yaml-cpp/
+```
 ### Creating an Application
 Basic application startup is fairly simple.
 ```cpp

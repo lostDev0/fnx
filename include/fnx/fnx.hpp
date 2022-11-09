@@ -16,6 +16,7 @@
 // Dependencies
 #pragma warning(disable: 4244)
 #include <reactphysics3d/reactphysics3d.h>
+#include <yaml-cpp/yaml.h>
 #pragma warning(default: 4244)
 
 namespace fnx
@@ -46,7 +47,7 @@ namespace fnx
 #include "core/async.hpp"
 #include "core/alignment.hpp"
 #include "core/byte_stream.hpp"
-#include "core/serialize.hpp"
+#include "core/serializer.hpp"
 
 #include "math/math.hpp"
 #include "math/angle.hpp"

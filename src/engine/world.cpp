@@ -16,8 +16,6 @@ namespace fnx
 
         void init()
         {
-            serialize::register_members<fnx::display_mode>();
-
             { 
                 auto [physicsCommon,_] = singleton<PhysicsCommon>::acquire();
                 // Create a physics world
@@ -117,7 +115,9 @@ namespace fnx
                 FNX_ERROR(fnx::format_string("Unable to save display configuration file %s", file_path));
                 return;
             }
-		    out << serialize::serialize(mode).dump(3);
+            std::string str;
+            serializer<display_mode>::to_yaml(str, mode);
+            out << str;
         }
 
         fnx::display_mode load_display_configuration(const std::string& file_path)
@@ -129,7 +129,9 @@ namespace fnx
                 FNX_ERROR(fnx::format_string("Unable to load display configuration file %s", file_path));
                 return mode;
             }
-            serialize::deserialize(nlohmann::json::parse(in), mode);
+            ostringstream sout;
+            copy(istreambuf_iterator<char>(in), istreambuf_iterator<char>(), ostreambuf_iterator<char>(sout));
+		    serializer<display_mode>::from_yaml(sout.str(), mode);
             return mode;
         }
     }

@@ -12,4 +12,4 @@ file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/*.cpp)
 
 # compiles the files defined by SOURCES to generante the executable defined
 add_executable(${PROJECT_NAME} ${SOURCES})
-#target_link_libraries(${PROJECT_NAME} fnx)
+target_link_libraries(${PROJECT_NAME} fnx)
