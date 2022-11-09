@@ -1,12 +1,7 @@
 # FNX C++ Game Engine
 ## Getting Started
 ### Dependencies
-Perform a git clone on ReachPhysics3d and build the library for static inclusion.
-Install yaml-cppd
-```
-$ cd ./dependencies
-$ git submodule add https://github.com/jbeder/yaml-cpp.git ./yaml-cpp/
-```
+Dependencies are managed through submodules.
 ### Creating an Application
 Basic application startup is fairly simple.
 ```cpp
@@ -21,11 +16,14 @@ Complex applicaiton startup allows for setting up windows with specific configur
 ```cpp
 fnx::world::init();
 // Get any preconfigured display mode settings and attempt to restore the window using those values
-auto display = fnx::world::load_display_configuration("display.cfg");
+auto display = fnx::world::load_display_configuration("display.yaml");
 fnx::world::create_window("My Window Title", display);
 // Whatever the engine was able to create, save those for the next time
 auto [win, _1] = fnx::singleton<fnx::window>::acquire();
-fnx::world::save_display_configuration("display.cfg", win.get_display_mode());
+fnx::world::save_display_configuration("display.yaml", win.get_display_mode());
+fnx::ui::init();
+// Define the user interface
+fnx::ui::parse_yaml_file("user_interface.yaml");
 fnx::world::run();
 fnx::world::terminate();
 ```
