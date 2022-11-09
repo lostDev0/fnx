@@ -104,6 +104,8 @@ namespace fnx
 
         void terminate()
         {
+            auto [audio, _] = singleton<audio_manager>::acquire();
+            audio.stop();
             glfwTerminate();
         }
 
@@ -131,7 +133,7 @@ namespace fnx
             }
             ostringstream sout;
             copy(istreambuf_iterator<char>(in), istreambuf_iterator<char>(), ostreambuf_iterator<char>(sout));
-		    serializer<display_mode>::from_yaml(sout.str(), mode);
+            serializer<display_mode>::from_yaml(sout.str(), mode);
             return mode;
         }
     }

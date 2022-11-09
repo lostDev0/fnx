@@ -2,6 +2,7 @@
 
 namespace fnx
 {
+    class layer_stack;
     /// @brief Layers act as the main interaction with game objects and widgets.
     /// @note these should be used like an interface
     class layer
@@ -9,6 +10,7 @@ namespace fnx
     protected:
 
         friend serializer<fnx::layer>;
+        friend serializer<fnx::layer_stack>;
         bool _visible{ false };
         std::string _name;  /// identifier of this layer
     public:

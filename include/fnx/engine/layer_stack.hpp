@@ -59,4 +59,30 @@ namespace fnx
 		/// @brief Call render on all layers in order.
 		bool render_layers(const fnx::render_user_interface_evt& evt);
 	};
+
+	template<>
+    struct serializer<fnx::layer_stack>
+    {
+        static inline void to_yaml(std::string& content, const fnx::layer_stack& obj)
+        {
+            YAML::Emitter out;
+			// TODO
+            content = out.c_str();
+        }
+
+        static inline void from_yaml(const std::string& content, fnx::layer_stack& obj)
+        {
+            YAML::Node data = YAML::Load(content);
+			if(data["layer_stack"])
+			{
+				for(auto layer : data["layer_stack"])
+				{
+					auto handle = make_shared_ref<fnx::layer>();
+					handle->_name = layer["name"].as<std::string>();
+					handle->_visible = layer["visible"].as<bool>();
+					obj.add_layer(handle);
+				}
+			}
+        }
+    };
 }

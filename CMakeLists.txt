@@ -22,7 +22,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 if(MSVC)
-#    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi")
 else()
     set(CMAKE_CXX_FLAGS "-w")
     set(CMAKE_CXX_FLAGS_DEBUG "-G" "_DEBUG")
@@ -38,7 +38,7 @@ else()
 endif()
 
 # include dependencies and project files
-set(INC_DEPENDENCIES /usr/include/sdl dependencies/include dependencies/yaml-cpp/include)
+set(INC_DEPENDENCIES /usr/include/sdl dependencies/include)
 include_directories(include ${INC_DEPENDENCIES})
 
 # puts all .cpp files inside src to the SOURCES variable
@@ -51,16 +51,18 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILES})
 # linking dependencies
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     link_directories(dependencies/lib/linux)
-    set(LIB_DEPENDENCIES libreachphysics3d.a opengl32.lib glew32s.lib glfw3.lib)
+    set(LIB_DEPENDENCIES opengl32.lib glew32s.lib glfw3.lib)
 else()
     link_directories(dependencies/lib/win32)
-    set(LIB_DEPENDENCIES reactphysics3d.lib opengl32.lib glew32s.lib glfw3.lib)
+    set(LIB_DEPENDENCIES opengl32.lib glew32s.lib glfw3.lib)
 endif()
 
 target_link_libraries(${PROJECT_NAME} yaml-cpp)
+target_link_libraries(${PROJECT_NAME} reactphysics3d)
 target_link_libraries(${PROJECT_NAME} ${LIB_DEPENDENCIES})
 
 add_subdirectory(dependencies/yaml-cpp)
+add_subdirectory(dependencies/reactphysics3d)
 add_subdirectory(unit)
 add_subdirectory(helloworld)
 add_subdirectory(sandbox)

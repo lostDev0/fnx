@@ -1,0 +1,5 @@
+layer_stack:
+- name: layer_0
+  visible: true
+- name: layer_1
+  visible: true

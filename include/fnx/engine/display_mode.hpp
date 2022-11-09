@@ -48,12 +48,18 @@ namespace fnx
         static inline void from_yaml(const std::string& content, fnx::display_mode& obj)
         {
             YAML::Node data = YAML::Load(content);
-            obj.set_width(data["width"].as<decltype(obj._width)>());
-            obj.set_height(data["height"].as<decltype(obj._height)>());
-            obj.set_refresh_rate(data["refresh_rate"].as<decltype(obj._refresh_rate)>());
-            obj.set_depth(data["depth"].as<decltype(obj._depth)>());
-            obj.set_fullscreen(data["fullscreen"].as<decltype(obj._fullscreen)>());
-            obj.set_anti_alias(static_cast<display_mode::anti_alias>(data["anti_alias"].as<int>()));
+            if(data["width"])
+                obj.set_width(data["width"].as<decltype(obj._width)>());
+            if(data["height"])
+                obj.set_height(data["height"].as<decltype(obj._height)>());
+            if(data["refresh_rate"])
+                obj.set_refresh_rate(data["refresh_rate"].as<decltype(obj._refresh_rate)>());
+            if(data["depth"])
+                obj.set_depth(data["depth"].as<decltype(obj._depth)>());
+            if(data["fullscreen"])
+                obj.set_fullscreen(data["fullscreen"].as<decltype(obj._fullscreen)>());
+            if(data["anti_aias"])
+                obj.set_anti_alias(static_cast<display_mode::anti_alias>(data["anti_alias"].as<int>()));
         }
     };
 }

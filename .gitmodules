@@ -1,3 +1,6 @@
 [submodule "dependencies/yaml-cpp"]
 	path = dependencies/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "dependencies/reactphysics3d"]
+	path = dependencies/reactphysics3d
+	url = https://github.com/DanielChappuis/reactphysics3d.git
