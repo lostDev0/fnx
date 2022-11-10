@@ -21,9 +21,9 @@
 
 namespace fnx
 {
-    using vector2 = reactphysics3d::Vector2;
-    using vector3 = reactphysics3d::Vector3;
-    using decimal = reactphysics3d::decimal;
+using vector2 = reactphysics3d::Vector2;
+using vector3 = reactphysics3d::Vector3;
+using decimal = reactphysics3d::decimal;
 }
 
 #include "utils/template_utils.hpp"

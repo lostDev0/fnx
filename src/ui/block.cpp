@@ -1,8 +1,8 @@
 namespace fnx
 {
-    namespace detail
-    {
-        const std::string ui_block_shader{ R"(#vertex shader
+namespace detail
+{
+const std::string ui_block_shader{ R"(#vertex shader
 #version 330 core
 layout(location = 0) in vec3 vert;
 

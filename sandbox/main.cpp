@@ -36,6 +36,7 @@ int main(int argc, char** argv)
     // 4. Add logs
     // 5. Add fire emitter
     // 6. Add user interface
+    // 7. Add user interface behavior scripting
     {
         auto [audio,_] = singleton<audio_manager>::acquire();
         audio.set_master_volume(1.f,1.f);

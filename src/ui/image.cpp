@@ -1,8 +1,8 @@
 namespace fnx
 {
-    namespace detail
-    {
-        const std::string ui_image_shader{R"(#vertex shader
+namespace detail
+{
+const std::string ui_image_shader{R"(#vertex shader
 #version 330 core
 layout(location = 0) in vec3 vert;
 layout(location = 1) in vec2 vertTextCoord;
@@ -275,115 +275,124 @@ void main()
 
     OutColor = vec4(color.rgb, a);
 })"};
-    }
+}
 
-    void image::render(camera_handle camera, matrix4x4 parent_matrix)
+void image::render( camera_handle camera, matrix4x4 parent_matrix )
+{
+    auto [win, _0] = singleton<fnx::window>::acquire();
+    auto [renderer, _1] = singleton<fnx::renderer>::acquire();
     {
-        auto [win, _0] = singleton<fnx::window>::acquire();
-        auto [renderer, _1] = singleton<fnx::renderer>::acquire();
-        {
-            auto [manager, _2] = singleton<asset_manager<shader>>::acquire();
-            _shader = manager.get("fnx_ui_image.shader", fnx::detail::ui_image_shader);
-        }
-        {
-            auto [manager, _2] = singleton<asset_manager<model>>::acquire();
-            _model = manager.get("quad", *raw_model_quad());
-        }
-        {
-            auto [manager, _2] = singleton<asset_manager<material>>::acquire();
-            _material = manager.get("ui_block.material");
-        }
-        {
-            auto [manager, _2] = singleton<asset_manager<texture>>::acquire();
-            _texture = manager.get(_resource, _resource_config);
-        }
-        auto [properties, _3] = singleton<property_manager>::acquire();
-        
-        fnx::material material("ui_block");
-
-        /*
-            Design & Implementation
-
-            Model
-                left = -1 opengl x axis
-                top = 1 opengl y axis
-                width = 2.0
-                height = 2.0
-
-            Widget Constraint
-                left = x pixel
-                top = y pixel
-                width = n pixels
-                height = m pixels
-
-            Scale
-                coord_width/screen_width = x/2.0
-                coord_height/screen_height = x/2.0
-        */ 
-
-        auto state = _state;
-        if (state == state::normal && _checked)
-        {
-            state = state::checked;
-        }
-        auto color = _colors[static_cast<size_t>(state)];
-        auto outline_color = _outline_colors[static_cast<size_t>(state)];
-        auto parent_alpha = has_parent() ? _parent->get_alpha() : 1.f;
-        auto alpha = parent_alpha * _current_alpha;
-        color.w *= alpha;
-        outline_color.w *= alpha;
-
-        auto scale = vector3{ get_width() / 2.f, get_height() / 2.f,1.f } * properties.get_property<float>(PROPERTY_UI_SCALE);
-
-        // widget coordinates and size are measured in world units from -1 to 1
-        // scaling will only need to be done when the UI as a whole is scaled, otherwise the viewport will take care of scaling
-        // 1. start with scaling the model to our size
-        auto mat_scale = matrix_scale(matrix4x4::identity(), scale);
-        // 2. translate to the parent aligned matrix
-        auto mat_translate = fnx::matrix_translate(parent_matrix, get_x(), get_y(), 0.f);
-        // 3. get the center coordinate for the glsl shader to do it's calculations per pixel
-        auto center = vector3{ get_width() / 2.f, get_height() / 2.f, 0.f };
-        mat_translate = fnx::matrix_translate(mat_translate, center);
-        // 4. translate to the center of the widget
-        auto mat = mat_scale * matrix_translate(mat_translate, get_width() / 2.f, get_height() / 2.f, 0.f);
-
-        material.add_vector4(UNIFORM_COLOR, color);
-        material.add_vector2(UNIFORM_SIZE, fnx::vector2{ get_width(), get_height() });
-        material.add_vector2(UNIFORM_CENTER, fnx::vector2{ center.x, center.y });
-        material.add_vector4(UNIFORM_RADIUS, _corner_radius);
-        material.add_vector2(UNIFORM_RESOLUTION, fnx::vector2{ static_cast<decimal>(win.width()), static_cast<decimal>(win.height()) });
-        material.add_int(UNIFORM_OVERLAY, _overlay);
-        material.add_texture(UNIFORM_TEXTURE_SAMPLER, _texture);
-        material.add_float(UNIFORM_OUTLINE_THICKNESS, _outline_thickness[static_cast<size_t>(state)]);
-        material.add_vector4(UNIFORM_OUTLINE_COLOR, outline_color);
-        material.add_int(UNIFORM_NUM_GRADIENT, static_cast<int>(_gradients[static_cast<size_t>(state)].get_values().size()));
-        material.add_int(UNIFORM_GRADIENT_DIRECTION, static_cast<int>(_gradient_directions[static_cast<size_t>(state)]));
-
-        material.add_vector2(UNIFORM_TEXTURE_ATLAS_MAP, fnx::vector2(_texture->atlas_num_cols(), _texture->atlas_num_rows()));
-        int idx = _atlas_index[static_cast<int>(get_state())];
-        if (is_checked()) idx = _atlas_index[static_cast<int>(state::checked)];
-        if (!_auto_pick_atlas_index)
-        {
-            idx = _manual_atlas_index;
-        }
-        auto atlas_coord = _texture->calc_atlas_offset(idx);
-        // convert the pixel coordinate to uv coordinate
-        atlas_coord.x = (atlas_coord.x / _texture->width());
-        atlas_coord.y = (atlas_coord.y / _texture->height());
-        material.add_vector2(UNIFORM_TEXTURE_ATLAS_OFFSET, atlas_coord);
-
-        auto gradient = _gradients[static_cast<size_t>(state)].get_values();
-        std::for_each(std::begin(gradient), std::end(gradient), [this](fnx::vector4& v) { v.w *= _current_alpha; });	// apply any transition alpha to the gradient
-        material.add_array_vector4s(UNIFORM_GRADIENT, gradient);
-
-        // could use a transform component but this isn't an entity in the traditional sense
-        // could set this on the material, but this way we avoid any reuse issues with the material and other buttons
-        _shader->apply_uniform(UNIFORM_MODEL_VIEW_MATRIX, mat);
-
-        renderer.apply_shader(_shader);
-        renderer.apply_model(_model);
-        renderer.apply_material(material);
-        renderer.apply_camera(camera);
-        renderer.draw_current();
+        auto [manager, _2] = singleton<asset_manager<shader>>::acquire();
+        _shader = manager.get( "fnx_ui_image.shader", fnx::detail::ui_image_shader );
     }
+    {
+        auto [manager, _2] = singleton<asset_manager<model>>::acquire();
+        _model = manager.get( "quad", *raw_model_quad() );
+    }
+    {
+        auto [manager, _2] = singleton<asset_manager<material>>::acquire();
+        _material = manager.get( "ui_block.material" );
+    }
+    {
+        auto [manager, _2] = singleton<asset_manager<texture>>::acquire();
+        _texture = manager.get( _resource, _resource_config );
+    }
+    auto [properties, _3] = singleton<property_manager>::acquire();
+
+    fnx::material material( "ui_block" );
+
+    /*
+        Design & Implementation
+
+        Model
+            left = -1 opengl x axis
+            top = 1 opengl y axis
+            width = 2.0
+            height = 2.0
+
+        Widget Constraint
+            left = x pixel
+            top = y pixel
+            width = n pixels
+            height = m pixels
+
+        Scale
+            coord_width/screen_width = x/2.0
+            coord_height/screen_height = x/2.0
+    */
+
+    auto state = _state;
+    if ( state == state::normal && _checked )
+    {
+        state = state::checked;
+    }
+    auto color = _colors[static_cast<size_t>( state )];
+    auto outline_color = _outline_colors[static_cast<size_t>( state )];
+    auto parent_alpha = has_parent() ? _parent->get_alpha() : 1.f;
+    auto alpha = parent_alpha * _current_alpha;
+    color.w *= alpha;
+    outline_color.w *= alpha;
+
+    auto scale = vector3{ get_width() / 2.f, get_height() / 2.f, 1.f } * properties.get_property<float>
+                 ( PROPERTY_UI_SCALE );
+
+    // widget coordinates and size are measured in world units from -1 to 1
+    // scaling will only need to be done when the UI as a whole is scaled, otherwise the viewport will take care of scaling
+    // 1. start with scaling the model to our size
+    auto mat_scale = matrix_scale( matrix4x4::identity(), scale );
+    // 2. translate to the parent aligned matrix
+    auto mat_translate = fnx::matrix_translate( parent_matrix, get_x(), get_y(), 0.f );
+    // 3. get the center coordinate for the glsl shader to do it's calculations per pixel
+    auto center = vector3{ get_width() / 2.f, get_height() / 2.f, 0.f };
+    mat_translate = fnx::matrix_translate( mat_translate, center );
+    // 4. translate to the center of the widget
+    auto mat = mat_scale * matrix_translate( mat_translate, get_width() / 2.f, get_height() / 2.f, 0.f );
+
+    material.add_vector4( UNIFORM_COLOR, color );
+    material.add_vector2( UNIFORM_SIZE, fnx::vector2{ get_width(), get_height() } );
+    material.add_vector2( UNIFORM_CENTER, fnx::vector2{ center.x, center.y } );
+    material.add_vector4( UNIFORM_RADIUS, _corner_radius );
+    material.add_vector2( UNIFORM_RESOLUTION, fnx::vector2{ static_cast<decimal>( win.width() ), static_cast<decimal>( win.height() ) } );
+    material.add_int( UNIFORM_OVERLAY, _overlay );
+    material.add_texture( UNIFORM_TEXTURE_SAMPLER, _texture );
+    material.add_float( UNIFORM_OUTLINE_THICKNESS, _outline_thickness[static_cast<size_t>( state )] );
+    material.add_vector4( UNIFORM_OUTLINE_COLOR, outline_color );
+    material.add_int( UNIFORM_NUM_GRADIENT,
+                      static_cast<int>( _gradients[static_cast<size_t>( state )].get_values().size() ) );
+    material.add_int( UNIFORM_GRADIENT_DIRECTION, static_cast<int>( _gradient_directions[static_cast<size_t>( state )] ) );
+
+    material.add_vector2( UNIFORM_TEXTURE_ATLAS_MAP, fnx::vector2( _texture->atlas_num_cols(),
+                          _texture->atlas_num_rows() ) );
+    int idx = _atlas_index[static_cast<int>( get_state() )];
+    if ( is_checked() )
+    {
+        idx = _atlas_index[static_cast<int>( state::checked )];
+    }
+    if ( !_auto_pick_atlas_index )
+    {
+        idx = _manual_atlas_index;
+    }
+    auto atlas_coord = _texture->calc_atlas_offset( idx );
+    // convert the pixel coordinate to uv coordinate
+    atlas_coord.x = ( atlas_coord.x / _texture->width() );
+    atlas_coord.y = ( atlas_coord.y / _texture->height() );
+    material.add_vector2( UNIFORM_TEXTURE_ATLAS_OFFSET, atlas_coord );
+
+    auto gradient = _gradients[static_cast<size_t>( state )].get_values();
+    std::for_each( std::begin( gradient ), std::end( gradient ), [this]( fnx::vector4 & v )
+    {
+        v.w *= _current_alpha;
+    } );	// apply any transition alpha to the gradient
+    material.add_array_vector4s( UNIFORM_GRADIENT, gradient );
+
+    // could use a transform component but this isn't an entity in the traditional sense
+    // could set this on the material, but this way we avoid any reuse issues with the material and other buttons
+    _shader->apply_uniform( UNIFORM_MODEL_VIEW_MATRIX, mat );
+
+    renderer.apply_shader( _shader );
+    renderer.apply_model( _model );
+    renderer.apply_material( material );
+    renderer.apply_camera( camera );
+    renderer.draw_current();
+}
 }
