@@ -1,5 +1,8 @@
 layer_stack:
 - name: layer_0
   visible: true
-- name: layer_1
-  visible: true
+  dirty_cache: true
+  active_widget: 1
+  children:
+    - id: 1
+    - id: 2

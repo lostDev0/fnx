@@ -68,16 +68,26 @@ namespace fnx
         static inline void to_yaml(std::string& content, const fnx::layer& obj)
         {
             YAML::Emitter out;
-            out << YAML::BeginMap;
-            out << YAML::Key << "name" << YAML::Value << obj.get_name();
-            out << YAML::Key << "visible" << YAML::Value << obj.is_visible();
-            out << YAML::EndMap;
+            to_yaml(out, obj);
             content = out.c_str();
         }
 
         static inline void from_yaml(const std::string& content, fnx::layer& obj)
         {
             YAML::Node data = YAML::Load(content);
+            from_yaml(data, obj);
+        }
+
+        static inline void to_yaml(YAML::Emitter& out, const fnx::layer& obj)
+        {
+            out << YAML::BeginMap;
+            out << YAML::Key << "name" << YAML::Value << obj.get_name();
+            out << YAML::Key << "visible" << YAML::Value << obj.is_visible();
+            out << YAML::EndMap;
+        }
+
+        static inline void from_yaml(const YAML::Node& data, fnx::layer& obj)
+        {
             obj._name = data["name"].as<std::string>();
             obj._visible = data["visible"].as<bool>();
         }
