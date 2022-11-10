@@ -25,7 +25,7 @@ void enable_debug_ui_output()
     label->set_text_size_in_points( 8 );
     label->set_constraints( fnx::constraints( fnx::relative_vert_constraint( .9f ),
                             fnx::relative_horz_constraint( .008f ) ) );
-    auto layer = fnx::make_shared_ref<fnx::widget_layer>( "debug_layer" );
+    auto layer = fnx::make_shared_ref<fnx::layer>( "debug_layer" );
     layer->show();
     layer->add_widget( label );
     {

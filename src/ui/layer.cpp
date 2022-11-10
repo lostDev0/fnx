@@ -1,7 +1,6 @@
 namespace fnx
 {
-widget_layer::widget_layer( const std::string& name )
-    : layer( name )
+layer::layer( const std::string& name )
 {
     // widget layer is considered always visible to the layer stack, however, the _root widget determines rendering and interactivity
     layer::show();
@@ -11,15 +10,15 @@ widget_layer::widget_layer( const std::string& name )
     _root->inactivate();
     _root->set_visibility( false );
     auto [events, _] = singleton<event_manager>::acquire();
-    events.subscribe<widget_active_evt>( fnx::bind( *this, &widget_layer::on_widget_active ) );
-    events.subscribe<widget_inactive_evt>( fnx::bind( *this, &widget_layer::on_widget_inactive ) );
+    events.subscribe<widget_active_evt>( fnx::bind( *this, &layer::on_widget_active ) );
+    events.subscribe<widget_inactive_evt>( fnx::bind( *this, &layer::on_widget_inactive ) );
 }
 
-widget_layer::~widget_layer()
+layer::~layer()
 {
 }
 
-bool widget_layer::on_widget_active( const widget_active_evt& evt )
+bool layer::on_widget_active( const widget_active_evt& evt )
 {
     auto handle = get_widget_by_id( evt._src );
     if ( _active_widget != evt._src && _active_widget )
@@ -36,14 +35,14 @@ bool widget_layer::on_widget_active( const widget_active_evt& evt )
     return false;
 }
 
-bool widget_layer::on_widget_inactive( const widget_inactive_evt& evt )
+bool layer::on_widget_inactive( const widget_inactive_evt& evt )
 {
     FNX_DEBUG( fnx::format_string( "inactivate: %d", evt._src ) );
     _active_widget = 0xffffffff;
     return false;
 }
 
-widget_handle widget_layer::add_widget( widget_handle w )
+widget_handle layer::add_widget( widget_handle w )
 {
     if ( w )
     {
@@ -54,7 +53,7 @@ widget_handle widget_layer::add_widget( widget_handle w )
     return fnx::widget_handle{};
 }
 
-widget_handle widget_layer::get_widget( const std::string& widget_name )
+widget_handle layer::get_widget( const std::string& widget_name )
 {
     for ( auto child : _root->get_children() )
     {
@@ -74,7 +73,7 @@ widget_handle widget_layer::get_widget( const std::string& widget_name )
     return nullptr;
 }
 
-void widget_layer::update( double delta )
+void layer::update( double delta )
 {
     if ( _visible )
     {
@@ -82,7 +81,7 @@ void widget_layer::update( double delta )
     }
 }
 
-void widget_layer::render( camera_handle camera )
+void layer::render( camera_handle camera )
 {
     if ( _root->is_visible() )
     {
@@ -102,52 +101,52 @@ void widget_layer::render( camera_handle camera )
     }
 }
 
-bool widget_layer::on_event( const window_init_evt& event )
+bool layer::on_event( const window_init_evt& event )
 {
     _root->on_parent_change( 0.f, 0.f, 2.f, 2.f );
     return false;
 }
 
-bool widget_layer::on_event( const window_close_evt& event )
+bool layer::on_event( const window_close_evt& event )
 {
     _root->clear();
     return false;
 }
 
-bool widget_layer::on_event( const window_resize_evt& event )
+bool layer::on_event( const window_resize_evt& event )
 {
     _root->on_parent_change( 0.f, 0.f, 2.f, 2.f );
     return false;
 }
 
-bool widget_layer::on_event( const window_move_evt& event )
+bool layer::on_event( const window_move_evt& event )
 {
     _root->on_parent_change( 0.f, 0.f, 2.f, 2.f );
     return false;
 }
 
-bool widget_layer::on_event( const window_minimize_evt& event )
+bool layer::on_event( const window_minimize_evt& event )
 {
     return false;
 }
-bool widget_layer::on_event( const window_maximize_evt& event )
+bool layer::on_event( const window_maximize_evt& event )
 {
     return false;
 }
-bool widget_layer::on_event( const window_fullscreen_evt& event )
+bool layer::on_event( const window_fullscreen_evt& event )
 {
     return false;
 }
-bool widget_layer::on_event( const window_lose_focus_evt& event )
+bool layer::on_event( const window_lose_focus_evt& event )
 {
     return false;
 }
-bool widget_layer::on_event( const window_gain_focus_evt& event )
+bool layer::on_event( const window_gain_focus_evt& event )
 {
     return false;
 }
 
-bool widget_layer::on_event( const keyboard_press_evt& event )
+bool layer::on_event( const keyboard_press_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -156,7 +155,7 @@ bool widget_layer::on_event( const keyboard_press_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const keyboard_release_evt& event )
+bool layer::on_event( const keyboard_release_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -165,7 +164,7 @@ bool widget_layer::on_event( const keyboard_release_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const keyboard_repeat_evt& event )
+bool layer::on_event( const keyboard_repeat_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -174,16 +173,16 @@ bool widget_layer::on_event( const keyboard_repeat_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const mouse_enter_evt& event )
+bool layer::on_event( const mouse_enter_evt& event )
 {
     return false;
 }
 
-bool widget_layer::on_event( const mouse_exit_evt& event )
+bool layer::on_event( const mouse_exit_evt& event )
 {
     return false;
 }
-bool widget_layer::on_event( const mouse_move_evt& event )
+bool layer::on_event( const mouse_move_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -192,7 +191,7 @@ bool widget_layer::on_event( const mouse_move_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const mouse_press_evt& event )
+bool layer::on_event( const mouse_press_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -201,7 +200,7 @@ bool widget_layer::on_event( const mouse_press_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const mouse_release_evt& event )
+bool layer::on_event( const mouse_release_evt& event )
 {
     if ( _root->is_interactive() )
     {
@@ -210,7 +209,7 @@ bool widget_layer::on_event( const mouse_release_evt& event )
     return false;
 }
 
-bool widget_layer::on_event( const mouse_scroll_evt& event )
+bool layer::on_event( const mouse_scroll_evt& event )
 {
     if ( _root->is_interactive() )
     {

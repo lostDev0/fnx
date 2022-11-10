@@ -5,8 +5,13 @@ namespace ui
 {
 bool init()
 {
-    auto [properties, _] = singleton<property_manager>::acquire();
-    properties.set_property( fnx::PROPERTY_UI_SCALE, 1.f );
+    {
+        auto [stack, _1] = singleton<layer_stack>::acquire();
+    }
+    {
+        auto [properties, _2] = singleton<property_manager>::acquire();
+        properties.set_property( fnx::PROPERTY_UI_SCALE, 1.f );
+    }
     return true;
 }
 

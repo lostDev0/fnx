@@ -95,8 +95,8 @@ struct serializer<fnx::layer_stack>
             {
                 // TODO need to handle layer vs widge_layer
                 auto handle = make_shared_ref<fnx::layer>();
-                handle->_name = layer["name"].as<std::string>();
-                handle->_visible = layer["visible"].as<bool>();
+                //handle->_name = layer["name"].as<std::string>();
+                //handle->_visible = layer["visible"].as<bool>();
                 obj.add_layer( handle );
             }
         }

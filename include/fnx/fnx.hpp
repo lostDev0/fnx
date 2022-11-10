@@ -82,8 +82,6 @@ using decimal = reactphysics3d::decimal;
 #include "engine/camera.hpp"
 #include "engine/ortho_camera.hpp"
 #include "engine/perspective_camera.hpp"
-#include "engine/layer.hpp"
-#include "engine/layer_stack.hpp"
 #include "engine/renderer.hpp"
 #include "engine/property.hpp"
 #include "engine/property_manager.hpp"
@@ -112,6 +110,7 @@ using decimal = reactphysics3d::decimal;
 #include "ui/mutually_exclusive_container.hpp"
 #include "ui/scroll_view.hpp"
 #include "ui/tabbed_notebook.hpp"
-#include "ui/widget_layer.hpp"
+#include "ui/layer.hpp"
+#include "ui/layer_stack.hpp"
 
 #include "engine/world.hpp"
