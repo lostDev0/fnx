@@ -1,6 +1,7 @@
 namespace fnx
 {
 layer::layer( const std::string& name )
+    : _name( name )
 {
     // widget layer is considered always visible to the layer stack, however, the _root widget determines rendering and interactivity
     layer::show();

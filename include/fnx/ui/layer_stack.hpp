@@ -78,25 +78,26 @@ struct serializer<fnx::layer_stack>
     static inline void to_yaml( std::string& content, const fnx::layer_stack& obj )
     {
         YAML::Emitter out;
+        out << YAML::BeginSeq << "layers";
         for ( auto layer : obj.get_layers() )
         {
             // TODO handle widget_layer vs layer
             serializer<fnx::layer>::to_yaml( out, *( layer.second ) );
         }
+        out << YAML::EndSeq;
         content = out.c_str();
     }
 
     static inline void from_yaml( const std::string& content, fnx::layer_stack& obj )
     {
         YAML::Node data = YAML::Load( content );
-        if ( data["layer_stack"] )
+        if ( data["layers"] )
         {
-            for ( auto layer : data["layer_stack"] )
+            for ( auto layer : data["layers"] )
             {
                 // TODO need to handle layer vs widge_layer
                 auto handle = make_shared_ref<fnx::layer>();
-                //handle->_name = layer["name"].as<std::string>();
-                //handle->_visible = layer["visible"].as<bool>();
+                serializer<fnx::layer>::from_yaml( layer, *handle );
                 obj.add_layer( handle );
             }
         }

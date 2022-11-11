@@ -577,6 +577,11 @@ struct serializer<fnx::widget>
 
     static inline void from_yaml( const YAML::Node& data, fnx::widget& obj )
     {
+        if ( !data["id"] )
+        {
+            FNX_WARN( fnx::format_string( "no id found for widget object" ) );
+            return;
+        }
         obj._id = data["id"].as<decltype( obj._id )>();
         for ( auto node : data["children"] )
         {

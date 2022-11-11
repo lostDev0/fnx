@@ -1,8 +1,36 @@
-layer_stack:
+- layers
 - name: layer_0
-  visible: true
+  visible: false
   dirty_cache: true
-  active_widget: 1
-  children:
-    - id: 1
-    - id: 2
+  active_widget: 4294967295
+  ? id: 0
+    children:
+      []
+- name: layer_1
+  visible: false
+  dirty_cache: true
+  active_widget: 4294967295
+  ? id: 2
+    children:
+      []
+- name: layer_2
+  visible: false
+  dirty_cache: true
+  active_widget: 4294967295
+  ? id: 4
+    children:
+      []
+- name: layer_3
+  visible: false
+  dirty_cache: true
+  active_widget: 4294967295
+  ? id: 6
+    children:
+      []
+- name: layer_4
+  visible: false
+  dirty_cache: true
+  active_widget: 4294967295
+  ? id: 8
+    children:
+      []
