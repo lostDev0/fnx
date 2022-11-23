@@ -71,36 +71,4 @@ private:
     /// @brief Call render on all layers in order.
     bool render_layers( const fnx::render_user_interface_evt& evt );
 };
-
-template<>
-struct serializer<fnx::layer_stack>
-{
-    static inline void to_yaml( std::string& content, const fnx::layer_stack& obj )
-    {
-        YAML::Emitter out;
-        out << YAML::BeginSeq << "layers";
-        for ( auto layer : obj.get_layers() )
-        {
-            // TODO handle widget_layer vs layer
-            serializer<fnx::layer>::to_yaml( out, *( layer.second ) );
-        }
-        out << YAML::EndSeq;
-        content = out.c_str();
-    }
-
-    static inline void from_yaml( const std::string& content, fnx::layer_stack& obj )
-    {
-        YAML::Node data = YAML::Load( content );
-        if ( data["layers"] )
-        {
-            for ( auto layer : data["layers"] )
-            {
-                // TODO need to handle layer vs widge_layer
-                auto handle = make_shared_ref<fnx::layer>();
-                serializer<fnx::layer>::from_yaml( layer, *handle );
-                obj.add_layer( handle );
-            }
-        }
-    }
-};
 }

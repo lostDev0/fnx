@@ -35,8 +35,9 @@ return result
         } \
     } \
 
-widget::widget( const std::string& name )
-    : _name{ name }
+widget::widget( const std::string& name, widget_type type )
+    : _type { type}
+    , _name{ name }
 {
     static unsigned int handle = 0u;
     _id = handle++;

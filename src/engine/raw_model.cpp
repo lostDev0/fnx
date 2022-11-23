@@ -691,7 +691,7 @@ void parse_model_file( const std::string& file_path )
     {
         in.close();
         FNX_ERROR( fnx::format_string( "unable to load model %s", file_path.c_str() ) );
-        throw "resource file missing";
+        throw std::runtime_error( "model file missing" );
     }
 }
 

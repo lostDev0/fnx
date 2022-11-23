@@ -23,8 +23,7 @@
 *                                                                               *
 ********************************************************************************/
 
-#ifndef REACTPHYSICS3D_vector4_H
-#define REACTPHYSICS3D_vector4_H
+#pragma once
 
 // Libraries
 #include <cassert>
@@ -476,6 +475,42 @@ RP3D_FORCE_INLINE bool approxEqual( const vector4& vec1, const vector4& vec2,
            reactphysics3d::approxEqual( vec1.z, vec2.z, epsilon ) && reactphysics3d::approxEqual( vec1.w, vec2.w, epsilon );
 }
 
+inline YAML::Emitter& operator<<(YAML::Emitter& out, const vector4& v)
+{
+    out << YAML::Flow;
+    out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
+    return out;
 }
 
-#endif
+}
+
+namespace YAML
+{
+    template<>
+    struct convert<fnx::vector4>
+    {
+        static Node encode(const fnx::vector4& in)
+        {
+            Node node;
+            node.push_back(in.x);
+            node.push_back(in.y);
+            node.push_back(in.z);
+            node.push_back(in.w);
+            return node;
+        }
+
+        static bool decode(const Node& node, fnx::vector4& out)
+        {
+            if(!node.IsSequence() || node.size() != 4)
+            {
+                return false;
+            }
+
+            out.x = node[0].as<fnx::decimal>();
+            out.y = node[1].as<fnx::decimal>();
+            out.z = node[2].as<fnx::decimal>();
+            out.w = node[3].as<fnx::decimal>();
+            return true;
+        }
+    };
+}

@@ -41,8 +41,8 @@ void create_window( const char* window_title, fnx::display_mode& display )
         // initialize GLFW
         if ( !glfwInit() )
         {
-            FNX_ERROR( "Unable to initialize window framework" )
-            throw "unable to initialize window framework";
+            FNX_ERROR( "Unable to initialize window framework" );
+            throw std::runtime_error( "unable to initialize window framework" );
         }
         auto [win, _] = singleton<window>::acquire();
         auto mode = display;
@@ -80,21 +80,25 @@ void create_window( const char* window_title, fnx::display_mode& display )
 
 void run()
 {
-    while ( detail::_engine_running )
+    try
     {
+        while ( detail::_engine_running )
         {
-            auto [win, _] = singleton<window>::acquire();
-            win.update();
-        }
-        {
-            auto [event, _] = singleton<event_manager>::acquire();
-            event.update( 0 );
-        }
-        {
-            auto [win, _] = singleton<window>::acquire();
-            win.swap();
+            {
+                auto [win, _] = singleton<window>::acquire();
+                win.update();
+            }
+            {
+                auto [event, _] = singleton<event_manager>::acquire();
+                event.update( 0 );
+            }
+            {
+                auto [win, _] = singleton<window>::acquire();
+                win.swap();
+            }
         }
     }
+    catch ( ... ) {}
 }
 
 bool stop( const window_close_evt& )

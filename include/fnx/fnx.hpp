@@ -30,6 +30,7 @@ using decimal = reactphysics3d::decimal;
 #include "utils/macro_utils.hpp"
 #include "utils/string_utils.hpp"
 #include "utils/react_utils.hpp"
+#include "utils/yaml_utils.hpp"
 
 #include "containers/dequeue.hpp"
 #include "containers/ring_buffer.hpp"
@@ -112,5 +113,6 @@ using decimal = reactphysics3d::decimal;
 #include "ui/tabbed_notebook.hpp"
 #include "ui/layer.hpp"
 #include "ui/layer_stack.hpp"
+#include "ui/layer_serializer.hpp"
 
 #include "engine/world.hpp"

@@ -26,7 +26,7 @@ void parse_yaml_file( const std::string& file_path )
     }
     ostringstream sout;
     copy( istreambuf_iterator<char>( in ), istreambuf_iterator<char>(), ostreambuf_iterator<char>( sout ) );
-    serializer<layer_stack>::from_yaml( sout.str(), stack );
+    layer_serializer().deserialize( stack, sout.str() );
 }
 }
 }

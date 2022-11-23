@@ -272,7 +272,7 @@ shader::shader( const std::string& path )
     else
     {
         FNX_ERROR( fnx::format_string( "unable to load shader %s", path.c_str() ) );
-        throw "resource file missing";
+        throw std::runtime_error( "shader file missing" );
     }
 }
 

@@ -102,7 +102,7 @@ union property
 
     template<typename T>void set( const T& val )
     {
-        throw "Invalid property type";
+        throw std::runtime_error( "Invalid property type" );
     }
 
     template<>void set( const char& val )

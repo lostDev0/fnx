@@ -10,6 +10,8 @@ class shader;
 class texture;
 class raw_model;
 class layer;
+class widget;
+class block;
 
 template<typename T>
 inline const char* get_type_name()
@@ -57,6 +59,20 @@ template<>
 inline const char* get_type_name<fnx::layer>()
 {
     static const auto name = "layer";
+    return name;
+}
+
+template<>
+inline const char* get_type_name<fnx::widget>()
+{
+    static const auto name = "widget";
+    return name;
+}
+
+template<>
+inline const char* get_type_name<fnx::block>()
+{
+    static const auto name = "block";
     return name;
 }
 

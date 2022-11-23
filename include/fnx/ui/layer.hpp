@@ -7,8 +7,7 @@ class layer_stack;
 /// @note It is the expectation that entities are never removed and only destroyed when the layer is destroyed.
 class layer
 {
-    friend serializer<fnx::layer>;
-    friend serializer<fnx::layer_stack>;
+    friend layer_serializer;
     bool _visible{ false };
     std::string _name;  /// identifier of this layer
     fnx::widget_handle _root{fnx::create_widget<fnx::widget>()};		/// top level widget container that has no visual representation
@@ -120,41 +119,4 @@ protected:
 };
 
 using layer_handle = fnx::reference_ptr<fnx::layer>;
-
-template<>
-struct serializer<fnx::layer>
-{
-    static inline void to_yaml( std::string& content, const fnx::layer& obj )
-    {
-        YAML::Emitter out;
-        to_yaml( out, obj );
-        content = out.c_str();
-    }
-
-    static inline void from_yaml( const std::string& content, fnx::layer& obj )
-    {
-        YAML::Node data = YAML::Load( content );
-        from_yaml( data, obj );
-    }
-
-    static inline void to_yaml( YAML::Emitter& out, const fnx::layer& obj )
-    {
-        out << YAML::BeginMap;
-        out << YAML::Key << "name" << YAML::Value << obj.get_name();
-        out << YAML::Key << "visible" << YAML::Value << obj.is_visible();
-        out << YAML::Key << "dirty_cache" << YAML::Value << true;
-        out << YAML::Key << "active_widget" << YAML::Value << obj._active_widget;
-        serializer<fnx::widget>::to_yaml( out, *obj.get_root() );
-        out << YAML::EndMap;
-    }
-
-    static inline void from_yaml( const YAML::Node& data, fnx::layer& obj )
-    {
-        obj._name = data["name"].as<std::string>();
-        obj._visible = data["visible"].as<bool>();
-        obj._dirty_cache = data["dirty_cache"].as<decltype( obj._dirty_cache )>();
-        obj._active_widget = data["active_widget"].as<decltype( obj._active_widget )>();
-        serializer<fnx::widget>::from_yaml( data, *obj._root );
-    }
-};
 }

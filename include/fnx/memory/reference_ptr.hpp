@@ -40,7 +40,7 @@ public:
 
         if ( nullptr == _asset_ptr || nullptr == _ref_count )
         {
-            throw;
+            throw std::runtime_error( "missing reference" );
         }
 
         *_ref_count = 1;

@@ -14,7 +14,7 @@ public:
            const fnx::colors::rgba& press_color,
            const fnx::colors::rgba& checked_color,
            const std::string& name = create_type_name<fnx::block>() )
-        : widget( name )
+        : widget( name, widget_type::block )
     {
         _colors[static_cast<size_t>( state::normal )] = color;
         _colors[static_cast<size_t>( state::hover )] = highlight_color;
@@ -105,6 +105,11 @@ public:
         _colors[static_cast<size_t>( state )] = color;
     }
 
+    auto get_color( state state ) const
+    {
+        return _colors[static_cast<size_t>( state )];
+    }
+
     void set_color( const fnx::colors::rgba& color )
     {
         for ( auto i = 0u; i < static_cast<size_t>( state::max ); ++i )
@@ -177,6 +182,16 @@ public:
         }
     }
 
+    auto get_gradient( state state ) const
+    {
+        return _gradients[static_cast<size_t>( state )];
+    }
+
+    auto get_gradient_direction( state state ) const
+    {
+        return _gradient_directions[static_cast<size_t>( state )];
+    }
+
     /// @brief Set the thickness of a border for the block for all states
     void set_outline_thickness( int pixels )
     {
@@ -207,9 +222,19 @@ public:
         _outline_colors[static_cast<size_t>( state )] = color;
     }
 
+    auto get_outline_color( state state ) const
+    {
+        return _outline_colors[static_cast<size_t>( state )];
+    }
+
     /// @brief Draw the block.
     /// @note User Interface does not currently use the camera that is provided.
     virtual void render( camera_handle camera, fnx::matrix4x4 parent_matrix ) override;
+
+    auto get_outline_thickness( state state ) const
+    {
+        return _outline_thickness[static_cast<size_t>( state )];
+    }
 
     void set_outline_thickness_normal( const float& px )
     {

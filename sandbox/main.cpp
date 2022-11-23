@@ -48,20 +48,22 @@ int main( int argc, char** argv )
     fnx::ui::init();
     fnx::ui::parse_yaml_file( "user_interface.yaml" );
 
+    /*
     auto [layers, _1] = singleton<layer_stack>::acquire();
     for ( auto i = 0; i < 5; i++ )
     {
         auto layer = make_shared_ref<fnx::layer>();
+        auto widget = create_widget<fnx::block>();
+        auto ret = layer->add_widget( widget );
         layers.add_layer( layer );
-        layer->add_widget( create_widget<fnx::block>() );
     }
-
+    std::string out;
+    fnx::layer_serializer serializer;
+    fstream of( "user_interface.yaml" );
+    of << serializer.serialize( layers ) << endl;
+    */
     fnx::world::run();
     fnx::world::terminate();
-
-    std::string out;
-    serializer<layer_stack>::to_yaml( out, layers );
-    cout << out << endl;
 
     return 0;
 }

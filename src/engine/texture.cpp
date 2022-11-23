@@ -22,7 +22,10 @@ texture::texture( const std::string& file_path )
     : fnx::asset( file_path )
     , _impl{ new texture::impl( GL_TEXTURE_2D ) }
 {
-    _image.load_from_file( file_path, 4 );
+    if ( !_image.load_from_file( file_path, 4 ) )
+    {
+        FNX_ERROR( fnx::format_string( "unable to load texture resource %s", file_path ) );
+    }
     init();
 }
 
@@ -30,7 +33,10 @@ texture::texture( const std::string& file_path, uint32_t target )
     : fnx::asset( file_path )
     , _impl{ new texture::impl( target ) }
 {
-    _image.load_from_file( file_path, 4 );
+    if ( !_image.load_from_file( file_path, 4 ) )
+    {
+        FNX_ERROR( fnx::format_string( "unable to load texture resource %s", file_path ) );
+    }
     init();
 }
 
@@ -88,7 +94,7 @@ void texture::init()
     if ( !info._is_ok )
     {
         // nothing was loaded for this asset, who did this?!
-        throw;
+        throw std::runtime_error( "texture file missing" );
     }
 
     // - mip-mapped texture files (.mpc, .mps, .mpb)

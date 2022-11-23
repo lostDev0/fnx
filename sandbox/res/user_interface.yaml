@@ -1,36 +1,371 @@
-- layers
-- name: layer_0
-  visible: false
-  dirty_cache: true
-  active_widget: 4294967295
-  ? id: 0
-    children:
-      []
-- name: layer_1
-  visible: false
-  dirty_cache: true
-  active_widget: 4294967295
-  ? id: 2
-    children:
-      []
-- name: layer_2
-  visible: false
-  dirty_cache: true
-  active_widget: 4294967295
-  ? id: 4
-    children:
-      []
-- name: layer_3
-  visible: false
-  dirty_cache: true
-  active_widget: 4294967295
-  ? id: 6
-    children:
-      []
-- name: layer_4
-  visible: false
-  dirty_cache: true
-  active_widget: 4294967295
-  ? id: 8
-    children:
-      []
+layers:
+  - name: layer_0
+    visible: false
+    dirty_cache: true
+    active_widget: 4294967295
+    root:
+      type: 0
+      id: 0
+      model: default.model
+      shader: default.shader
+      texture: default.texture
+      material: default.material
+      current_bounds: [-1, -1, 2, 2]
+      original_bounds: [0, 0, 0, 0]
+      strict_size: [0, 0]
+      visible: false
+      animator_hidden: false
+      interactive: true
+      checked: false
+      checkable: true
+      send_events_to_children: true
+      current_alpha: 1
+      original_alpha: 1
+      name: widget_0
+      state: 0
+      children:
+        type: 1
+        id: 1
+        model: default.model
+        shader: default.shader
+        texture: default.texture
+        material: default.material
+        current_bounds: [0, 0, 0, 0]
+        original_bounds: [0, 0, 0, 0]
+        strict_size: [0, 0]
+        visible: true
+        animator_hidden: false
+        interactive: true
+        checked: false
+        checkable: true
+        send_events_to_children: true
+        current_alpha: 1
+        original_alpha: 1
+        name: block_0
+        state: 0
+        colors:
+          normal: [1, 1, 1, 1]
+          hover: [1, 1, 1, 1]
+          checked: [1, 1, 1, 1]
+          press: [1, 1, 1, 1]
+        outline_colors:
+          normal: [0, 0, 0, 0]
+          hover: [0, 0, 0, 0]
+          checked: [0, 0, 0, 0]
+          press: [0, 0, 0, 0]
+        outline_thickness:
+          normal: 0
+          hover: 0
+          checked: 0
+          press: 0
+        gradient:
+          normal:
+            []
+          hover:
+            []
+          checked:
+            []
+          press:
+            []
+        gradient_direction:
+          normal: 1
+          hover: 0
+          checked: 0
+          press: 0
+        corner_radius: 0
+  - name: layer_1
+    visible: false
+    dirty_cache: true
+    active_widget: 4294967295
+    root:
+      type: 0
+      id: 2
+      model: default.model
+      shader: default.shader
+      texture: default.texture
+      material: default.material
+      current_bounds: [-1, -1, 2, 2]
+      original_bounds: [0, 0, 0, 0]
+      strict_size: [0, 0]
+      visible: false
+      animator_hidden: false
+      interactive: true
+      checked: false
+      checkable: true
+      send_events_to_children: true
+      current_alpha: 1
+      original_alpha: 1
+      name: widget_1
+      state: 0
+      children:
+        type: 1
+        id: 3
+        model: default.model
+        shader: default.shader
+        texture: default.texture
+        material: default.material
+        current_bounds: [0, 0, 0, 0]
+        original_bounds: [0, 0, 0, 0]
+        strict_size: [0, 0]
+        visible: true
+        animator_hidden: false
+        interactive: true
+        checked: false
+        checkable: true
+        send_events_to_children: true
+        current_alpha: 1
+        original_alpha: 1
+        name: block_1
+        state: 0
+        colors:
+          normal: [1, 1, 1, 1]
+          hover: [1, 1, 1, 1]
+          checked: [1, 1, 1, 1]
+          press: [1, 1, 1, 1]
+        outline_colors:
+          normal: [0, 0, 0, 0]
+          hover: [0, 0, 0, 0]
+          checked: [0, 0, 0, 0]
+          press: [0, 0, 0, 0]
+        outline_thickness:
+          normal: 0
+          hover: 0
+          checked: 0
+          press: 0
+        gradient:
+          normal:
+            []
+          hover:
+            []
+          checked:
+            []
+          press:
+            []
+        gradient_direction:
+          normal: 1
+          hover: 0
+          checked: 0
+          press: 0
+        corner_radius: 0
+  - name: layer_2
+    visible: false
+    dirty_cache: true
+    active_widget: 4294967295
+    root:
+      type: 0
+      id: 4
+      model: default.model
+      shader: default.shader
+      texture: default.texture
+      material: default.material
+      current_bounds: [-1, -1, 2, 2]
+      original_bounds: [0, 0, 0, 0]
+      strict_size: [0, 0]
+      visible: false
+      animator_hidden: false
+      interactive: true
+      checked: false
+      checkable: true
+      send_events_to_children: true
+      current_alpha: 1
+      original_alpha: 1
+      name: widget_2
+      state: 0
+      children:
+        type: 1
+        id: 5
+        model: default.model
+        shader: default.shader
+        texture: default.texture
+        material: default.material
+        current_bounds: [0, 0, 0, 0]
+        original_bounds: [0, 0, 0, 0]
+        strict_size: [0, 0]
+        visible: true
+        animator_hidden: false
+        interactive: true
+        checked: false
+        checkable: true
+        send_events_to_children: true
+        current_alpha: 1
+        original_alpha: 1
+        name: block_2
+        state: 0
+        colors:
+          normal: [1, 1, 1, 1]
+          hover: [1, 1, 1, 1]
+          checked: [1, 1, 1, 1]
+          press: [1, 1, 1, 1]
+        outline_colors:
+          normal: [0, 0, 0, 0]
+          hover: [0, 0, 0, 0]
+          checked: [0, 0, 0, 0]
+          press: [0, 0, 0, 0]
+        outline_thickness:
+          normal: 0
+          hover: 0
+          checked: 0
+          press: 0
+        gradient:
+          normal:
+            []
+          hover:
+            []
+          checked:
+            []
+          press:
+            []
+        gradient_direction:
+          normal: 1
+          hover: 0
+          checked: 0
+          press: 0
+        corner_radius: 0
+  - name: layer_3
+    visible: false
+    dirty_cache: true
+    active_widget: 4294967295
+    root:
+      type: 0
+      id: 6
+      model: default.model
+      shader: default.shader
+      texture: default.texture
+      material: default.material
+      current_bounds: [-1, -1, 2, 2]
+      original_bounds: [0, 0, 0, 0]
+      strict_size: [0, 0]
+      visible: false
+      animator_hidden: false
+      interactive: true
+      checked: false
+      checkable: true
+      send_events_to_children: true
+      current_alpha: 1
+      original_alpha: 1
+      name: widget_3
+      state: 0
+      children:
+        type: 1
+        id: 7
+        model: default.model
+        shader: default.shader
+        texture: default.texture
+        material: default.material
+        current_bounds: [0, 0, 0, 0]
+        original_bounds: [0, 0, 0, 0]
+        strict_size: [0, 0]
+        visible: true
+        animator_hidden: false
+        interactive: true
+        checked: false
+        checkable: true
+        send_events_to_children: true
+        current_alpha: 1
+        original_alpha: 1
+        name: block_3
+        state: 0
+        colors:
+          normal: [1, 1, 1, 1]
+          hover: [1, 1, 1, 1]
+          checked: [1, 1, 1, 1]
+          press: [1, 1, 1, 1]
+        outline_colors:
+          normal: [0, 0, 0, 0]
+          hover: [0, 0, 0, 0]
+          checked: [0, 0, 0, 0]
+          press: [0, 0, 0, 0]
+        outline_thickness:
+          normal: 0
+          hover: 0
+          checked: 0
+          press: 0
+        gradient:
+          normal:
+            []
+          hover:
+            []
+          checked:
+            []
+          press:
+            []
+        gradient_direction:
+          normal: 1
+          hover: 0
+          checked: 0
+          press: 0
+        corner_radius: 0
+  - name: layer_4
+    visible: false
+    dirty_cache: true
+    active_widget: 4294967295
+    root:
+      type: 0
+      id: 8
+      model: default.model
+      shader: default.shader
+      texture: default.texture
+      material: default.material
+      current_bounds: [-1, -1, 2, 2]
+      original_bounds: [0, 0, 0, 0]
+      strict_size: [0, 0]
+      visible: false
+      animator_hidden: false
+      interactive: true
+      checked: false
+      checkable: true
+      send_events_to_children: true
+      current_alpha: 1
+      original_alpha: 1
+      name: widget_4
+      state: 0
+      children:
+        type: 1
+        id: 9
+        model: default.model
+        shader: default.shader
+        texture: default.texture
+        material: default.material
+        current_bounds: [0, 0, 0, 0]
+        original_bounds: [0, 0, 0, 0]
+        strict_size: [0, 0]
+        visible: true
+        animator_hidden: false
+        interactive: true
+        checked: false
+        checkable: true
+        send_events_to_children: true
+        current_alpha: 1
+        original_alpha: 1
+        name: block_4
+        state: 0
+        colors:
+          normal: [1, 1, 1, 1]
+          hover: [1, 1, 1, 1]
+          checked: [1, 1, 1, 1]
+          press: [1, 1, 1, 1]
+        outline_colors:
+          normal: [0, 0, 0, 0]
+          hover: [0, 0, 0, 0]
+          checked: [0, 0, 0, 0]
+          press: [0, 0, 0, 0]
+        outline_thickness:
+          normal: 0
+          hover: 0
+          checked: 0
+          press: 0
+        gradient:
+          normal:
+            []
+          hover:
+            []
+          checked:
+            []
+          press:
+            []
+        gradient_direction:
+          normal: 1
+          hover: 0
+          checked: 0
+          press: 0
+        corner_radius: 0

@@ -2,8 +2,30 @@
 
 namespace fnx
 {
+class layer_serializer;
+enum class widget_type
+{
+    widget = 0,
+    block,
+    button,
+    clipping_container,
+    image,
+    label,
+    line,
+    mutually_exclusive_container,
+    panel,
+    progress_bar,
+    radio,
+    scroll_view,
+    sizer,
+    slider,
+    tabbed_notebook,
+    text_box,
+    text_input
+};
+
+
 class widget;
-//using widget_handle = std::shared_ptr<fnx::widget>;
 template<typename T>
 using widget_handle_t = fnx::reference_ptr<T>;
 using widget_handle = fnx::widget_handle_t<fnx::widget>;
@@ -34,7 +56,7 @@ public:
     };
 
     /// @brief Create a widget with an optional name.
-    widget( const std::string& name = fnx::create_type_name<fnx::widget>() );
+    widget( const std::string& name = fnx::create_type_name<fnx::widget>(), widget_type type = widget_type::widget );
     virtual ~widget() = default;
 
     /// @brief Get the widget local x coordinate in world space (opengl).
@@ -487,9 +509,15 @@ public:
         _children.clear();
     }
 
+    inline auto get_type() const
+    {
+        return _type;
+    }
+
 protected:
-    friend fnx::serializer<fnx::widget>;
-    widget_id _id{ 0u };				/// unique id
+    friend fnx::layer_serializer;
+    widget_type _type{widget_type::widget};
+    widget_id _id{ 0u };				    /// unique id
     widget* _parent{ nullptr };				/// parent widget
     constraints _constraints;				/// position and size constraints within parent
     animator _animator;						/// transition animator
@@ -499,7 +527,7 @@ protected:
     material_handle _material;				/// material used to render this widget
     vector4 _current_bounds{};				/// the widget's current bounds (animator)
     vector4 _original_bounds{};				/// the widget's original bounds
-    fnx::vector2 _strict_size{};					/// the widget's size
+    fnx::vector2 _strict_size{};			/// the widget's size
     bool _mouse_over{ false };				/// the mouse is currently over the widget
     bool _recalculate{ true };
     bool _visible{ true };					/// the widget is currently visible
@@ -509,8 +537,8 @@ protected:
     bool _checked{ false };
     bool _checkable{ true };
     bool _send_events_to_children{ true };
-    reactphysics3d::decimal _current_alpha{ 1.f };			/// the widget's current alpha state (animator)
-    reactphysics3d::decimal _original_alpha{ 1.f };			/// the widget's normal alpha state
+    fnx::decimal _current_alpha{ 1.f };		/// the widget's current alpha state (animator)
+    fnx::decimal _original_alpha{ 1.f };	/// the widget's normal alpha state
     std::string _name;						/// the widget's non unique name
     state _state{ state::normal };
     std::vector<fnx::widget_handle> _children;
@@ -545,74 +573,4 @@ fnx::widget_handle_t<T> create_widget( Args... args )
 }
 
 extern widget_handle get_widget_by_id( widget_id id );
-
-template<>
-struct serializer<fnx::widget>
-{
-    static inline void to_yaml( std::string& content, const fnx::widget& obj )
-    {
-        YAML::Emitter out;
-        to_yaml( out, obj );
-        content = out.c_str();
-    }
-
-    static inline void from_yaml( const std::string& content, fnx::widget& obj )
-    {
-        YAML::Node data = YAML::Load( content );
-        from_yaml( data, obj );
-    }
-
-    static inline void to_yaml( YAML::Emitter& out, const fnx::widget& obj )
-    {
-        out << YAML::BeginMap;
-        out << YAML::Key << "id" << YAML::Value << obj._id;
-        out << YAML::Key << "children" << YAML::BeginSeq;
-        for ( auto child : obj._children )
-        {
-            to_yaml( out, *child );
-        }
-        out << YAML::EndSeq;
-        out << YAML::EndMap;
-    }
-
-    static inline void from_yaml( const YAML::Node& data, fnx::widget& obj )
-    {
-        if ( !data["id"] )
-        {
-            FNX_WARN( fnx::format_string( "no id found for widget object" ) );
-            return;
-        }
-        obj._id = data["id"].as<decltype( obj._id )>();
-        for ( auto node : data["children"] )
-        {
-            auto child = create_widget<fnx::widget>();
-            from_yaml( node, *child );
-        }
-        /*widget_id _id{ 0u };				/// unique id
-        widget* _parent{ nullptr };				/// parent widget
-        constraints _constraints;				/// position and size constraints within parent
-        animator _animator;						/// transition animator
-        model_handle _model;					/// model used to render this widget
-        shader_handle _shader;					/// shader used to render this widget
-        texture_handle _texture;				/// texture used to render this widget
-        material_handle _material;				/// material used to render this widget
-        vector4 _current_bounds{};				/// the widget's current bounds (animator)
-        vector4 _original_bounds{};				/// the widget's original bounds
-        fnx::vector2 _strict_size{};					/// the widget's size
-        bool _mouse_over{ false };				/// the mouse is currently over the widget
-        bool _recalculate{ true };
-        bool _visible{ true };					/// the widget is currently visible
-        bool _animator_hidden{ false };			/// the widget is currently hidden due to the animator
-        bool _interactive{ true };				/// the widget accepts user input
-        bool _active{ false };					/// the widget is considered to be active
-        bool _checked{ false };
-        bool _checkable{ true };
-        bool _send_events_to_children{ true };
-        reactphysics3d::decimal _current_alpha{ 1.f };			/// the widget's current alpha state (animator)
-        reactphysics3d::decimal _original_alpha{ 1.f };			/// the widget's normal alpha state
-        std::string _name;						/// the widget's non unique name
-        state _state{ state::normal };
-        std::vector<fnx::widget_handle> _children; */
-    }
-};
 }

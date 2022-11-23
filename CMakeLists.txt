@@ -44,9 +44,10 @@ include_directories(include ${INC_DEPENDENCIES})
 # puts all .cpp files inside src to the SOURCES variable
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
-# compiles the files defined by SOURCES to generante the executable defined by EXEC
+# compiles the files defined by SOURCES to generate the executable defined by EXEC
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${HEADER_FILES})
+target_compile_definitions(${PROJECT_NAME} PRIVATE _FNX_COMPILE_ONLY)
 
 # linking dependencies
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
