@@ -54,10 +54,12 @@ void layer_serializer::serialize_widget( YAML::Emitter& out, const widget& obj )
     if ( obj.has_children() )
     {
         out << YAML::Key << "children";
+        out << YAML::BeginSeq;
         for ( auto child : obj._children )
         {
             serialize_widget( out, *child );
         }
+        out << YAML::EndSeq;
     }
     out << YAML::EndMap;
 }
@@ -139,10 +141,10 @@ void layer_serializer::deserialize_widget( const YAML::Node& data, widget& obj )
     obj._id = data["id"].as<decltype( obj._id )>();
     // TODO constraints
     // TODO animator
-    obj._model = singleton<asset_manager<model>>::acquire().data.get( data["model"].as<std::string>() );
-    obj._shader = singleton<asset_manager<shader>>::acquire().data.get( data["shader"].as<std::string>() );
-    obj._texture = singleton<asset_manager<texture>>::acquire().data.get( data["texture"].as<std::string>() );
-    obj._material = singleton<asset_manager<material>>::acquire().data.get( data["material"].as<std::string>() );
+    obj._model = singleton<asset_manager<model>>::acquire().data.reserve( data["model"].as<std::string>() );
+    obj._shader = singleton<asset_manager<shader>>::acquire().data.reserve( data["shader"].as<std::string>() );
+    obj._texture = singleton<asset_manager<texture>>::acquire().data.reserve( data["texture"].as<std::string>() );
+    obj._material = singleton<asset_manager<material>>::acquire().data.reserve( data["material"].as<std::string>() );
     obj._current_bounds = data["current_bounds"].as<fnx::vector4>();
     obj._original_bounds = data["original_bounds"].as<fnx::vector4>();
     obj._strict_size = data["strict_size"].as<fnx::vector2>();
@@ -156,7 +158,7 @@ void layer_serializer::deserialize_widget( const YAML::Node& data, widget& obj )
     obj._state = static_cast<widget::state>( data["state"].as<int>() );
     if ( data["children"] )
     {
-        for ( auto node : data["children"] )
+        for ( const YAML::Node& node : data["children"] )
         {
             auto child = deserialize_widget_type( node );
             obj.add_widget( child );

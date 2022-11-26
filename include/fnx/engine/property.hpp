@@ -177,4 +177,17 @@ union property
         set<T>( other );
     }
 };
+
+constexpr auto PROPERTY_WORLD_BACKGROUND = "world_bg";
+constexpr auto PROPERTY_FOG_COLOR_DAY = "fog_color_day";
+constexpr auto PROPERTY_FOG_COLOR_NIGHT = "fog_color_night";
+constexpr auto PROPERTY_FOG_COLOR = "fog_color";
+constexpr auto PROPERTY_DAY_NIGHT_BLEND_FACTOR = "day_night_blend";
+constexpr auto PROPERTY_FOG_DENSITY = "fog_density";
+constexpr auto PROPERTY_FOG_GRADIENT = "fog_gradient";
+constexpr auto PROPERTY_GAMMA = "gamma";
+constexpr auto PROPERTY_NEAR_PLANE = "near_plane";
+constexpr auto PROPERTY_FAR_PLANE = "far_plane";
+constexpr auto PROPERTY_GRAVITY = "gravity";
+constexpr auto PROPERTY_TIME_OF_DAY = "time";
 }

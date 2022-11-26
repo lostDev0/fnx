@@ -84,6 +84,11 @@ public:
         return _enable_shadows;
     }
 
+    /// @brief Creates the depth map FBO for doing depth testing and shadows
+    void init_depth_map();
+    /// @brief Creates the post processing FBO for doing effects upon the rendered scene
+    void init_post_processing();
+
     /*
     void render_world_objects(fnx::camera_handle camera, const fnx::vector4& fog_color, float fog_density,
     	float fog_gradient, const fnx::vector3& gamma, const std::vector<material>& lights);
@@ -111,11 +116,6 @@ private:
 
     uint32_t _post_processing_fbo{ 0u };
     uint32_t _post_processing_texture{ 0u };
-
-    /// @brief Creates the depth map FBO for doing depth testing and shadows
-    void init_depth_map();
-    /// @brief Creates the post processing FBO for doing effects upon the rendered scene
-    void init_post_processing();
 
     //bool render_game_objects(const fnx::render_evt& evt);
     //bool render_game_object_shadows(const fnx::render_shadows_evt& evt);

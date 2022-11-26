@@ -10,7 +10,7 @@ class asset
 {
 protected:
     std::string _name;		/// non unique name of the asset
-    bool _loaded{ true };	/// flag to signify this asset is allocated
+    bool _loaded{ false };	/// flag to signify this asset is allocated
 public:
     asset( const std::string& _name ) : _name( _name ) {};
     virtual ~asset() {};

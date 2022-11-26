@@ -36,6 +36,12 @@ public:
         {
             // not yet constructed, construct a new asset
             ref = fnx::make_shared_ref<T>( asset_name, std::forward<TArgs>( args )... );
+            ref->load();
+        }
+        else if ( !ref->is_loaded() )
+        {
+            release( asset_name );
+            ref = get( asset_name, std::forward<TArgs>( args )... );
         }
         return ref;
     }
@@ -52,6 +58,26 @@ public:
         {
             // copy construct a new object matching the provided struct
             ref = fnx::make_shared_ref<T>( asset_name, base );
+            ref->load();
+        }
+        else if ( !ref->is_loaded() )
+        {
+            ref = get( asset_name, std::forward<TArgs>( args )... );
+        }
+        return ref;
+    }
+
+    /// @brief Creates a default asset in the asset map. This is an unloaded asset.
+    /// @param asset_name : unique name of an asset
+    /// @return
+    fnx::asset_handle<fnx::asset> reserve( const std::string& asset_name )
+    {
+        std::lock_guard<std::mutex> guard( _lock );
+        auto& ref = _assets[asset_name];
+        if ( nullptr == ref.get() )
+        {
+            // creates an unloaded asset
+            ref = fnx::make_shared_ref<fnx::asset>( asset_name );
         }
         return ref;
     }

@@ -20,7 +20,6 @@ public:
     /// @brief Trigger an event to be queued.
     void emit( const T& payload, bool reverse = false, double delay = 0.0 )
     {
-        FNX_INFO( fnx::to_string( payload ) );
         auto& d = get_dispatcher<T>();
         d.trigger( payload, reverse, delay );
     }
@@ -87,5 +86,6 @@ private:
     }
 };
 
-#define FNX_EMIT(e) { auto [emitter,_99] = fnx::singleton<fnx::event_manager>::acquire(); emitter.emit(e); }
+#define FNX_EMIT(...) { auto [emitter,_99] = fnx::singleton<fnx::event_manager>::acquire(); emitter.emit(__VA_ARGS__); }
+#define FNX_EMIT_NOW(...) { fnx::singleton<fnx::event_manager>::acquire().data.emit_immediately(__VA_ARGS__, false); }
 }

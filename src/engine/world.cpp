@@ -4,6 +4,7 @@
 
 using namespace reactphysics3d;
 using namespace std;
+using namespace std::chrono;
 
 namespace fnx
 {
@@ -82,19 +83,113 @@ void run()
 {
     try
     {
+        double fps;
+        {
+            // render engine initialization
+            auto [renderer, _] = singleton<fnx::renderer>::acquire();
+            renderer.init_depth_map();
+            renderer.init_post_processing();
+        }
+        {
+            // ensure that any systems relying on the window dimensions has accurate information
+            auto [win, _] = singleton<window>::acquire();
+            window_resize_evt e;
+            e._x = win.get_pos_x();
+            e._y = win.get_pos_y();
+            e._width = win.width();
+            e._height = win.height();
+            FNX_EMIT( e );
+            fps = 1.0 / static_cast<double>( win.get_display_mode()._refresh_rate );
+        }
+
+        high_resolution_clock::time_point start_time = high_resolution_clock::now();
+        fnx::decimal delta = 0.0;
+        fnx::decimal cycle_accumulator = 0.0;
+        const double rolling_val = 0.9;
+        constexpr auto max_samples = 16;
+        auto num_samples = 0;
+        auto current_sample = 0;
+        fnx::decimal second_accumulator{ 0.0 };
+        fnx::decimal fps_samples[max_samples] { 0.f };
+
+        fnx::decimal fps_now{ 0.0 };
+        fnx::decimal fps_avg{ 0.0 };
+        fnx::decimal fps_min{ 0.0 };
+        fnx::decimal fps_max{ 0.0 };
+
         while ( detail::_engine_running )
         {
+            high_resolution_clock::time_point now = high_resolution_clock::now();
+            delta = static_cast<fnx::decimal>( duration_cast<nanoseconds>( now - start_time ).count() ) / 1E9;
+            start_time = now;
+            cycle_accumulator += delta;
+            second_accumulator += delta;	// for fps calculation
+
             {
+                // process io events
                 auto [win, _] = singleton<window>::acquire();
                 win.update();
             }
             {
-                auto [event, _] = singleton<event_manager>::acquire();
-                event.update( 0 );
+                // process any io events
+                singleton<event_manager>::acquire().data.update( delta );
+                // process systems
+                FNX_EMIT_NOW( fnx::update_evt{fnx::update_evt::action_t::start, delta} );
+                FNX_EMIT_NOW( fnx::update_evt{fnx::update_evt::action_t::end} );
             }
+            if ( cycle_accumulator >= fps )
             {
+                num_samples++;
+                while ( second_accumulator > 1.0 )
+                {
+                    // calcuate average fps, min fps and max fps
+                    // first current_fps should be legit, after that it's 0
+                    auto current_fps = static_cast<fnx::decimal>( num_samples ) / second_accumulator;
+                    fps_samples[current_sample++] = current_fps;
+                    if ( current_sample == max_samples )
+                    {
+                        current_sample = 0;    // roll over
+                    }
+                    second_accumulator -= 1.0;	// remove a second
+                    fnx::decimal avg = 0.0;
+                    fnx::decimal min = 10000.0;
+                    fnx::decimal max = -10000.0;
+                    for ( auto i = 0; i < max_samples; i++ )
+                    {
+                        auto val = fps_samples[i];
+                        avg += val;
+                        if ( val < min )
+                        {
+                            min = val;
+                        }
+                        if ( val > max )
+                        {
+                            max = val;
+                        }
+                    }
+                    fps_now = current_fps;
+                    fps_avg = avg / max_samples;
+                    fps_min = min;
+                    fps_max = max;
+                    num_samples = 0;
+                }
+
+                {
+                    auto [properties, _1] = singleton<fnx::property_manager>::acquire();
+                    auto [renderer, _2] = singleton<fnx::renderer>::acquire();
+                    renderer.clear( properties.get_property<vector3>( fnx::PROPERTY_WORLD_BACKGROUND ) );
+                }
+                FNX_EMIT_NOW( fnx::render_evt{ render_evt::action_t::start, fps_now, fps_avg, fps_min, fps_max} );
+                FNX_EMIT_NOW( fnx::render_evt{ render_evt::action_t::end } );
+                FNX_EMIT_NOW( fnx::render_shadows_evt{ render_shadows_evt::action_t::start } );
+                FNX_EMIT_NOW( fnx::render_shadows_evt{ render_shadows_evt::action_t::end } );
+                FNX_EMIT_NOW( fnx::render_post_processing_evt{ render_post_processing_evt::action_t::start } );
+                FNX_EMIT_NOW( fnx::render_post_processing_evt{ render_post_processing_evt::action_t::end } );
+                FNX_EMIT_NOW( fnx::render_user_interface_evt{ render_user_interface_evt::action_t::start } );
+                FNX_EMIT_NOW( fnx::render_user_interface_evt{ render_user_interface_evt::action_t::end } );
                 auto [win, _] = singleton<window>::acquire();
                 win.swap();
+                cycle_accumulator = 0.0;
             }
         }
     }
