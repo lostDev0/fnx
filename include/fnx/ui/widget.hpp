@@ -574,3 +574,23 @@ fnx::widget_handle_t<T> create_widget( Args... args )
 
 extern widget_handle get_widget_by_id( widget_id id );
 }
+
+namespace YAML
+{
+template<>
+struct convert<fnx::widget::fill_direction>
+{
+    static Node encode( const fnx::widget::fill_direction& in )
+    {
+        Node node;
+        node.push_back( static_cast<int>( in ) );
+        return node;
+    }
+
+    static bool decode( const Node& node, fnx::widget::fill_direction& out )
+    {
+        out = static_cast<fnx::widget::fill_direction>( node.as<int>() );
+        return true;
+    }
+};
+}

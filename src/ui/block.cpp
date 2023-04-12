@@ -359,11 +359,6 @@ void main()
 
         _material->add_vector4(UNIFORM_COLOR, color);
 
-        // opengl based 
-        //_material->add_vector2(UNIFORM_SIZE, fnx::vector2{ get_width(), get_height() });
-        //_material->add_vector2(UNIFORM_CENTER, center.xy());
-        //_material->add_vector4(UNIFORM_RADIUS, _corner_radius); // @todo Handle screen proportions
-
         auto pixel_size = fnx::vector2{ get_width() * (win.width()/2.f), get_height() * (win.height() / 2.f) };
         auto pixel_center = win.opengl_to_screen(center.x, center.y);
         

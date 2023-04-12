@@ -2,6 +2,11 @@
 
 namespace fnx
 {
+enum class camera_type
+{
+    ortho = 0,
+    perspective = 1
+};
 class camera
 {
 public:
@@ -106,7 +111,7 @@ protected:
     float _aspect_ratio{ 1.f };
 };
 
-using camera_handle = std::shared_ptr<camera>;
+using camera_handle = fnx::reference_ptr<camera>;
 
 /// @brief Camera component to render the game world objects from a given camera's perspective.
 struct camera_component

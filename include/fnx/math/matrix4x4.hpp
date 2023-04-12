@@ -598,11 +598,24 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_ortho( reactphysics3d::decimal l,
 {
     fnx::matrix4x4 mat;
     mat[0][0] = 2.f / ( r - l );
+    mat[0][1] = 0;
+    mat[0][2] = 0;
+    mat[0][3] = 0;
+
+    mat[1][0] = 0;
     mat[1][1] = 2.f / ( t - b );
+    mat[1][2] = 0;
+    mat[1][3] = 0;
+
+    mat[2][0] = 0;
+    mat[2][1] = 0;
     mat[2][2] = -2.f / ( f - n );
+    mat[2][3] = 0;
+
     mat[3][0] = -( r + l ) / ( r - l );
     mat[3][1] = -( t + b ) / ( t - b );
     mat[3][2] = -( f + n ) / ( f - n );
+    mat[3][3] = 1;
     return mat;
 }
 

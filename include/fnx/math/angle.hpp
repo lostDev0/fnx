@@ -38,6 +38,19 @@ struct angle
     {
         return _rad_val < other._rad_val;
     }
+
+    auto& operator=( const fnx::Radian& rad )
+    {
+        this->_rad_val = rad._rad;
+        return *this;
+    }
+
+    auto& operator=( const fnx::Degree& deg )
+    {
+        this->_rad_val = deg._deg * DEG_TO_RAD;
+        return *this;
+    }
+
     bool operator== ( const angle& rhs )
     {
         return !( rhs < *this ) && !( *this < rhs );

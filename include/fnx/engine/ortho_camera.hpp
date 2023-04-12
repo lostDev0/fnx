@@ -2,6 +2,7 @@
 
 namespace fnx
 {
+
 class ortho_camera : public fnx::camera
 {
 public:
@@ -29,6 +30,8 @@ public:
     }
 
 protected:
+    friend fnx::camera_serializer;
+
     virtual void update_view_matrix() override;
 
     float _left{};

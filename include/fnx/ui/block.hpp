@@ -173,6 +173,12 @@ public:
         _gradient_directions[static_cast<size_t>( state )] = dir;
     }
 
+    void set_gradient( state state, const fnx::tween<vector4>& gradient )
+    {
+        assert( state < state::max );
+        _gradients[static_cast<size_t>( state )] = gradient;
+    }
+
     void set_gradient( const fnx::tween<vector4>& gradient, fill_direction dir )
     {
         for ( auto i = 0u; i < static_cast<size_t>( state::max ); ++i )
@@ -185,6 +191,11 @@ public:
     auto get_gradient( state state ) const
     {
         return _gradients[static_cast<size_t>( state )];
+    }
+
+    void set_gradient_direction( state state, fill_direction dir )
+    {
+        _gradient_directions[static_cast<size_t>( state )] = dir;
     }
 
     auto get_gradient_direction( state state ) const

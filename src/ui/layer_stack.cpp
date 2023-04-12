@@ -93,14 +93,11 @@ bool layer_stack::render_layers( const fnx::render_user_interface_evt& evt )
 {
     if ( evt._action == render_user_interface_evt::action_t::start )
     {
-        // TODO : Add in the camera class
-        /*
-        auto camera = locate<camera_manager>()->get_camera(camera_manager::camera_id::user_interface);
-        for (auto& layer_pair : _layers)
+        auto camera = singleton<camera_manager>::acquire().data.get( camera_manager::ui );
+        for ( auto& layer_pair : _layers )
         {
-            layer_pair.second->render(camera);
+            layer_pair.second->render( camera );
         }
-        */
     }
     return false;
 }

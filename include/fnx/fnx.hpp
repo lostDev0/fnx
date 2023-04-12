@@ -81,11 +81,13 @@ using decimal = reactphysics3d::decimal;
 #include "engine/font.hpp"
 #include "engine/type_names.hpp"
 #include "engine/camera.hpp"
+#include "engine/camera_serializer.hpp"
 #include "engine/ortho_camera.hpp"
 #include "engine/perspective_camera.hpp"
 #include "engine/renderer.hpp"
 #include "engine/property.hpp"
 #include "engine/property_manager.hpp"
+#include "engine/camera_manager.hpp"
 
 #include "ui/interface.hpp"
 #include "ui/transition.hpp"

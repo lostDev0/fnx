@@ -33,6 +33,7 @@ public:
         update_view_matrix();
     }
 protected:
+    friend fnx::camera_serializer;
     virtual void update_view_matrix() override;
 
     fnx::angle _field_of_view;

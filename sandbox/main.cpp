@@ -48,6 +48,16 @@ int main( int argc, char** argv )
     fnx::ui::init();
     fnx::ui::parse_yaml_file( "user_interface.yaml" );
 
+    {
+        auto ui_cam = fnx::make_shared_ref<fnx::ortho_camera>();
+        auto dflt_cam = fnx::make_shared_ref<fnx::perspective_camera>( fnx::angle( fnx::Degree( 70.0 ) ), 16.0 / 9.0, .1,
+                        1000.0 );
+        auto [cam_mgr, _] = singleton<camera_manager>::acquire();
+        cam_mgr.add( ui_cam, camera_manager::ui );
+        cam_mgr.add( dflt_cam, camera_manager::default );
+    }
+
+
     /*
     auto [layers, _1] = singleton<layer_stack>::acquire();
     for ( auto i = 0; i < 5; i++ )

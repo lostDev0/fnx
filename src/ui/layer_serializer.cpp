@@ -1,3 +1,43 @@
+namespace YAML
+{
+template<>
+struct convert<fnx::tween<fnx::vector4>>
+{
+    static Node encode( const fnx::tween<fnx::vector4>& in )
+    {
+        Node node;
+        node.push_back( in.get_values().size() );
+        for ( auto& it : in.get_values() )
+        {
+            node.push_back( it.x );
+            node.push_back( it.y );
+            node.push_back( it.z );
+            node.push_back( it.w );
+        }
+
+        return node;
+    }
+
+    static bool decode( const Node& node, fnx::tween<fnx::vector4>& out )
+    {
+        if ( !node.IsSequence() || node.size() < 1 )
+        {
+            return false;
+        }
+        auto s = node[0].as<size_t>();
+        auto idx = 1;
+        for ( auto i = 0; i < s; i++ )
+        {
+            out.add( fnx::vector4{node[idx++].as<fnx::decimal>(),
+                                  node[idx++].as<fnx::decimal>(),
+                                  node[idx++].as<fnx::decimal>(),
+                                  node[idx++].as<fnx::decimal>()} );
+        }
+        return true;
+    }
+};
+}
+
 namespace fnx
 {
 std::string layer_serializer::serialize( const layer_stack& stack )
@@ -166,6 +206,54 @@ void layer_serializer::deserialize_widget( const YAML::Node& data, widget& obj )
     }
 }
 
+void layer_serializer::deserialize_block( const YAML::Node& data, widget& obj )
+{
+    fnx::block& block = dynamic_cast<fnx::block&>( obj );
+    if ( data["colors"] )
+    {
+        block.set_color( widget::state::normal, data["colors"]["normal"].as<fnx::vector4>() );
+        block.set_color( widget::state::hover, data["colors"]["hover"].as<fnx::vector4>() );
+        block.set_color( widget::state::checked, data["colors"]["checked"].as<fnx::vector4>() );
+        block.set_color( widget::state::press, data["colors"]["press"].as<fnx::vector4>() );
+    }
+
+    if ( data["outline_colors"] )
+    {
+        block.set_outline_color( widget::state::normal, data["outline_colors"]["normal"].as<fnx::vector4>() );
+        block.set_outline_color( widget::state::hover, data["outline_colors"]["hover"].as<fnx::vector4>() );
+        block.set_outline_color( widget::state::checked, data["outline_colors"]["checked"].as<fnx::vector4>() );
+        block.set_outline_color( widget::state::press, data["outline_colors"]["press"].as<fnx::vector4>() );
+    }
+
+    if ( data["outline_thickness"] )
+    {
+        block.set_outline_thickness( widget::state::normal, data["outline_thickness"]["normal"].as<fnx::decimal>() );
+        block.set_outline_thickness( widget::state::hover, data["outline_thickness"]["hover"].as<fnx::decimal>() );
+        block.set_outline_thickness( widget::state::checked, data["outline_thickness"]["checked"].as<fnx::decimal>() );
+        block.set_outline_thickness( widget::state::press, data["outline_thickness"]["press"].as<fnx::decimal>() );
+    }
+
+    if ( data["gradient"] )
+    {
+        block.set_gradient( widget::state::normal, data["gradient"]["normal"].as<fnx::tween<vector4>>() );
+        block.set_gradient( widget::state::hover, data["gradient"]["hover"].as<fnx::tween<vector4>>() );
+        block.set_gradient( widget::state::checked, data["gradient"]["checked"].as<fnx::tween<vector4>>() );
+        block.set_gradient( widget::state::press, data["gradient"]["press"].as<fnx::tween<vector4>>() );
+    }
+
+    if ( data["gradient_direction"] )
+    {
+        block.set_gradient_direction( widget::state::normal,
+                                      data["gradient_direction"]["normal"].as<widget::fill_direction>() );
+        block.set_gradient_direction( widget::state::hover, data["gradient_direction"]["hover"].as<widget::fill_direction>() );
+        block.set_gradient_direction( widget::state::checked,
+                                      data["gradient_direction"]["checked"].as<widget::fill_direction>() );
+        block.set_gradient_direction( widget::state::press, data["gradient_direction"]["press"].as<widget::fill_direction>() );
+    }
+
+    block.set_corner_radius( data["corner_radius"].as<fnx::decimal>() );
+}
+
 fnx::widget_handle layer_serializer::deserialize_widget_type( const YAML::Node& data )
 {
     auto type = static_cast<fnx::widget_type>( data["type"].as<int>() );
@@ -173,11 +261,12 @@ fnx::widget_handle layer_serializer::deserialize_widget_type( const YAML::Node& 
     switch ( type )
     {
         case widget_type::block:
-            // TODO
             handle = create_widget<fnx::block>( data["name"].as<std::string>() );
+            deserialize_block( data, *handle );
             break;
         default:    // widget
             handle = create_widget<fnx::widget>( data["name"].as<std::string>() );
+            deserialize_widget( data, *handle );
             break;
     }
     deserialize_widget( data, *handle );
