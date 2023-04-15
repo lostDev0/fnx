@@ -46,6 +46,21 @@ public:
             _cameras[idx] = camera;
             return idx;
         }
+        else if( camera )
+        {
+            // Camera hasn't yet been added
+            for(auto i = _cameras.size(); i <= idx; i++)
+            {
+                if (i != idx)
+                {
+                    _cameras.emplace_back(camera_manager::handle{});
+                }
+                else
+                {
+                    _cameras.emplace_back(camera);
+                }
+            }
+        }
         return index::invalid;
     }
 
@@ -64,7 +79,7 @@ private:
 
     inline bool is_valid( int idx )
     {
-        return idx > camera_manager::index::invalid && idx < _cameras.size();
+        return idx > camera_manager::index::invalid && idx < _cameras.size() && _cameras[idx] != nullptr;
     }
 };
 }

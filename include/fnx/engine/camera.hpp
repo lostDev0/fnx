@@ -92,6 +92,10 @@ public:
         _front = front;
         update_view_matrix();
     }
+    virtual void set_front( fnx::decimal x, fnx::decimal y, fnx::decimal z)
+    {
+        set_front(fnx::vector3{x,y,z});
+    }
     virtual void set_aspect_ratio( float ratio )
     {
         _aspect_ratio = ratio;

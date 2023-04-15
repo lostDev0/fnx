@@ -93,7 +93,9 @@ bool layer_stack::render_layers( const fnx::render_user_interface_evt& evt )
 {
     if ( evt._action == render_user_interface_evt::action_t::start )
     {
-        auto camera = singleton<camera_manager>::acquire().data.get( camera_manager::ui );
+        auto [camera_manager,_] = singleton<fnx::camera_manager>::acquire();
+        auto camera = camera_manager.get( camera_manager::ui );
+        assert(camera != nullptr);
         for ( auto& layer_pair : _layers )
         {
             layer_pair.second->render( camera );

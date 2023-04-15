@@ -695,7 +695,7 @@ void parse_model_file( const std::string& file_path )
     }
 }
 
-std::shared_ptr<fnx::raw_model> raw_model_quad()
+fnx::reference_ptr<fnx::raw_model> raw_model_quad()
 {
     static const std::vector<unsigned short> indices
     {
@@ -714,7 +714,7 @@ std::shared_ptr<fnx::raw_model> raw_model_quad()
             1.f, 0.f			// bottom right
         };
 
-    auto a = std::make_shared<fnx::raw_model>( "quad", data, indices );
+    auto a = fnx::make_shared_ref<fnx::raw_model>( "quad", data, indices );
     a->set_texture_data_true();
     return a;
 }

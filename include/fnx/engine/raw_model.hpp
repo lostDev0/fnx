@@ -154,7 +154,7 @@ private:
 
 using raw_model_handle = fnx::asset_handle<fnx::raw_model>;
 
-extern std::shared_ptr<fnx::raw_model> raw_model_quad();
+extern fnx::reference_ptr<fnx::raw_model> raw_model_quad();
 extern std::vector<float> create_vbo_data_for_line( const fnx::vector3& start,
         const fnx::vector3& end,
         const fnx::vector3& start_color,
