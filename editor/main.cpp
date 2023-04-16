@@ -44,17 +44,17 @@ int main( int argc, char** argv )
                           fnx::colors::grey_3, "lower_land" );
         raise_land->set_constraints( constraints( fnx::fill_horz_constraint( .1f ), fnx::fill_vert_constraint( .1f ),
                                      center_horz_constraint{}, center_vert_constraint{} ) );
-        //raise_land->set_outline_thickness(1);
+        raise_land->set_outline_thickness(1);
         raise_land->set_outline_color(fnx::colors::cyan);
         auto teal_transparent = fnx::colors::rgba(fnx::colors::teal);
 	    teal_transparent.w = 0.0;
-        //raise_land->set_gradient({ fnx::colors::teal , fnx::colors::teal, teal_transparent }, widget::fill_direction::left_to_right);
-        //raise_land->set_corner_radius(.02f);
+        raise_land->set_gradient({ fnx::colors::teal , teal_transparent }, widget::fill_direction::left_to_right);
+        raise_land->set_corner_radius(12);
         //fnx::slide_transition t{ fnx::vector2{-1,0}, fnx::vector2{0,0}, .4 };
-        //fnx::fade_transition t{ fnx::tween<float>{1.f, 0.f, 1.f}, .5 };
-        //fnx::transitions ts{t};
+        fnx::fade_transition t{ fnx::tween<float>{1.f, 0.f, 1.f}, .5 };
+        fnx::transitions ts{t};
         //raise_land->get_animator().add_on_show_transitions(ts);
-        //raise_land->get_animator().add_on_mouse_enter_transitions(ts);
+        raise_land->get_animator().add_on_mouse_enter_transitions(ts);
         //raise_land->set_constraints(fill_parent);
         //sizer->set_constraints( fnx::constraints( fill_vert_constraint{.3f}, fill_horz_constraint{.1f} ) );
         //sizer->set_constraints( fill_parent );
@@ -77,7 +77,7 @@ int main( int argc, char** argv )
 
     {
         auto ui_cam = fnx::make_shared_ref<fnx::ortho_camera>(aspect_ratio, -1.f, 1.f, -1.f, 1.f);
-        //ui_cam->set_position(0,0,0);
+        ui_cam->set_position(0,0,0);
         ui_cam->look_at(fnx::vector3(0,0,0), fnx::vector3(0,1,0));
         auto dflt_cam = fnx::make_shared_ref<fnx::perspective_camera>( fnx::angle( fnx::Degree( 70.0 ) ), 16.0 / 9.0, .1,
                         1000.0 );

@@ -443,38 +443,53 @@ RP3D_FORCE_INLINE matrix4x4 operator/( const matrix4x4& matrix, decimal nb )
 // Overloaded operator for matrix multiplication
 RP3D_FORCE_INLINE matrix4x4 operator*( const matrix4x4& matrix1, const matrix4x4& matrix2 )
 {
-    return matrix4x4( matrix1.mRows[0][0] * matrix2.mRows[0][0] + matrix1.mRows[0][1] * matrix2.mRows[1][0] +
+    return matrix4x4( matrix1.mRows[0][0] * matrix2.mRows[0][0] + matrix1.mRows[0][1] * matrix2.mRows[1][0] + 
                       matrix1.mRows[0][2] * matrix2.mRows[2][0] + matrix1.mRows[0][3] * matrix2.mRows[3][0],
-                      matrix1.mRows[0][0] * matrix2.mRows[0][1] + matrix1.mRows[0][1] * matrix2.mRows[1][1] + matrix1.mRows[0][2] *
-                      matrix2.mRows[2][1] + matrix1.mRows[0][3] * matrix2.mRows[3][1],
-                      matrix1.mRows[0][0] * matrix2.mRows[0][2] + matrix1.mRows[0][1] * matrix2.mRows[1][2] + matrix1.mRows[0][2] *
-                      matrix2.mRows[2][2] + matrix1.mRows[0][3] * matrix2.mRows[3][2],
-                      matrix1.mRows[0][0] * matrix2.mRows[0][3] + matrix1.mRows[0][1] * matrix2.mRows[1][3] + matrix1.mRows[0][2] *
-                      matrix2.mRows[2][3] + matrix1.mRows[0][3] * matrix2.mRows[3][3],
-                      matrix1.mRows[1][0] * matrix2.mRows[0][0] + matrix1.mRows[1][1] * matrix2.mRows[1][0] + matrix1.mRows[1][2] *
-                      matrix2.mRows[2][0] + matrix1.mRows[1][3] * matrix2.mRows[3][0],
-                      matrix1.mRows[1][0] * matrix2.mRows[0][1] + matrix1.mRows[1][1] * matrix2.mRows[1][1] + matrix1.mRows[1][2] *
-                      matrix2.mRows[2][1] + matrix1.mRows[1][3] * matrix2.mRows[3][1],
-                      matrix1.mRows[1][0] * matrix2.mRows[0][2] + matrix1.mRows[1][1] * matrix2.mRows[1][2] + matrix1.mRows[1][2] *
-                      matrix2.mRows[2][2] + matrix1.mRows[1][3] * matrix2.mRows[3][2],
-                      matrix1.mRows[1][0] * matrix2.mRows[0][3] + matrix1.mRows[1][1] * matrix2.mRows[1][3] + matrix1.mRows[1][2] *
-                      matrix2.mRows[2][3] + matrix1.mRows[1][3] * matrix2.mRows[3][3],
-                      matrix1.mRows[2][0] * matrix2.mRows[0][0] + matrix1.mRows[2][1] * matrix2.mRows[1][0] + matrix1.mRows[2][2] *
-                      matrix2.mRows[2][0] + matrix1.mRows[2][3] * matrix2.mRows[3][0],
-                      matrix1.mRows[2][0] * matrix2.mRows[0][1] + matrix1.mRows[2][1] * matrix2.mRows[1][1] + matrix1.mRows[2][2] *
-                      matrix2.mRows[2][1] + matrix1.mRows[2][3] * matrix2.mRows[3][1],
-                      matrix1.mRows[2][0] * matrix2.mRows[0][2] + matrix1.mRows[2][1] * matrix2.mRows[1][2] + matrix1.mRows[2][2] *
-                      matrix2.mRows[2][2] + matrix1.mRows[2][3] * matrix2.mRows[3][2],
-                      matrix1.mRows[2][0] * matrix2.mRows[0][3] + matrix1.mRows[2][1] * matrix2.mRows[1][3] + matrix1.mRows[2][2] *
-                      matrix2.mRows[2][3] + matrix1.mRows[2][3] * matrix2.mRows[3][3],
-                      matrix1.mRows[3][0] * matrix2.mRows[0][0] + matrix1.mRows[3][1] * matrix2.mRows[1][0] + matrix1.mRows[3][2] *
-                      matrix2.mRows[2][0] + matrix1.mRows[2][3] * matrix2.mRows[3][0],
-                      matrix1.mRows[3][0] * matrix2.mRows[0][1] + matrix1.mRows[3][1] * matrix2.mRows[1][1] + matrix1.mRows[3][2] *
-                      matrix2.mRows[2][1] + matrix1.mRows[2][3] * matrix2.mRows[3][1],
-                      matrix1.mRows[3][0] * matrix2.mRows[0][2] + matrix1.mRows[3][1] * matrix2.mRows[1][2] + matrix1.mRows[3][2] *
-                      matrix2.mRows[2][2] + matrix1.mRows[2][3] * matrix2.mRows[3][2],
-                      matrix1.mRows[3][0] * matrix2.mRows[0][3] + matrix1.mRows[3][1] * matrix2.mRows[1][3] + matrix1.mRows[3][2] *
-                      matrix2.mRows[2][3] + matrix1.mRows[2][3] * matrix2.mRows[3][3] );
+
+                      matrix1.mRows[0][0] * matrix2.mRows[0][1] + matrix1.mRows[0][1] * matrix2.mRows[1][1] + 
+                      matrix1.mRows[0][2] * matrix2.mRows[2][1] + matrix1.mRows[0][3] * matrix2.mRows[3][1],
+
+                      matrix1.mRows[0][0] * matrix2.mRows[0][2] + matrix1.mRows[0][1] * matrix2.mRows[1][2] + 
+                      matrix1.mRows[0][2] * matrix2.mRows[2][2] + matrix1.mRows[0][3] * matrix2.mRows[3][2],
+
+                      matrix1.mRows[0][0] * matrix2.mRows[0][3] + matrix1.mRows[0][1] * matrix2.mRows[1][3] +
+                      matrix1.mRows[0][2] * matrix2.mRows[2][3] + matrix1.mRows[0][3] * matrix2.mRows[3][3],
+
+                      matrix1.mRows[1][0] * matrix2.mRows[0][0] + matrix1.mRows[1][1] * matrix2.mRows[1][0] +
+                      matrix1.mRows[1][2] * matrix2.mRows[2][0] + matrix1.mRows[1][3] * matrix2.mRows[3][0],
+
+                      matrix1.mRows[1][0] * matrix2.mRows[0][1] + matrix1.mRows[1][1] * matrix2.mRows[1][1] + 
+                      matrix1.mRows[1][2] * matrix2.mRows[2][1] + matrix1.mRows[1][3] * matrix2.mRows[3][1],
+
+                      matrix1.mRows[1][0] * matrix2.mRows[0][2] + matrix1.mRows[1][1] * matrix2.mRows[1][2] + 
+                      matrix1.mRows[1][2] * matrix2.mRows[2][2] + matrix1.mRows[1][3] * matrix2.mRows[3][2],
+
+                      matrix1.mRows[1][0] * matrix2.mRows[0][3] + matrix1.mRows[1][1] * matrix2.mRows[1][3] + 
+                      matrix1.mRows[1][2] * matrix2.mRows[2][3] + matrix1.mRows[1][3] * matrix2.mRows[3][3],
+
+                      matrix1.mRows[2][0] * matrix2.mRows[0][0] + matrix1.mRows[2][1] * matrix2.mRows[1][0] + 
+                      matrix1.mRows[2][2] * matrix2.mRows[2][0] + matrix1.mRows[2][3] * matrix2.mRows[3][0],
+
+                      matrix1.mRows[2][0] * matrix2.mRows[0][1] + matrix1.mRows[2][1] * matrix2.mRows[1][1] + 
+                      matrix1.mRows[2][2] * matrix2.mRows[2][1] + matrix1.mRows[2][3] * matrix2.mRows[3][1],
+
+                      matrix1.mRows[2][0] * matrix2.mRows[0][2] + matrix1.mRows[2][1] * matrix2.mRows[1][2] + 
+                      matrix1.mRows[2][2] * matrix2.mRows[2][2] + matrix1.mRows[2][3] * matrix2.mRows[3][2],
+
+                      matrix1.mRows[2][0] * matrix2.mRows[0][3] + matrix1.mRows[2][1] * matrix2.mRows[1][3] + 
+                      matrix1.mRows[2][2] * matrix2.mRows[2][3] + matrix1.mRows[2][3] * matrix2.mRows[3][3],
+
+                      matrix1.mRows[3][0] * matrix2.mRows[0][0] + matrix1.mRows[3][1] * matrix2.mRows[1][0] + 
+                      matrix1.mRows[3][2] * matrix2.mRows[2][0] + matrix1.mRows[3][3] * matrix2.mRows[3][0],
+
+                      matrix1.mRows[3][0] * matrix2.mRows[0][1] + matrix1.mRows[3][1] * matrix2.mRows[1][1] + 
+                      matrix1.mRows[3][2] * matrix2.mRows[2][1] + matrix1.mRows[3][3] * matrix2.mRows[3][1],
+
+                      matrix1.mRows[3][0] * matrix2.mRows[0][2] + matrix1.mRows[3][1] * matrix2.mRows[1][2] + 
+                      matrix1.mRows[3][2] * matrix2.mRows[2][2] + matrix1.mRows[3][3] * matrix2.mRows[3][2],
+
+                      matrix1.mRows[3][0] * matrix2.mRows[0][3] + matrix1.mRows[3][1] * matrix2.mRows[1][3] + 
+                      matrix1.mRows[3][2] * matrix2.mRows[2][3] + matrix1.mRows[3][3] * matrix2.mRows[3][3] );
 }
 
 // Overloaded operator for multiplication with a vector
@@ -655,44 +670,35 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_perspective( const angle& fov_y, reactph
     return set_frustum( -width, width, -height, height, front, back );
 }
 
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_scale( const fnx::vector3& scale )
+{
+    auto ret = matrix4x4::identity();
+    ret[0][0] = scale.x;
+    ret[1][1] = scale.y;
+    ret[2][2] = scale.z;
+    return ret;
+}
+
+RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate( const fnx::vector3& position )
+{
+    auto ret = matrix4x4::identity();
+    ret[0][3] = position.x;
+    ret[1][3] = position.y;
+    ret[2][3] = position.z;
+    return ret;
+}
+
 RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate( const fnx::matrix4x4& input, const fnx::vector3& position )
 {
-    auto ret = input;
-    auto x = position.x;
-    auto y = position.y;
-    auto z = position.z;
-    ret[0][0] += ret[0][3] * x;
-    ret[1][0] += ret[1][3] * x;
-    ret[2][0] += ret[2][3] * x;
-    ret[3][0] += ret[3][3] * x;
-    ret[0][1] += ret[0][3] * y;
-    ret[1][1] += ret[1][3] * y;
-    ret[2][1] += ret[2][3] * y;
-    ret[3][1] += ret[3][3] * y;
-    ret[0][2] += ret[0][3] * z;
-    ret[1][2] += ret[1][3] * z;
-    ret[2][2] += ret[2][3] * z;
-    ret[3][2] += ret[3][3] * z;
-    return ret;
+    auto scale = matrix_translate(position);
+    return input * scale;
 }
 
 RP3D_FORCE_INLINE fnx::matrix4x4 matrix_translate( const fnx::matrix4x4& input, reactphysics3d::decimal x,
         reactphysics3d::decimal y, reactphysics3d::decimal z )
 {
-    auto ret = input;
-    ret[0][0] += ret[0][3] * x;
-    ret[1][0] += ret[1][3] * x;
-    ret[2][0] += ret[2][3] * x;
-    ret[3][0] += ret[3][3] * x;
-    ret[0][1] += ret[0][3] * y;
-    ret[1][1] += ret[1][3] * y;
-    ret[2][1] += ret[2][3] * y;
-    ret[3][1] += ret[3][3] * y;
-    ret[0][2] += ret[0][3] * z;
-    ret[1][2] += ret[1][3] * z;
-    ret[2][2] += ret[2][3] * z;
-    ret[3][2] += ret[3][3] * z;
-    return ret;
+    fnx::vector3 scale{x,y,z};
+    return matrix_translate(input, scale);
 }
 
 RP3D_FORCE_INLINE fnx::matrix4x4 matrix_rotate( const fnx::matrix4x4& input, const angle& angle,
@@ -741,17 +747,17 @@ RP3D_FORCE_INLINE fnx::matrix4x4 matrix_scale( const fnx::matrix4x4& input,
 {
     auto ret = input;
     ret[0][0] *= sx;
-    ret[1][0] *= sx;
-    ret[2][0] *= sx;
-    ret[3][0] *= sx;
-    ret[0][1] *= sy;
+    ret[0][1] *= sx;
+    ret[0][2] *= sx;
+    ret[0][3] *= sx;
+    ret[1][0] *= sy;
     ret[1][1] *= sy;
-    ret[2][1] *= sy;
-    ret[3][1] *= sy;
-    ret[0][2] *= sz;
-    ret[1][2] *= sz;
+    ret[1][2] *= sy;
+    ret[1][3] *= sy;
+    ret[2][0] *= sz;
+    ret[2][1] *= sz;
     ret[2][2] *= sz;
-    ret[3][2] *= sz;
+    ret[2][3] *= sz;
     return ret;
 }
 

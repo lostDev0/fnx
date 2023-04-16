@@ -352,17 +352,13 @@ void main()
         // 2. translate to the parent aligned matrix
         auto mat_translate = fnx::matrix_translate(parent_matrix, get_x(), get_y(), 0.f);
         // 3. get the center coordinate for the glsl shader to do it's calculations per pixel
-        auto center = vector3{ half_width, half_height, 0.f }; 
-        //mat_translate.transform(center);
+        //auto center = vector3{ half_width, half_height, 0.f };
+        // TODO : should need center translation ....
+        auto center = vector3{};
         mat_translate = matrix_translate(mat_translate, center);
         // 4. translate to the center of the widget
         auto mat = mat_scale * matrix_translate(mat_translate, half_width, half_height, 0.f);
         _material->add_vector4(UNIFORM_COLOR, color);
-
-        // opengl based 
-        //_material->add_vector2(UNIFORM_SIZE, vector2{ get_width(), get_height() });
-        //_material->add_vector2(UNIFORM_CENTER, vector2{center.x, center.y});
-        //_material->add_vector4(UNIFORM_RADIUS, _corner_radius); // @todo Handle screen proportions
 
         auto pixel_size = fnx::vector2{ get_width() * (win.width()/2.f), get_height() * (win.height() / 2.f) };
         auto pixel_center = win.opengl_to_screen(center.x, center.y);
